@@ -4,7 +4,7 @@
     <string name="player_two">Player 2</string>
     <string name="player_one_won_match">Player 1 Won Match!</string>
     <string name="player_two_won_match">Player 2 Won Match!</string>
-    <string name="player_won_set">Player Won Set %1$d!</string>
+    <string name="player_won_set">Player %1$d Won Set %2$d!</string>
     <string name="deuce">Deuce</string>
     <string name="initial_set_score">0</string>
     <string name="initial_sets_won">0</string>

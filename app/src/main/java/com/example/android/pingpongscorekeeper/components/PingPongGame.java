@@ -2,13 +2,13 @@ package com.example.android.pingpongscorekeeper.components;
 
 public class PingPongGame
 {
-    private PingPongPlayer playerOne;
-    private PingPongPlayer playerTwo;
+    public PingPongPlayer playerOne;
+    public PingPongPlayer playerTwo;
 
     private final static int minNumberOfPointsToWinASet = 11;
     private final static int numberOfPointsPlayerNeedsToBeatOpponent = 2;
     private final static int winningNumberOfSets = 3;
-
+    public boolean gameOver = false;
     public PingPongGame()
     {
         playerOne = new PingPongPlayer();
@@ -27,6 +27,7 @@ public class PingPongGame
         playerOne.resetNumberOfSetsWon();
         playerTwo.resetCurrentSetScore();
         playerTwo.resetNumberOfSetsWon();
+        gameOver = false;
     }
 
     public int getCurrentSetNumber()
@@ -111,4 +112,6 @@ public class PingPongGame
         return playerOne.getCurrentSetScore() >= minNumberOfPointsToWinASet - 1 &&
                 playerOne.getCurrentSetScore() == playerTwo.getCurrentSetScore();
     }
+
+
 }

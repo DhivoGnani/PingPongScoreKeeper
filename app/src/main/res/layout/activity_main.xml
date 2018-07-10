@@ -36,6 +36,7 @@
                 android:layout_gravity="center_horizontal">
 
                 <TextView
+                    android:id="@+id/player_one_current_set_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -51,6 +52,7 @@
                     android:background="#616161" />
 
                 <TextView
+                    android:id="@+id/player_one_sets_won"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -71,6 +73,7 @@
                 android:textColor="#FF616161" />
 
             <Button
+                android:onClick="playerOneScored"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
@@ -109,6 +112,7 @@
                 android:layout_gravity="center_horizontal">
 
                 <TextView
+                    android:id="@+id/player_two_current_set_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -124,6 +128,7 @@
                     android:background="#616161" />
 
                 <TextView
+                    android:id="@+id/player_two_sets_won"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -144,6 +149,7 @@
                 android:textColor="#FF616161" />
 
             <Button
+                android:onClick="playerTwoScored"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
@@ -158,10 +164,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-       >
+        android:layout_alignParentStart="true"
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
