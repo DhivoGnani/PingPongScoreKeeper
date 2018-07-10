@@ -29,6 +29,11 @@ public class PingPongGame
         playerTwo.resetNumberOfSetsWon();
     }
 
+    public int getCurrentSetNumber()
+    {
+        return playerOne.getNumberOfSetsWon() + playerTwo.getNumberOfSetsWon();
+    }
+
     public int getPlayerOneCurrentSetScore()
     {
         return playerOne.getCurrentSetScore();
@@ -99,5 +104,11 @@ public class PingPongGame
         return player.getCurrentSetScore() >= minNumberOfPointsToWinASet &&
                 player.getCurrentSetScore() - opponent.getCurrentSetScore() >=
                         numberOfPointsPlayerNeedsToBeatOpponent;
+    }
+
+    public boolean isDeuce()
+    {
+        return playerOne.getCurrentSetScore() >= minNumberOfPointsToWinASet - 1 &&
+                playerOne.getCurrentSetScore() == playerTwo.getCurrentSetScore();
     }
 }
