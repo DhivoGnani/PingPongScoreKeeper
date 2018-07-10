@@ -92,7 +92,14 @@ public class MainActivity extends AppCompatActivity
         ((TextView)findViewById(R.id.player_two_current_set_score)).setText("0");
         pingPongGame.playerOne.resetCurrentSetScore();
         pingPongGame.playerTwo.resetCurrentSetScore();
+    }
 
+    public void clearSetsWonBothPlayers()
+    {
+        ((TextView)findViewById(R.id.player_one_sets_won)).setText("0");
+        ((TextView)findViewById(R.id.player_two_sets_won)).setText("0");
+        pingPongGame.playerOne.resetNumberOfSetsWon();
+        pingPongGame.playerTwo.resetNumberOfSetsWon();
     }
 
     public void displayNumberOfSetsPlayerOneWon()
@@ -113,6 +120,14 @@ public class MainActivity extends AppCompatActivity
     public void displayPlayerTwoScore()
     {
         ((TextView)findViewById(R.id.player_two_current_set_score)).setText(pingPongGame.getPlayerTwoCurrentSetScore()+"");
+    }
+
+    public void reset(View view)
+    {
+        clearCurrentSetScoreBothPlayers();
+        clearMessage();
+        clearSetsWonBothPlayers();
+        pingPongGame.resetGame();
     }
 
 
