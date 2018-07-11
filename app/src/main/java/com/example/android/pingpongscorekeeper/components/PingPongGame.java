@@ -11,6 +11,7 @@ public class PingPongGame
     private final static int minNumberOfPointsToWinASet = 11;
     private final static int numberOfPointsPlayerNeedsToBeatOpponent = 2;
     private final static int winningNumberOfSets = 3;
+
     public PingPongGame()
     {
         playerOne = new PingPongPlayer(playerOneName);
@@ -97,5 +98,11 @@ public class PingPongGame
     public void incrementNumberOfSetsWon(PingPongPlayer player)
     {
         player.incrementNumberOfSetsWon();
+    }
+
+    public void resetCurrentScore()
+    {
+        playerOne.resetCurrentSetScore();
+        playerTwo.resetCurrentSetScore();
     }
 }

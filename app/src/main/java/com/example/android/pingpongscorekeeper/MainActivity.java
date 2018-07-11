@@ -30,28 +30,33 @@ public class MainActivity extends AppCompatActivity
 
     public void playerOneScoreOnClick(View view)
     {
+        if(pingPongGame.isGameOver()) return;
         playerScored(pingPongGame.playerOne);
+        displayPointsAndSets();
+    }
+
+    public void displayPointsAndSets()
+    {
         displayPlayerOneScore();
         displayNumberOfSetsPlayerOneWon();
+        displayPlayerTwoScore();
+        displayNumberOfSetsPlayerTwoWon();
     }
 
     public void playerTwoScoreOnClick(View view)
     {
         playerScored(pingPongGame.playerTwo);
-        displayPlayerTwoScore();
-        displayNumberOfSetsPlayerTwoWon();
+        displayPointsAndSets();
     }
 
     public void playerScored(PingPongPlayer player)
     {
         if(pingPongGame.isGameOver()) return;
-
         pingPongGame.playerHasScored(player);
-
         if(!pingPongGame.hasPlayerWonCurrentSet(player)) return;
 
         pingPongGame.incrementNumberOfSetsWon(player);
-        clearCurrentSetScoreBothPlayers();
+        pingPongGame.resetCurrentScore();
 
         if(pingPongGame.hasPlayerWonMatch(player))
         {
@@ -85,24 +90,20 @@ public class MainActivity extends AppCompatActivity
         displayMessage("");
     }
 
-    public void clearCurrentSetScoreBothPlayers()
+    public void resetCurrentScoreDisplay()
     {
         ((TextView)findViewById(R.id.player_one_current_set_score)).
                 setText(getString(R.string.initial_set_score));
         ((TextView)findViewById(R.id.player_two_current_set_score)).
                 setText(getString(R.string.initial_set_score));
-        pingPongGame.playerOne.resetCurrentSetScore();
-        pingPongGame.playerTwo.resetCurrentSetScore();
     }
 
-    public void clearSetsWonBothPlayers()
+    public void resetNumberOfSetsWonDisplay()
     {
         ((TextView)findViewById(R.id.player_one_sets_won)).
                 setText(getString(R.string.initial_sets_won));
         ((TextView)findViewById(R.id.player_two_sets_won)).
                 setText(getString(R.string.initial_sets_won));
-        pingPongGame.playerOne.resetNumberOfSetsWon();
-        pingPongGame.playerTwo.resetNumberOfSetsWon();
     }
 
     public void displayNumberOfSetsPlayerOneWon()
@@ -129,13 +130,11 @@ public class MainActivity extends AppCompatActivity
                 setText(Integer.toString(pingPongGame.getPlayerTwoCurrentSetScore()));
     }
 
-    public void reset(View view)
+    public void resetOnClick(View view)
     {
-        clearCurrentSetScoreBothPlayers();
+        resetCurrentScoreDisplay();
+        resetNumberOfSetsWonDisplay();
         clearMessage();
-        clearSetsWonBothPlayers();
         pingPongGame.resetGame();
     }
-
-
 }

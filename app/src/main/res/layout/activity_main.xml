@@ -10,154 +10,167 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_marginTop="8dp"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logo" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="sans-serif-medium"
-                android:paddingTop="8dp"
-                android:id="@+id/player_one"
-                android:textAllCaps="true"
-                android:textColor="#616161"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/player_one_current_set_score"
+                    android:id="@+id/player_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:paddingRight="8dp"
-                    android:text="@string/initial_set_score"
-                    android:textColor="#000000"
-                    android:textSize="56sp" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="#616161" />
-
-                <TextView
-                    android:id="@+id/player_one_sets_won"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:paddingLeft="8dp"
-                    android:text="@string/initial_sets_won"
-                    android:textColor="#757575"
-                    android:textSize="34sp"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingTop="8dp"
+                    android:textAllCaps="true"
+                    android:textColor="#616161"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/player_one_current_set_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingRight="8dp"
+                        android:text="@string/initial_set_score"
+                        android:textColor="#000000"
+                        android:textSize="56sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="#616161" />
+
+                    <TextView
+                        android:id="@+id/player_one_sets_won"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingLeft="8dp"
+                        android:text="@string/initial_sets_won"
+                        android:textColor="#757575"
+                        android:textSize="34sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="2dp"
+                    android:text="@string/points_sets"
+                    android:textColor="#FF616161" />
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/paddle"
+                    android:onClick="playerOneScoreOnClick" />
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="2dp"
-                android:text="@string/points_sets"
-                android:textColor="#FF616161" />
-
-            <Button
-                android:onClick="playerOneScoreOnClick"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/paddle" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
-            android:background="@android:color/darker_gray" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="sans-serif-medium"
-                android:paddingTop="8dp"
-                android:id="@+id/player_two"
-                android:textAllCaps="true"
-                android:textColor="#616161"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/darker_gray" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/player_two_current_set_score"
+                    android:id="@+id/player_two"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:paddingRight="8dp"
-                    android:text="@string/initial_set_score"
-                    android:textColor="#000000"
-                    android:textSize="56sp" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="#616161" />
-
-                <TextView
-                    android:id="@+id/player_two_sets_won"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:paddingLeft="8dp"
-                    android:text="@string/initial_sets_won"
-                    android:textColor="#757575"
-                    android:textSize="34sp"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingTop="8dp"
+                    android:textAllCaps="true"
+                    android:textColor="#616161"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/player_two_current_set_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingRight="8dp"
+                        android:text="@string/initial_set_score"
+                        android:textColor="#000000"
+                        android:textSize="56sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="#616161" />
+
+                    <TextView
+                        android:id="@+id/player_two_sets_won"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingLeft="8dp"
+                        android:text="@string/initial_sets_won"
+                        android:textColor="#757575"
+                        android:textSize="34sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="2dp"
+                    android:text="@string/points_sets"
+                    android:textColor="#FF616161" />
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/paddle"
+                    android:onClick="playerTwoScoreOnClick" />
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="2dp"
-                android:text="@string/points_sets"
-                android:textColor="#FF616161" />
-
-            <Button
-                android:onClick="playerTwoScoreOnClick"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/paddle" />
-
         </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout
@@ -181,8 +194,8 @@
             android:layout_alignParentBottom="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="32dp"
-            android:text="@string/reset"
-            android:onClick="reset"/>
+            android:onClick="resetOnClick"
+            android:text="@string/reset" />
 
     </LinearLayout>
 
