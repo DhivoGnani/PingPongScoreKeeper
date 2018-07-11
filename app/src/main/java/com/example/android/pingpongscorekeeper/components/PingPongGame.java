@@ -12,10 +12,16 @@ public class PingPongGame
     private final static int numberOfPointsPlayerNeedsToBeatOpponent = 2;
     private final static int winningNumberOfSets = 3;
 
+    public PingPongPlayer previousSetFirstPlayer;
+    public PingPongPlayer currentPlayer;
+    private int runningNumOfServes = 0;
+
     public PingPongGame()
     {
         playerOne = new PingPongPlayer(playerOneName);
         playerTwo = new PingPongPlayer(playerTwoName);
+        currentPlayer = playerOne;
+        previousSetFirstPlayer = currentPlayer;
     }
 
     public void resetGame()
@@ -24,6 +30,9 @@ public class PingPongGame
         playerOne.resetNumberOfSetsWon();
         playerTwo.resetCurrentSetScore();
         playerTwo.resetNumberOfSetsWon();
+        currentPlayer = playerOne;
+        previousSetFirstPlayer = currentPlayer;
+        runningNumOfServes =  0;
     }
 
     public int getCurrentSetNumber()
@@ -87,6 +96,42 @@ public class PingPongGame
     public void playerHasScored(PingPongPlayer player)
     {
         player.incrementCurrentSetScore();
+        test();
+    }
+
+    public void test()
+    {
+        runningNumOfServes++;
+        if(playerOne.getCurrentSetScore() < 10 || playerTwo.getCurrentSetScore() < 10)
+        {
+            if(runningNumOfServes == 2)
+            {
+                runningNumOfServes = 0;
+                if(currentPlayer == playerOne)
+                {
+                    currentPlayer = playerTwo;
+                }
+                else
+                {
+                    currentPlayer = playerOne;
+                }
+            }
+        }
+        else
+        {
+            if(runningNumOfServes >= 1)
+            {
+                runningNumOfServes = 0;
+                if(currentPlayer == playerOne)
+                {
+                    currentPlayer = playerTwo;
+                }
+                else
+                {
+                    currentPlayer = playerOne;
+                }
+            }
+        }
     }
 
     public boolean hasPlayerWonCurrentSet(PingPongPlayer player)
@@ -98,6 +143,22 @@ public class PingPongGame
     public void incrementNumberOfSetsWon(PingPongPlayer player)
     {
         player.incrementNumberOfSetsWon();
+        if(previousSetFirstPlayer == playerOne)
+        {
+            currentPlayer = playerTwo;
+            previousSetFirstPlayer = playerTwo;
+
+        }
+        else
+        {
+            currentPlayer = playerOne;
+            previousSetFirstPlayer = playerOne;
+        }
+
+        if(isGameOver())
+        {
+            currentPlayer = null;
+        }
     }
 
     public void resetCurrentScore()

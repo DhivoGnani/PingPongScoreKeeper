@@ -21,6 +21,20 @@ public class MainActivity extends AppCompatActivity
         pingPongGame = new PingPongGame();
 
         displayPlayersName();
+        if(pingPongGame.currentPlayer == pingPongGame.playerOne)
+        {
+            ((TextView)findViewById(R.id.player_one_serve)).
+                    setText("Serve");
+            ((TextView)findViewById(R.id.player_two_serve)).
+                    setText("");
+        }
+        else if(pingPongGame.currentPlayer == pingPongGame.playerTwo)
+        {
+            ((TextView)findViewById(R.id.player_two_serve)).
+                    setText("Serve");
+            ((TextView)findViewById(R.id.player_one_serve)).
+                    setText("");
+        }
     }
 
     private void displayPlayersName() {
@@ -41,6 +55,26 @@ public class MainActivity extends AppCompatActivity
         displayNumberOfSetsPlayerOneWon();
         displayPlayerTwoScore();
         displayNumberOfSetsPlayerTwoWon();
+        if(pingPongGame.currentPlayer == pingPongGame.playerOne)
+        {
+            ((TextView)findViewById(R.id.player_one_serve)).
+                    setText("Serve");
+            ((TextView)findViewById(R.id.player_two_serve)).
+                    setText("");
+        }
+        else if(pingPongGame.currentPlayer == pingPongGame.playerTwo)
+        {
+            ((TextView)findViewById(R.id.player_two_serve)).
+                    setText("Serve");
+            ((TextView)findViewById(R.id.player_one_serve)).
+                    setText("");
+        } else
+        {
+            ((TextView)findViewById(R.id.player_one_serve)).
+                    setText("");
+            ((TextView)findViewById(R.id.player_two_serve)).
+                    setText("");
+        }
     }
 
     public void playerTwoScoreOnClick(View view)
@@ -136,5 +170,19 @@ public class MainActivity extends AppCompatActivity
         resetNumberOfSetsWonDisplay();
         clearMessage();
         pingPongGame.resetGame();
+        if(pingPongGame.currentPlayer == pingPongGame.playerOne)
+        {
+            ((TextView)findViewById(R.id.player_one_serve)).
+                    setText("Serve");
+            ((TextView)findViewById(R.id.player_two_serve)).
+                    setText("");
+        }
+        else if(pingPongGame.currentPlayer == pingPongGame.playerTwo)
+        {
+            ((TextView)findViewById(R.id.player_two_serve)).
+                    setText("Serve");
+            ((TextView)findViewById(R.id.player_one_serve)).
+                    setText("");
+        }
     }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PingPongScoreKeeper</string>
+    <string name="app_name">Ping Pong Master</string>
     <string name="player_won_match">%1$s Won Match!</string>
     <string name="player_won_set">%1$s Won Set %2$d!</string>
     <string name="deuce">Deuce</string>
