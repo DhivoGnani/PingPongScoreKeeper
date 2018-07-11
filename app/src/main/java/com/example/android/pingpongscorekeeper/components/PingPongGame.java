@@ -5,20 +5,16 @@ public class PingPongGame
     public PingPongPlayer playerOne;
     public PingPongPlayer playerTwo;
 
+    private final static String playerOneName = "Player 1";
+    private final static String playerTwoName = "Player 2";
+
     private final static int minNumberOfPointsToWinASet = 11;
     private final static int numberOfPointsPlayerNeedsToBeatOpponent = 2;
     private final static int winningNumberOfSets = 3;
-    public boolean gameOver = false;
     public PingPongGame()
     {
-        playerOne = new PingPongPlayer();
-        playerTwo = new PingPongPlayer();
-    }
-
-    public void startNewSet()
-    {
-        playerOne.resetCurrentSetScore();
-        playerTwo.resetCurrentSetScore();
+        playerOne = new PingPongPlayer(playerOneName);
+        playerTwo = new PingPongPlayer(playerTwoName);
     }
 
     public void resetGame()
@@ -27,7 +23,6 @@ public class PingPongGame
         playerOne.resetNumberOfSetsWon();
         playerTwo.resetCurrentSetScore();
         playerTwo.resetNumberOfSetsWon();
-        gameOver = false;
     }
 
     public int getCurrentSetNumber()
@@ -55,26 +50,6 @@ public class PingPongGame
         return playerTwo.getNumberOfSetsWon();
     }
 
-    public void playerOneHasScored()
-    {
-        playerOne.incrementCurrentSetScore();
-    }
-
-    public void playerTwoHasScored()
-    {
-        playerTwo.incrementCurrentSetScore();
-    }
-
-    public void playerOneHasWonSet()
-    {
-        playerOne.incrementNumberOfSetsWon();
-    }
-
-    public void playerTwoHasWonSet()
-    {
-        playerTwo.incrementNumberOfSetsWon();
-    }
-
     public boolean hasPlayerOneWonMatch()
     {
         return hasPlayerWonMatch(playerOne);
@@ -85,17 +60,7 @@ public class PingPongGame
         return hasPlayerWonMatch(playerTwo);
     }
 
-    public boolean hasPlayerOneWonCurrentSet()
-    {
-        return hasPlayerWonCurrentSet(playerOne, playerTwo);
-    }
-
-    public boolean hasPlayerTwoWonCurrentSet()
-    {
-        return hasPlayerWonCurrentSet(playerTwo, playerOne);
-    }
-
-    private boolean hasPlayerWonMatch(PingPongPlayer player)
+    public boolean hasPlayerWonMatch(PingPongPlayer player)
     {
         return player.getNumberOfSetsWon() == winningNumberOfSets;
     }
@@ -113,5 +78,24 @@ public class PingPongGame
                 playerOne.getCurrentSetScore() == playerTwo.getCurrentSetScore();
     }
 
+    public boolean isGameOver()
+    {
+        return hasPlayerOneWonMatch() || hasPlayerTwoWonMatch();
+    }
 
+    public void playerHasScored(PingPongPlayer player)
+    {
+        player.incrementCurrentSetScore();
+    }
+
+    public boolean hasPlayerWonCurrentSet(PingPongPlayer player)
+    {
+        PingPongPlayer opponentPlayer = player == playerOne  ? playerTwo : playerOne;
+        return hasPlayerWonCurrentSet(player, opponentPlayer);
+    }
+
+    public void incrementNumberOfSetsWon(PingPongPlayer player)
+    {
+        player.incrementNumberOfSetsWon();
+    }
 }

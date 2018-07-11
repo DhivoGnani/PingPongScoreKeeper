@@ -2,11 +2,13 @@ package com.example.android.pingpongscorekeeper.components;
 
 public class PingPongPlayer
 {
+    private final String name;
     private int currentSetScore;
     private int numberOfSetsWon;
 
-    public PingPongPlayer()
+    public PingPongPlayer(String name)
     {
+        this.name = name;
         currentSetScore = 0;
         numberOfSetsWon = 0;
     }
@@ -39,5 +41,9 @@ public class PingPongPlayer
     public void incrementNumberOfSetsWon()
     {
         numberOfSetsWon++;
+    }
+
+    public String getName() {
+        return name;
     }
 }

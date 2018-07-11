@@ -24,7 +24,7 @@
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="sans-serif-medium"
                 android:paddingTop="8dp"
-                android:text="@string/player_one"
+                android:id="@+id/player_one"
                 android:textAllCaps="true"
                 android:textColor="#616161"
                 android:textSize="14sp"
@@ -73,7 +73,7 @@
                 android:textColor="#FF616161" />
 
             <Button
-                android:onClick="playerOneScored"
+                android:onClick="playerOneScoreOnClick"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
@@ -100,7 +100,7 @@
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="sans-serif-medium"
                 android:paddingTop="8dp"
-                android:text="@string/player_two"
+                android:id="@+id/player_two"
                 android:textAllCaps="true"
                 android:textColor="#616161"
                 android:textSize="14sp"
@@ -149,7 +149,7 @@
                 android:textColor="#FF616161" />
 
             <Button
-                android:onClick="playerTwoScored"
+                android:onClick="playerTwoScoreOnClick"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
