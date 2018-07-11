@@ -4,6 +4,8 @@ public class PingPongGame
 {
     public PingPongPlayer playerOne;
     public PingPongPlayer playerTwo;
+    public PingPongPlayer previousSetFirstServingPlayer;
+    public PingPongPlayer currentServingPlayer;
 
     private final static String playerOneName = "Player 1";
     private final static String playerTwoName = "Player 2";
@@ -11,17 +13,18 @@ public class PingPongGame
     private final static int minNumberOfPointsToWinASet = 11;
     private final static int numberOfPointsPlayerNeedsToBeatOpponent = 2;
     private final static int winningNumberOfSets = 3;
+    private final static int numOfServesForEachPlayerBeforeDeuce = 2;
+    private final static int numOfServersForEachPlayerAfterDeuce = 1;
 
-    public PingPongPlayer previousSetFirstPlayer;
-    public PingPongPlayer currentPlayer;
-    private int runningNumOfServes = 0;
+    private int runningNumberOfServesForCurrentServingPlayer = 0;
 
     public PingPongGame()
     {
         playerOne = new PingPongPlayer(playerOneName);
         playerTwo = new PingPongPlayer(playerTwoName);
-        currentPlayer = playerOne;
-        previousSetFirstPlayer = currentPlayer;
+
+        currentServingPlayer = playerOne;
+        previousSetFirstServingPlayer = currentServingPlayer;
     }
 
     public void resetGame()
@@ -30,9 +33,10 @@ public class PingPongGame
         playerOne.resetNumberOfSetsWon();
         playerTwo.resetCurrentSetScore();
         playerTwo.resetNumberOfSetsWon();
-        currentPlayer = playerOne;
-        previousSetFirstPlayer = currentPlayer;
-        runningNumOfServes =  0;
+
+        currentServingPlayer = playerOne;
+        previousSetFirstServingPlayer = currentServingPlayer;
+        runningNumberOfServesForCurrentServingPlayer =  0;
     }
 
     public int getCurrentSetNumber()
@@ -96,40 +100,32 @@ public class PingPongGame
     public void playerHasScored(PingPongPlayer player)
     {
         player.incrementCurrentSetScore();
-        test();
+        updateServingPlayer();
     }
 
-    public void test()
+    private void switchCurrentServingPlayer()
     {
-        runningNumOfServes++;
-        if(playerOne.getCurrentSetScore() < 10 || playerTwo.getCurrentSetScore() < 10)
+        currentServingPlayer = currentServingPlayer == playerOne ? playerTwo : playerOne;
+    }
+
+    public void updateServingPlayer()
+    {
+        runningNumberOfServesForCurrentServingPlayer++;
+        if(playerOne.getCurrentSetScore() < minNumberOfPointsToWinASet -1 ||
+                playerTwo.getCurrentSetScore() < minNumberOfPointsToWinASet - 1)
         {
-            if(runningNumOfServes == 2)
+            if(runningNumberOfServesForCurrentServingPlayer == numOfServesForEachPlayerBeforeDeuce)
             {
-                runningNumOfServes = 0;
-                if(currentPlayer == playerOne)
-                {
-                    currentPlayer = playerTwo;
-                }
-                else
-                {
-                    currentPlayer = playerOne;
-                }
+                runningNumberOfServesForCurrentServingPlayer = 0;
+                switchCurrentServingPlayer();
             }
         }
         else
         {
-            if(runningNumOfServes >= 1)
+            if(runningNumberOfServesForCurrentServingPlayer >= numOfServersForEachPlayerAfterDeuce)
             {
-                runningNumOfServes = 0;
-                if(currentPlayer == playerOne)
-                {
-                    currentPlayer = playerTwo;
-                }
-                else
-                {
-                    currentPlayer = playerOne;
-                }
+                runningNumberOfServesForCurrentServingPlayer = 0;
+                switchCurrentServingPlayer();
             }
         }
     }
@@ -143,22 +139,23 @@ public class PingPongGame
     public void incrementNumberOfSetsWon(PingPongPlayer player)
     {
         player.incrementNumberOfSetsWon();
-        if(previousSetFirstPlayer == playerOne)
+
+        switchStartingServerForSet();
+    }
+
+    private void switchStartingServerForSet() {
+        if(previousSetFirstServingPlayer == playerOne)
         {
-            currentPlayer = playerTwo;
-            previousSetFirstPlayer = playerTwo;
+            currentServingPlayer = playerTwo;
+            previousSetFirstServingPlayer = playerTwo;
 
         }
         else
         {
-            currentPlayer = playerOne;
-            previousSetFirstPlayer = playerOne;
+            currentServingPlayer = playerOne;
+            previousSetFirstServingPlayer = playerOne;
         }
-
-        if(isGameOver())
-        {
-            currentPlayer = null;
-        }
+        runningNumberOfServesForCurrentServingPlayer = 0;
     }
 
     public void resetCurrentScore()

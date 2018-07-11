@@ -21,14 +21,26 @@ public class MainActivity extends AppCompatActivity
         pingPongGame = new PingPongGame();
 
         displayPlayersName();
-        if(pingPongGame.currentPlayer == pingPongGame.playerOne)
+        displayCurrentServingPlayer();
+    }
+
+    private void clearServingPlayer()
+    {
+        ((TextView)findViewById(R.id.player_one_serve)).
+                setText("");
+        ((TextView)findViewById(R.id.player_two_serve)).
+                setText("");
+    }
+
+    private void displayCurrentServingPlayer() {
+        if(pingPongGame.currentServingPlayer == pingPongGame.playerOne)
         {
             ((TextView)findViewById(R.id.player_one_serve)).
                     setText("Serve");
             ((TextView)findViewById(R.id.player_two_serve)).
                     setText("");
         }
-        else if(pingPongGame.currentPlayer == pingPongGame.playerTwo)
+        else if(pingPongGame.currentServingPlayer == pingPongGame.playerTwo)
         {
             ((TextView)findViewById(R.id.player_two_serve)).
                     setText("Serve");
@@ -52,40 +64,21 @@ public class MainActivity extends AppCompatActivity
     public void displayPointsAndSets()
     {
         displayPlayerOneScore();
-        displayNumberOfSetsPlayerOneWon();
         displayPlayerTwoScore();
+        displayNumberOfSetsPlayerOneWon();
         displayNumberOfSetsPlayerTwoWon();
-        if(pingPongGame.currentPlayer == pingPongGame.playerOne)
-        {
-            ((TextView)findViewById(R.id.player_one_serve)).
-                    setText("Serve");
-            ((TextView)findViewById(R.id.player_two_serve)).
-                    setText("");
-        }
-        else if(pingPongGame.currentPlayer == pingPongGame.playerTwo)
-        {
-            ((TextView)findViewById(R.id.player_two_serve)).
-                    setText("Serve");
-            ((TextView)findViewById(R.id.player_one_serve)).
-                    setText("");
-        } else
-        {
-            ((TextView)findViewById(R.id.player_one_serve)).
-                    setText("");
-            ((TextView)findViewById(R.id.player_two_serve)).
-                    setText("");
-        }
+        displayCurrentServingPlayer();
     }
 
     public void playerTwoScoreOnClick(View view)
     {
+        if(pingPongGame.isGameOver()) return;
         playerScored(pingPongGame.playerTwo);
         displayPointsAndSets();
     }
 
     public void playerScored(PingPongPlayer player)
     {
-        if(pingPongGame.isGameOver()) return;
         pingPongGame.playerHasScored(player);
         if(!pingPongGame.hasPlayerWonCurrentSet(player)) return;
 
@@ -100,6 +93,7 @@ public class MainActivity extends AppCompatActivity
                             player.getName()
                     )
             );
+            clearServingPlayer();
         }
         else
         {
@@ -170,19 +164,6 @@ public class MainActivity extends AppCompatActivity
         resetNumberOfSetsWonDisplay();
         clearMessage();
         pingPongGame.resetGame();
-        if(pingPongGame.currentPlayer == pingPongGame.playerOne)
-        {
-            ((TextView)findViewById(R.id.player_one_serve)).
-                    setText("Serve");
-            ((TextView)findViewById(R.id.player_two_serve)).
-                    setText("");
-        }
-        else if(pingPongGame.currentPlayer == pingPongGame.playerTwo)
-        {
-            ((TextView)findViewById(R.id.player_two_serve)).
-                    setText("Serve");
-            ((TextView)findViewById(R.id.player_one_serve)).
-                    setText("");
-        }
+        displayCurrentServingPlayer();
     }
 }
