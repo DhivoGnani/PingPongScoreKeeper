@@ -1,16 +1,34 @@
 package com.example.android.pingpongscorekeeper;
 
+import android.media.MediaPlayer;
+import android.os.Build;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.android.pingpongscorekeeper.components.PingPongGame;
 import com.example.android.pingpongscorekeeper.components.PingPongPlayer;
 
+import java.util.Locale;
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity
 {
     PingPongGame pingPongGame;
+    private TextToSpeech tts;
+    Random rand = new Random();
+    EditText playerOne;
+    EditText playerTwo;
+
+    private static final String [] congratulatingWords =
+            {"Good Job", "Great Shot", "Nice Move", "Incredible"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -20,9 +38,81 @@ public class MainActivity extends AppCompatActivity
 
         pingPongGame = new PingPongGame();
 
-        displayPlayersName();
+        //displayPlayersName();
         displayCurrentServingPlayer();
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = tts.setLanguage(Locale.UK);
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "This Language is not supported");
+                    }
+
+                } else {
+                    Log.e("TTS", "Initilization Failed!");
+                }
+            }
+        });
+
+        playerOne = (EditText)findViewById(R.id.player_one);
+
+        playerOne.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                pingPongGame.setPlayerOneName(playerOne.getText().toString());
+
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+        });
+
+        playerTwo = (EditText)findViewById(R.id.player_two);
+
+        playerTwo.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                pingPongGame.setPlayerTwoName(playerTwo.getText().toString());
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+        });
     }
+
+    private void speak(String text){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+        }else{
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
+    }
+
 
     private void clearServingPlayer()
     {
@@ -57,6 +147,7 @@ public class MainActivity extends AppCompatActivity
     public void playerOneScoreOnClick(View view)
     {
         if(pingPongGame.isGameOver()) return;
+        playAudio(pingPongGame.playerOneName);
         playerScored(pingPongGame.playerOne);
         displayPointsAndSets();
     }
@@ -70,9 +161,27 @@ public class MainActivity extends AppCompatActivity
         displayCurrentServingPlayer();
     }
 
+    public void playAudio(String playerName)
+    {
+        // TODO: Change audio file
+        // TODO: Use voice library
+//        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.great);
+//        mediaPlayer.start();
+        speak(getRandomEncouragingWord() + " " + playerName );
+    }
+
+    public String getRandomEncouragingWord()
+    {
+        int Low = 0;
+        int High = congratulatingWords.length;
+        int Result = rand.nextInt(High-Low) + Low;
+        return congratulatingWords[Result];
+    }
+
     public void playerTwoScoreOnClick(View view)
     {
         if(pingPongGame.isGameOver()) return;
+        playAudio(pingPongGame.playerTwoName);
         playerScored(pingPongGame.playerTwo);
         displayPointsAndSets();
     }

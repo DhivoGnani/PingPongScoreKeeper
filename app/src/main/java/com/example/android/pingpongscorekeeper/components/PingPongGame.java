@@ -7,8 +7,8 @@ public class PingPongGame
     public PingPongPlayer previousSetFirstServingPlayer;
     public PingPongPlayer currentServingPlayer;
 
-    private final static String playerOneName = "Player 1";
-    private final static String playerTwoName = "Player 2";
+    public String playerOneName = "Player 1";
+    public String playerTwoName = "Player 2";
 
     private final static int minNumberOfPointsToWinASet = 11;
     private final static int numberOfPointsPlayerNeedsToBeatOpponent = 2;
@@ -25,6 +25,16 @@ public class PingPongGame
 
         currentServingPlayer = playerOne;
         previousSetFirstServingPlayer = currentServingPlayer;
+    }
+
+    public void setPlayerOneName(String name)
+    {
+        playerOneName = name;
+    }
+
+    public void setPlayerTwoName(String name)
+    {
+        playerTwoName = name;
     }
 
     public void resetGame()
