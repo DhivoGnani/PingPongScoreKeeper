@@ -14,17 +14,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.android.pingpongscorekeeper.components.PingPongGame;
 import com.example.android.pingpongscorekeeper.components.PingPongPlayer;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Random;
 
 //TODO: Why is AppCompactActivity and not Activity used here?
-public class MainActivity extends AppCompatActivity
+public class GameActivity extends AppCompatActivity
 {
     PingPongGame pingPongGame;
     private TextToSpeech tts;
@@ -65,9 +67,15 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        pingPongGame = new PingPongGame();
+        String playerOneName = getIntent().getExtras().getString("playerOneName");
+        String playerTwoName = getIntent().getExtras().getString("playerTwoName");
+        int numSets = Integer.valueOf(getIntent().getExtras().getString("numSets"));
+        String servingPlayer = getIntent().getExtras().getString("servingPlayer");
 
-        //displayPlayersName();
+
+        pingPongGame = new PingPongGame(playerOneName, playerTwoName, numSets, servingPlayer);
+
+        displayPlayersName();
         displayCurrentServingPlayer();
 
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
@@ -131,11 +139,13 @@ public class MainActivity extends AppCompatActivity
         Boolean switchPref = sharedPref.getBoolean
                 ("audio_switch", false);
         if(!switchPref) return;
+        HashMap<String, String> onlineSpeech = new HashMap<>();
+        onlineSpeech.put(TextToSpeech.Engine.KEY_FEATURE_NETWORK_SYNTHESIS, "true");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
         }else{
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, onlineSpeech);
         }
     }
 

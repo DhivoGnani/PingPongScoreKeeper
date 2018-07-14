@@ -12,7 +12,7 @@ public class PingPongGame
 
     private final static int minNumberOfPointsToWinASet = 11;
     private final static int numberOfPointsPlayerNeedsToBeatOpponent = 2;
-    private final static int winningNumberOfSets = 3;
+    private int winningNumberOfSets = 3;
     private final static int numOfServesForEachPlayerBeforeDeuce = 2;
     private final static int numOfServersForEachPlayerAfterDeuce = 1;
 
@@ -26,6 +26,22 @@ public class PingPongGame
         currentServingPlayer = playerOne;
         previousSetFirstServingPlayer = currentServingPlayer;
     }
+
+    public PingPongGame(String playerOneName,String playerTwoName, int numSets, String servingPlayer)
+    {
+        this.playerOneName = playerOneName;
+        this.playerTwoName = playerTwoName;
+
+        winningNumberOfSets = numSets % 2 == 1 ? numSets/2 + 1 : numSets / 2;
+
+
+        playerOne = new PingPongPlayer(playerOneName);
+        playerTwo = new PingPongPlayer(playerTwoName);
+
+        currentServingPlayer = servingPlayer == PlayerEnum.PLAYER_ONE.toString() ? playerOne : playerTwo;
+        previousSetFirstServingPlayer = currentServingPlayer;
+    }
+
 
     public void setPlayerOneName(String name)
     {
