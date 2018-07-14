@@ -5,5 +5,4 @@
         android:title="Audio"
         android:key="audio_switch"
         android:summary="Turn this option on or off"/>
-
 </PreferenceScreen>
