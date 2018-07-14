@@ -1,13 +1,18 @@
 package com.example.android.pingpongscorekeeper;
 
-import android.media.MediaPlayer;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,6 +23,7 @@ import com.example.android.pingpongscorekeeper.components.PingPongPlayer;
 import java.util.Locale;
 import java.util.Random;
 
+//TODO: Why is AppCompactActivity and not Activity used here?
 public class MainActivity extends AppCompatActivity
 {
     PingPongGame pingPongGame;
@@ -29,6 +35,29 @@ public class MainActivity extends AppCompatActivity
     private static final String [] congratulatingWords =
             {"Good Job", "Great Shot", "Nice Move", "Incredible"};
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mainmenu, menu);
+        return true;
+    }
+
+
+    private void displaySettings() {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -97,6 +126,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void speak(String text){
+        SharedPreferences sharedPref =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean switchPref = sharedPref.getBoolean
+                ("audio_switch", false);
+        if(!switchPref) return;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
         }else{
