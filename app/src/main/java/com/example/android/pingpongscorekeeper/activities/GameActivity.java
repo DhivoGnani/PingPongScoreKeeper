@@ -28,14 +28,68 @@ import java.util.Random;
 //TODO: Why is AppCompactActivity and not Activity used here?
 public class GameActivity extends AppCompatActivity
 {
-    PingPongGame pingPongGame;
-    private TextToSpeech tts;
-    Random rand = new Random();
-    EditText playerOne;
-    EditText playerTwo;
+    private PingPongGame pingPongGame;
+    private TextToSpeech textToSpeech;
+    private Random rand = new Random();
+    private EditText playerOneNameDisplay;
+    private EditText playerTwoNameDisplay;
 
+    // TODO: Remove hardcoded strings
     private static final String [] congratulatingWords =
             {"Good Job", "Great Shot", "Nice Move", "Incredible"};
+
+    // TODO: Remove hardcoded strings
+    private TextToSpeech.OnInitListener textToSpeechListener = new TextToSpeech.OnInitListener() {
+        @Override
+        public void onInit(int status) {
+            if (status == TextToSpeech.SUCCESS) {
+                int result = textToSpeech.setLanguage(Locale.UK);
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    Log.e("TTS", "This Language is not supported");
+                }
+
+            } else {
+                Log.e("TTS", "Initilization Failed!");
+            }
+        }
+    };
+
+    // TODO: Remove duplicate code
+    private TextWatcher playerOneNameChanged = new TextWatcher() {
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            pingPongGame.setPlayerOneName(playerOneNameDisplay.getText().toString());
+
+        }
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count,
+                                      int after) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+
+    };
+
+    // TODO: Remove duplicate code
+    private TextWatcher playerTwoNameChanged = new TextWatcher() {
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            pingPongGame.setPlayerTwoName(playerTwoNameDisplay.getText().toString());
+        }
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count,
+                                      int after) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+
+    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -45,7 +99,6 @@ public class GameActivity extends AppCompatActivity
                 startActivity(intent);
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -56,108 +109,57 @@ public class GameActivity extends AppCompatActivity
         return true;
     }
 
-
-    private void displaySettings() {
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String playerOneName = getIntent().getExtras().getString("playerOneName");
-        String playerTwoName = getIntent().getExtras().getString("playerTwoName");
-        int numSets = Integer.valueOf(getIntent().getExtras().getString("numSets"));
-        String servingPlayer = getIntent().getExtras().getString("servingPlayer");
-
+        // TODO: Find a better way to get necessary data
+        final String playerOneName = getIntent().getExtras().getString("playerOneName");
+        final String playerTwoName = getIntent().getExtras().getString("playerTwoName");
+        final int numSets = Integer.valueOf(getIntent().getExtras().getString("numSets"));
+        final String servingPlayer = getIntent().getExtras().getString("servingPlayer");
 
         pingPongGame = new PingPongGame(playerOneName, playerTwoName, numSets, servingPlayer);
 
         displayPlayersName();
         displayCurrentServingPlayer();
 
-        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    int result = tts.setLanguage(Locale.UK);
-                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Log.e("TTS", "This Language is not supported");
-                    }
+        textToSpeech = new TextToSpeech(this, textToSpeechListener);
 
-                } else {
-                    Log.e("TTS", "Initilization Failed!");
-                }
-            }
-        });
+        playerOneNameDisplay = findViewById(R.id.player_one);
+        playerOneNameDisplay.addTextChangedListener(playerOneNameChanged);
 
-        playerOne = (EditText)findViewById(R.id.player_one);
-
-        playerOne.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                pingPongGame.setPlayerOneName(playerOne.getText().toString());
-
-            }
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-
-        });
-
-        playerTwo = (EditText)findViewById(R.id.player_two);
-
-        playerTwo.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                pingPongGame.setPlayerTwoName(playerTwo.getText().toString());
-            }
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-
-        });
+        playerTwoNameDisplay = findViewById(R.id.player_two);
+        playerTwoNameDisplay.addTextChangedListener(playerTwoNameChanged);
     }
 
     private void speak(String text){
         SharedPreferences sharedPref =
                 PreferenceManager.getDefaultSharedPreferences(this);
-        Boolean switchPref = sharedPref.getBoolean
-                ("audio_switch", false);
-        if(!switchPref) return;
-        HashMap<String, String> onlineSpeech = new HashMap<>();
-        onlineSpeech.put(TextToSpeech.Engine.KEY_FEATURE_NETWORK_SYNTHESIS, "true");
 
+        // TODO: Remove hardcoded string
+        Boolean switchPref = sharedPref.getBoolean("audio_switch", false);
+
+        if(!switchPref) return;
+
+        // TODO: Use a better voice for TextToSpeech (not robotic sounding voice)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
         }else{
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, onlineSpeech);
+            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
 
     @Override
     public void onDestroy() {
-        if (tts != null) {
-            tts.stop();
-            tts.shutdown();
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
         }
         super.onDestroy();
     }
-
 
     private void clearServingPlayer()
     {
@@ -167,6 +169,7 @@ public class GameActivity extends AppCompatActivity
                 setText("");
     }
 
+    //TODO: Remove hardcoded strings
     private void displayCurrentServingPlayer() {
         if(pingPongGame.currentServingPlayer == pingPongGame.playerOne)
         {
@@ -218,8 +221,6 @@ public class GameActivity extends AppCompatActivity
     {
         // TODO: Change audio file
         // TODO: Use voice library
-//        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.great);
-//        mediaPlayer.start();
 
         String text = en ? getRandomEncouragingWord() + " " + playerName : playerName;
         speak(text );

@@ -2,13 +2,15 @@ package com.example.android.pingpongscorekeeper.components;
 
 public class PingPongGameConfiguration
 {
-    private int numberOfSets = 1;
+    private int numberOfSets;
     private PlayerEnum servingPlayer;
     private String playerOneName;
     private String playerTwoName;
 
     public PingPongGameConfiguration()
     {
+        // The default number of sets for each match will be one.
+        numberOfSets = 1;
         this.servingPlayer =  PlayerEnum.PLAYER_ONE;
         playerOneName = PlayerEnum.PLAYER_ONE.toString();
         playerTwoName = PlayerEnum.PLAYER_TWO.toString();
@@ -34,6 +36,11 @@ public class PingPongGameConfiguration
     {
         servingPlayer = servingPlayer == PlayerEnum.PLAYER_ONE ? PlayerEnum.PLAYER_TWO :
                 PlayerEnum.PLAYER_ONE;
+    }
+
+    public void setServingPlayer(PlayerEnum player)
+    {
+        servingPlayer = player;
     }
 
     public void setPlayerOneName(String name)

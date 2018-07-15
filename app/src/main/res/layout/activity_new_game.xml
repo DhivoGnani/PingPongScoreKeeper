@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
                 android:hint="Player 1"
-                android:inputType="text"
+                android:inputType="textCapSentences"
                 android:maxLines="1"
                 android:lines="1"/>
 
@@ -65,9 +65,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
                 android:hint="Player 2"
-                android:inputType="text"
+                android:inputType="textCapSentences"
                 android:maxLines="1"
-                android:lines="1"/>
+                android:lines="1" />
 
             <CheckBox
                 android:id="@+id/player_two_serve"

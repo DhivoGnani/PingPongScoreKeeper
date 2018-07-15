@@ -1,8 +1,8 @@
 package com.example.android.pingpongscorekeeper.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -13,64 +13,67 @@ import android.widget.TextView;
 import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.components.PingPongGameConfiguration;
 
-//android:launchMode="singleTop"
-public class NewGameActivity extends AppCompatActivity {
-    PingPongGameConfiguration  configuration;
-    private EditText playerOne;
-    private EditText playerTwo;
+public class NewGameActivity extends AppCompatActivity
+{
+    private PingPongGameConfiguration  configuration;
 
-    CheckBox playerOneC;
-    CheckBox playerTwoC;
+    private EditText playerOneDisplay;
+    private EditText playerTwoDisplay;
+    private CheckBox playerOneServe;
+    private CheckBox playerTwoServe;
 
+    // TODO: Duplicate code in TextWatcher
+    private TextWatcher playerOneDisplayWatcher = new TextWatcher() {
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            configuration.setPlayerOneName(playerOneDisplay.getText().toString());
 
-    @Override
+        }
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count,
+                                      int after) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+
+    };
+
+    // TODO: Duplicate code in TextWatcher
+    private TextWatcher playerTwoDisplayWatcher = new TextWatcher() {
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            configuration.setPlayerTwoName(playerTwoDisplay.getText().toString());
+
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count,
+                                      int after) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    };
+
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_game);
+
         configuration = new PingPongGameConfiguration();
 
-        playerOne = findViewById(R.id.player_one);
+        playerOneDisplay = findViewById(R.id.player_one);
+        playerTwoDisplay = findViewById(R.id.player_two);
 
-        playerOne.addTextChangedListener(new TextWatcher() {
+        playerOneDisplay.addTextChangedListener(playerOneDisplayWatcher);
+        playerTwoDisplay.addTextChangedListener(playerTwoDisplayWatcher);
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                configuration.setPlayerOneName(playerOne.getText().toString());
-
-            }
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-
-        });
-
-        playerTwo = findViewById(R.id.player_two);
-
-        playerTwo.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                configuration.setPlayerTwoName(playerTwo.getText().toString());
-
-            }
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-
-        });
-
-        playerOneC = findViewById(R.id.player_one_serve);
-        playerTwoC = findViewById(R.id.player_two_serve);
+        playerOneServe = findViewById(R.id.player_one_serve);
+        playerTwoServe = findViewById(R.id.player_two_serve);
     }
 
     public void decrementSets(View view) {
@@ -91,49 +94,43 @@ public class NewGameActivity extends AppCompatActivity {
 
     public void startGameOnClick(View view)
     {
-        String playerOneName   = configuration.getPlayerOneName();
-        String playerTwoName   =  configuration.getPlayerTwoName();
-        String numSets     = configuration.getNumberOfSets() + "";
+        String playerOneName = configuration.getPlayerOneName();
+        String playerTwoName =  configuration.getPlayerTwoName();
+        String numSets = configuration.getNumberOfSets() + "";
         String servingPlayer = configuration.getServingPlayer().toString();
 
+        // TODO: Find better way to pass necessary data to GameActivity
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("playerOneName", playerOneName);
         intent.putExtra("playerTwoName", playerTwoName);
         intent.putExtra("numSets", numSets);
         intent.putExtra("servingPlayer", servingPlayer);
-
         startActivity(intent);
     }
 
+    // TODO: remove duplicate code
     public void player_two_check_box(View view) {
         configuration.switchServingPlayer();
-        if(playerTwoC.isChecked())
+        if(playerTwoServe.isChecked())
         {
-           if(playerOneC.isChecked())
-           {
-               playerOneC.toggle();
-           }
-        } else {
-            if(!playerOneC.isChecked())
-            {
-                playerOneC.toggle();
-            }
+           if(playerOneServe.isChecked()) playerOneServe.toggle();
+        }
+        else
+        {
+            if(!playerOneServe.isChecked()) playerOneServe.toggle();
         }
     }
 
+    // TODO: remove duplicate code
     public void player_one_check_box(View view) {
         configuration.switchServingPlayer();
-        if(playerOneC.isChecked())
+        if(playerOneServe.isChecked())
         {
-            if(playerTwoC.isChecked())
-            {
-                playerTwoC.toggle();
-            }
-        } else {
-            if(!playerTwoC.isChecked())
-            {
-                playerTwoC.toggle();
-            }
+            if(playerTwoServe.isChecked())  playerTwoServe.toggle();
+        }
+        else
+        {
+            if(!playerTwoServe.isChecked()) playerTwoServe.toggle();
         }
     }
 }
