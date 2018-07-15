@@ -1,9 +1,10 @@
-package com.example.android.pingpongscorekeeper;
+package com.example.android.pingpongscorekeeper.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.adapters.FinishedMatchesAdapter;
 
 import java.util.ArrayList;

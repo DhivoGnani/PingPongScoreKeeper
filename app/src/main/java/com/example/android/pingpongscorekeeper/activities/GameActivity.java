@@ -1,4 +1,4 @@
-package com.example.android.pingpongscorekeeper;
+package com.example.android.pingpongscorekeeper.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,10 +14,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.components.PingPongGame;
 import com.example.android.pingpongscorekeeper.components.PingPongPlayer;
 
@@ -192,8 +192,16 @@ public class GameActivity extends AppCompatActivity
     public void playerOneScoreOnClick(View view)
     {
         if(pingPongGame.isGameOver()) return;
-        playAudio(pingPongGame.playerOneName);
         playerScored(pingPongGame.playerOne);
+        if(!pingPongGame.hasPlayerWonCurrentSet(pingPongGame.playerOne))
+        {
+            if(pingPongGame.isDeuce()) {
+                playAudio("Deuce!", false);
+            }
+            else if(pingPongGame.playerOne.getCurrentSetScore() != 0) {
+                playAudio(pingPongGame.playerOneName, true);
+            }
+        }
         displayPointsAndSets();
     }
 
@@ -206,13 +214,15 @@ public class GameActivity extends AppCompatActivity
         displayCurrentServingPlayer();
     }
 
-    public void playAudio(String playerName)
+    public void playAudio(String playerName, boolean en)
     {
         // TODO: Change audio file
         // TODO: Use voice library
 //        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.great);
 //        mediaPlayer.start();
-        speak(getRandomEncouragingWord() + " " + playerName );
+
+        String text = en ? getRandomEncouragingWord() + " " + playerName : playerName;
+        speak(text );
     }
 
     public String getRandomEncouragingWord()
@@ -226,15 +236,30 @@ public class GameActivity extends AppCompatActivity
     public void playerTwoScoreOnClick(View view)
     {
         if(pingPongGame.isGameOver()) return;
-        playAudio(pingPongGame.playerTwoName);
         playerScored(pingPongGame.playerTwo);
+        if(!pingPongGame.hasPlayerWonCurrentSet(pingPongGame.playerTwo))
+        {
+            if(pingPongGame.isDeuce()) {
+                playAudio("Deuce!", false);
+            }
+            else if(pingPongGame.playerTwo.getCurrentSetScore() != 0) {
+                playAudio(pingPongGame.playerTwoName, true);
+            }
+        }
         displayPointsAndSets();
     }
 
     public void playerScored(PingPongPlayer player)
     {
         pingPongGame.playerHasScored(player);
-        if(!pingPongGame.hasPlayerWonCurrentSet(player)) return;
+        if(!pingPongGame.hasPlayerWonCurrentSet(player)) {
+            if(pingPongGame.isDeuce()) {
+                displayMessage("Deuce !");
+            } else {
+                displayMessage("");
+            }
+            return;
+        }
 
         pingPongGame.incrementNumberOfSetsWon(player);
         pingPongGame.resetCurrentScore();
@@ -247,6 +272,11 @@ public class GameActivity extends AppCompatActivity
                             player.getName()
                     )
             );
+
+            playAudio(getString(
+                    R.string.player_won_match,
+                    player.getName()
+            ), false);
             clearServingPlayer();
         }
         else
@@ -258,6 +288,11 @@ public class GameActivity extends AppCompatActivity
                             pingPongGame.getCurrentSetNumber()
                     )
             );
+            playAudio(getString(
+                    R.string.player_won_set,
+                    player.getName(),
+                    pingPongGame.getCurrentSetNumber()
+            ), false);
         }
     }
 

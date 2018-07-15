@@ -1,7 +1,9 @@
-package com.example.android.pingpongscorekeeper;
+package com.example.android.pingpongscorekeeper.fragments;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+
+import com.example.android.pingpongscorekeeper.R;
 
 public class SettingsFragment extends PreferenceFragment {
 

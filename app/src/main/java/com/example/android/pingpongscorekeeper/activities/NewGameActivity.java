@@ -1,4 +1,4 @@
-package com.example.android.pingpongscorekeeper;
+package com.example.android.pingpongscorekeeper.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +10,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.components.PingPongGameConfiguration;
-
-import org.w3c.dom.Text;
 
 //android:launchMode="singleTop"
 public class NewGameActivity extends AppCompatActivity {
