@@ -10,6 +10,7 @@ public class PingPongGame
     public String playerOneName = "Player 1";
     public String playerTwoName = "Player 2";
 
+    private PingPongPlayer initialServingPlayer;
     private final static int minNumberOfPointsToWinASet = 11;
     private final static int numberOfPointsPlayerNeedsToBeatOpponent = 2;
     private int winningNumberOfSets = 3;
@@ -39,6 +40,7 @@ public class PingPongGame
         playerTwo = new PingPongPlayer(playerTwoName);
 
         currentServingPlayer = servingPlayer == PlayerEnum.PLAYER_ONE.toString() ? playerOne : playerTwo;
+        initialServingPlayer = currentServingPlayer;
         previousSetFirstServingPlayer = currentServingPlayer;
     }
 
@@ -60,7 +62,7 @@ public class PingPongGame
         playerTwo.resetCurrentSetScore();
         playerTwo.resetNumberOfSetsWon();
 
-        currentServingPlayer = playerOne;
+        currentServingPlayer = initialServingPlayer;
         previousSetFirstServingPlayer = currentServingPlayer;
         runningNumberOfServesForCurrentServingPlayer =  0;
     }
