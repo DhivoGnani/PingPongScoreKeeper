@@ -7,18 +7,18 @@ public class PingPongGame
     public PingPongPlayer previousSetFirstServingPlayer;
     public PingPongPlayer currentServingPlayer;
 
+    // TODO: This global variable is only needed for reset functionality. Not really needed in the
+    // future.
+    private PingPongPlayer initialServingPlayer;
+
     public String playerOneName = "Player 1";
     public String playerTwoName = "Player 2";
 
-    private PingPongPlayer initialServingPlayer;
     private final static int minNumberOfPointsToWinASet = 11;
     private final static int numberOfPointsPlayerNeedsToBeatOpponent = 2;
     private int winningNumberOfSets = 3;
-    private final static int numOfServesForEachPlayerBeforeDeuce = 2;
-    private final static int numOfServersForEachPlayerAfterDeuce = 1;
 
-    private int runningNumberOfServesForCurrentServingPlayer = 0;
-
+    // TODO: Unnecessary constructor anymore.
     public PingPongGame()
     {
         playerOne = new PingPongPlayer(playerOneName);
@@ -39,7 +39,7 @@ public class PingPongGame
         playerOne = new PingPongPlayer(playerOneName);
         playerTwo = new PingPongPlayer(playerTwoName);
 
-        currentServingPlayer = servingPlayer == PlayerEnum.PLAYER_ONE.toString() ? playerOne : playerTwo;
+        currentServingPlayer = servingPlayer.equals(PlayerEnum.PLAYER_ONE.toString()) ? playerOne : playerTwo;
         initialServingPlayer = currentServingPlayer;
         previousSetFirstServingPlayer = currentServingPlayer;
     }
@@ -64,7 +64,6 @@ public class PingPongGame
 
         currentServingPlayer = initialServingPlayer;
         previousSetFirstServingPlayer = currentServingPlayer;
-        runningNumberOfServesForCurrentServingPlayer =  0;
     }
 
     public int getCurrentSetNumber()
@@ -127,8 +126,8 @@ public class PingPongGame
 
     public void playerHasScored(PingPongPlayer player)
     {
-        player.incrementCurrentSetScore();
         updateServingPlayer();
+        player.incrementCurrentSetScore();
     }
 
     private void switchCurrentServingPlayer()
@@ -138,23 +137,17 @@ public class PingPongGame
 
     public void updateServingPlayer()
     {
-        runningNumberOfServesForCurrentServingPlayer++;
-        if(playerOne.getCurrentSetScore() < minNumberOfPointsToWinASet -1 ||
+        if(playerOne.getCurrentSetScore() < minNumberOfPointsToWinASet - 1 ||
                 playerTwo.getCurrentSetScore() < minNumberOfPointsToWinASet - 1)
         {
-            if(runningNumberOfServesForCurrentServingPlayer == numOfServesForEachPlayerBeforeDeuce)
+            if(((playerOne.getCurrentSetScore() + playerTwo.getCurrentSetScore())  % 2 ) == 1)
             {
-                runningNumberOfServesForCurrentServingPlayer = 0;
                 switchCurrentServingPlayer();
             }
         }
         else
         {
-            if(runningNumberOfServesForCurrentServingPlayer >= numOfServersForEachPlayerAfterDeuce)
-            {
-                runningNumberOfServesForCurrentServingPlayer = 0;
-                switchCurrentServingPlayer();
-            }
+            switchCurrentServingPlayer();
         }
     }
 
@@ -183,7 +176,6 @@ public class PingPongGame
             currentServingPlayer = playerOne;
             previousSetFirstServingPlayer = playerOne;
         }
-        runningNumberOfServesForCurrentServingPlayer = 0;
     }
 
     public void resetCurrentScore()
