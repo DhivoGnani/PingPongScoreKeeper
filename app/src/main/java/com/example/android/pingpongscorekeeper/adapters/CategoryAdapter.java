@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.android.pingpongscorekeeper.activities.FinishedMatchesFragment;
 import com.example.android.pingpongscorekeeper.fragments.NewGameFragment;
 
 public class CategoryAdapter extends FragmentPagerAdapter {
@@ -21,7 +22,7 @@ public class CategoryAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         if(position == 0) return new NewGameFragment();
-        else return new NewGameFragment();
+        else return new FinishedMatchesFragment();
     }
 
     @Override

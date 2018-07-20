@@ -115,9 +115,6 @@ public class NewGameFragment extends Fragment
             }
         });
 
-
-
-
         return rootView;
     }
 

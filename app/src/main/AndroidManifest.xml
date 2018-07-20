@@ -34,7 +34,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.GameActivity" />
         </activity>
-        <activity android:name=".activities.FinishedMatchesActivity" />
+        <activity android:name=".activities.FinishedMatchesFragment" />
     </application>
 
 </manifest>
