@@ -71,6 +71,12 @@ public class PingPongGame
         return playerOne.getNumberOfSetsWon() + playerTwo.getNumberOfSetsWon();
     }
 
+    public int getCurrentSet()
+    {
+        return (playerOne.getNumberOfSetsWon() + playerTwo.getNumberOfSetsWon() + 1 > winningNumberOfSets) ?  playerOne.getNumberOfSetsWon() + playerTwo.getNumberOfSetsWon() :
+            playerOne.getNumberOfSetsWon() + playerTwo.getNumberOfSetsWon() + 1;
+    }
+
     public int getPlayerOneCurrentSetScore()
     {
         return playerOne.getCurrentSetScore();

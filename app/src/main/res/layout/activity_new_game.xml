@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.NewGameActivity">
+    tools:context=".fragments.NewGameFragment">
 
 
     <LinearLayout
@@ -51,7 +51,7 @@
                 android:layout_weight="1"
                 android:checked="true"
                 android:textSize="16sp"
-                android:onClick="player_one_check_box"/>
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="16sp"
-                android:onClick="player_two_check_box"/>
+                />
         </LinearLayout>
 
         <TextView
@@ -90,9 +90,9 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/decrease"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:onClick="decrementSets"
                 android:text="-" />
 
             <TextView
@@ -106,9 +106,9 @@
                 android:textSize="16sp" />
 
             <Button
+                android:id="@+id/increase"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:onClick="incrementSets"
                 android:text="+" />
 
         </LinearLayout>
@@ -122,11 +122,11 @@
         android:layout_marginBottom="16dp">
 
         <Button
+            android:id="@+id/start_game"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Start"
-            android:onClick="startGameOnClick"
             />
 
     </LinearLayout>

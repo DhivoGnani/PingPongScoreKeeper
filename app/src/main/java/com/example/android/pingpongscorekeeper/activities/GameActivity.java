@@ -21,7 +21,6 @@ import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.components.PingPongGame;
 import com.example.android.pingpongscorekeeper.components.PingPongPlayer;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Random;
 
