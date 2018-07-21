@@ -59,7 +59,7 @@ public class FinishedMatchesAdapter  extends CursorAdapter
         String x = cursor.getString(done);
 
         TextView q = view.findViewById(R.id.date_game);
-        q.setText(x.substring(0, 10));
+        q.setText(x);
 
         r.setText(p1sets + "");
         s.setText(p2sets + "");
