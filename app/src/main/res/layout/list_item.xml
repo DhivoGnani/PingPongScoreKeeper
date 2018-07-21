@@ -29,7 +29,7 @@
                     android:layout_width="@dimen/crest_image_size"
                     android:layout_height="@dimen/crest_image_size"
                     android:layout_gravity="center"
-                    android:src="@drawable/canada" />
+                    android:src="@drawable/paddle" />
 
                 <TextView
                     android:id="@+id/player_one_name"
@@ -104,7 +104,7 @@
                     android:layout_width="@dimen/crest_image_size"
                     android:layout_height="@dimen/crest_image_size"
                     android:layout_gravity="center"
-                    android:src="@drawable/canada" />
+                    android:src="@drawable/paddle" />
 
                 <TextView
                     android:id="@+id/player_two_name"
