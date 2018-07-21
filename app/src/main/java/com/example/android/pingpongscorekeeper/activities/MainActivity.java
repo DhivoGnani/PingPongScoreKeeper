@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.adapters.CategoryAdapter;
@@ -31,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         tabLayout.setupWithViewPager(viewPager);
+
+        String id = getIntent().getStringExtra("cool");
+
+        if(id != null) {
+            tabLayout.getTabAt(1).select();
+//            ((ListView)findViewById(R.id.list)).setSelection(adapter.getCount() - 1);
+        }
     }
 
     @Override

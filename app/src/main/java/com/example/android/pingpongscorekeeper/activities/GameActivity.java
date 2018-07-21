@@ -1,5 +1,6 @@
 package com.example.android.pingpongscorekeeper.activities;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -14,12 +15,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.components.PingPongGame;
 import com.example.android.pingpongscorekeeper.components.PingPongPlayer;
+import com.example.android.pingpongscorekeeper.data.PingPongContract;
 
 import java.util.Locale;
 import java.util.Random;
@@ -32,6 +35,7 @@ public class GameActivity extends AppCompatActivity
     private Random rand = new Random();
     private EditText playerOneNameDisplay;
     private EditText playerTwoNameDisplay;
+    private Button reset;
 
     // TODO: Remove hardcoded strings
     private static final String [] congratulatingWords =
@@ -132,6 +136,13 @@ public class GameActivity extends AppCompatActivity
 
         playerTwoNameDisplay = findViewById(R.id.player_two);
         playerTwoNameDisplay.addTextChangedListener(playerTwoNameChanged);
+        reset = findViewById(R.id.reset_button);
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetOnClick(view);
+            }
+        });
     }
 
     private void speak(String text){
@@ -273,6 +284,16 @@ public class GameActivity extends AppCompatActivity
                     )
             );
 
+            ContentValues values = new ContentValues();
+            values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_NAME_TITLE, pingPongGame.playerOne.getName());
+            values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_NAME_TITLE,  pingPongGame.playerTwo.getName());
+            values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE,  pingPongGame.getNumSetsPlayerOneWon());
+            values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE, pingPongGame.getNumSetsPlayerTwoWon());
+
+            getContentResolver().insert(PingPongContract.PingPongMatch.CONTENT_URI, values);
+
+            changeResetButton();
+
 
 
             playAudio(getString(
@@ -356,5 +377,19 @@ public class GameActivity extends AppCompatActivity
         clearMessage();
         pingPongGame.resetGame();
         displayCurrentServingPlayer();
+    }
+
+    public void changeResetButton()
+    {
+        reset.setText("Done");
+        reset.setOnClickListener(null);
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GameActivity.this, MainActivity.class);
+                intent.putExtra("cool", "test");
+                startActivity(intent);
+            }
+        });
     }
 }

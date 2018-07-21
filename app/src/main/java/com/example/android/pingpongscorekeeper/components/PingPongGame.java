@@ -47,12 +47,12 @@ public class PingPongGame
 
     public void setPlayerOneName(String name)
     {
-        playerOneName = name;
+        playerOne.setName(name);
     }
 
     public void setPlayerTwoName(String name)
     {
-        playerTwoName = name;
+        playerTwo.setName(name);
     }
 
     public void resetGame()
