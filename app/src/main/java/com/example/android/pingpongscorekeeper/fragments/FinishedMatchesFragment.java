@@ -14,11 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.android.pingpongscorekeeper.R;
-import com.example.android.pingpongscorekeeper.adapters.FinishedMatchesAdapter;
-import com.example.android.pingpongscorekeeper.data.PingPongContract;
+import com.example.android.pingpongscorekeeper.adapters.FinishedMatchesCursorAdapter;
 
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_GAME_TIME_DONE_LOCAL_TITLE;
-import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_GAME_TIME_DONE_TITLE;
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_NAME_TITLE;
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE;
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_NAME_TITLE;
@@ -31,20 +29,19 @@ public class FinishedMatchesFragment extends Fragment implements  LoaderManager.
 
     private static final int PING_PONG_LOADER = 0;
 
-    FinishedMatchesAdapter mCursorAdapter;
-    private ListView listView;
+    FinishedMatchesCursorAdapter finishedMatchesCursorAdapter;
+    private ListView finishedMatchesListView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_finished_matches, container, false);
 
+        finishedMatchesListView = rootView.findViewById(R.id.list);
 
+        finishedMatchesCursorAdapter = new FinishedMatchesCursorAdapter(getActivity(), null);
+        finishedMatchesListView.setAdapter(finishedMatchesCursorAdapter);
 
-        listView = (ListView) rootView.findViewById(R.id.list);
-
-        mCursorAdapter = new FinishedMatchesAdapter(getActivity(), null);
-        listView.setAdapter(mCursorAdapter);
         this.getLoaderManager().initLoader(PING_PONG_LOADER, null, this);
         return rootView;
     }
@@ -63,13 +60,11 @@ public class FinishedMatchesFragment extends Fragment implements  LoaderManager.
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
-        mCursorAdapter.swapCursor(cursor);
-//        listView.setSelection(mCursorAdapter.getCount() - 1);
+        finishedMatchesCursorAdapter.swapCursor(cursor);
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-        mCursorAdapter.swapCursor(null);
-
+        finishedMatchesCursorAdapter.swapCursor(null);
     }
 }

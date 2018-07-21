@@ -17,9 +17,9 @@ import static com.example.android.pingpongscorekeeper.data.PingPongContract.Ping
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_NAME_TITLE;
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE;
 
-public class FinishedMatchesAdapter  extends CursorAdapter
+public class FinishedMatchesCursorAdapter extends CursorAdapter
 {
-    public FinishedMatchesAdapter(Context context, Cursor c) {
+    public FinishedMatchesCursorAdapter(Context context, Cursor c) {
         super(context, c, 0);
     }
 
