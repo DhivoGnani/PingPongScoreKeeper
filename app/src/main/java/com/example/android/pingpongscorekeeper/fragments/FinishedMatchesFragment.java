@@ -43,6 +43,11 @@ public class FinishedMatchesFragment extends Fragment implements  LoaderManager.
         finishedMatchesListView.setAdapter(finishedMatchesCursorAdapter);
 
         this.getLoaderManager().initLoader(PING_PONG_LOADER, null, this);
+
+        View emptyView = rootView.findViewById(R.id.empty_view);
+        finishedMatchesListView.setEmptyView(emptyView);
+
+
         return rootView;
     }
 
