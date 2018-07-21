@@ -35,6 +35,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.GameActivity" />
         </activity>
+        <provider
+            android:name=".data.PingPongProvider"
+            android:authorities="com.example.android.pingpongscorekeeper"
+            android:exported="false" />
     </application>
 
 </manifest>

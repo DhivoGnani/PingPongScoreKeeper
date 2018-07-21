@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widget_list_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -24,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Incredible face"
+            android:text="Dhivo"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -35,23 +36,12 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/score_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Blue heavens"
-            android:textSize="20sp" />
-
-        <TextView
             android:id="@+id/data_textview"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
             android:gravity="center"
-            android:text="Red Hares" />
+            tools:text="4 - 1" />
 
     </LinearLayout>
 
@@ -73,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Fire appleis"
+            tools:text="Dan"
             android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>
