@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mainmenu, menu);
+        menu.add(0, 0, 0, "Delete All");
         return true;
     }
 
@@ -51,16 +52,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.action_settings).setTitle("Insert Dummy Data");
+
+       // menu.add(0, 0, Menu.NONE, "Delete All");
+
+
         return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case 0:
+                deleteAllMatches();
+                break;
             case R.id.action_settings:
                 insertDummyMatchData();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteAllMatches() {
+        getContentResolver().delete(PingPongContract.PingPongMatch.CONTENT_URI, null, null);
     }
 
     private void insertDummyMatchData()

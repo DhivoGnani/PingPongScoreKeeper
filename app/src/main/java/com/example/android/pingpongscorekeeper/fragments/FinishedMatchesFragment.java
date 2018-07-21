@@ -17,6 +17,16 @@ import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.adapters.FinishedMatchesAdapter;
 import com.example.android.pingpongscorekeeper.data.PingPongContract;
 
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_GAME_TIME_DONE_LOCAL_TITLE;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_GAME_TIME_DONE_TITLE;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_NAME_TITLE;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_NAME_TITLE;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.CONTENT_URI;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.SORTED_GAME_TIME_DONE_LOCAL_DESC;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch._ID;
+
 public class FinishedMatchesFragment extends Fragment implements  LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final int PING_PONG_LOADER = 0;
@@ -43,12 +53,12 @@ public class FinishedMatchesFragment extends Fragment implements  LoaderManager.
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int i, @Nullable Bundle bundle) {
-        return new CursorLoader(getActivity(),
-                PingPongContract.PingPongMatch.CONTENT_URI,
-                null,
-                null,
-                null,
-                PingPongContract.PingPongMatch.COLUMN_GAME_TIME_DONE_TITLE + " DESC");
+        String[] projection = {_ID, COLUMN_PLAYER_ONE_NAME_TITLE, COLUMN_PLAYER_TWO_NAME_TITLE,
+                COLUMN_PLAYER_ONE_SETS_WON_TITLE, COLUMN_PLAYER_TWO_SETS_WON_TITLE,
+                COLUMN_GAME_TIME_DONE_LOCAL_TITLE};
+
+        return new CursorLoader(getActivity(), CONTENT_URI, projection, null, null,
+                SORTED_GAME_TIME_DONE_LOCAL_DESC);
     }
 
     @Override

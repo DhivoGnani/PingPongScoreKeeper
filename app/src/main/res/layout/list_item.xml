@@ -32,7 +32,7 @@
                     android:src="@drawable/canada"/>
 
                 <TextView
-                    android:id="@+id/home_name"
+                    android:id="@+id/player_one_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -81,7 +81,7 @@
             </LinearLayout>
 
                 <TextView
-                    android:id="@+id/date_game"
+                    android:id="@+id/game_end_timestamp"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_gravity="center|bottom"
@@ -104,7 +104,7 @@
                     android:src="@drawable/canada"/>
 
                 <TextView
-                    android:id="@+id/away_name"
+                    android:id="@+id/player_two_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

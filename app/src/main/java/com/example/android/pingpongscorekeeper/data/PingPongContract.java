@@ -29,5 +29,9 @@ public final class PingPongContract {
         public static final String COLUMN_PLAYER_ONE_SETS_WON_TITLE = "PlayerOneSetsWon";
         public static final String COLUMN_PLAYER_TWO_SETS_WON_TITLE = "PlayerTwoSetsWon";
         public static final String COLUMN_GAME_TIME_DONE_TITLE = "GameFinishedDate";
+        public static final String COLUMN_GAME_TIME_DONE_LOCAL_TITLE
+                = "datetime(" + PingPongMatch.COLUMN_GAME_TIME_DONE_TITLE +", 'localtime')";
+        public static final String SORTED_GAME_TIME_DONE_LOCAL_DESC
+                = COLUMN_GAME_TIME_DONE_TITLE + " DESC";
     }
 }

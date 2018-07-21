@@ -1,72 +1,66 @@
 package com.example.android.pingpongscorekeeper.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Typeface;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import com.example.android.pingpongscorekeeper.R;
-import com.example.android.pingpongscorekeeper.data.PingPongContract;
 
-import java.util.ArrayList;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_GAME_TIME_DONE_LOCAL_TITLE;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_NAME_TITLE;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_NAME_TITLE;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE;
 
 public class FinishedMatchesAdapter  extends CursorAdapter
 {
-
     public FinishedMatchesAdapter(Context context, Cursor c) {
         super(context, c, 0);
     }
 
-
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        // Inflate a list item view using the layout specified in list_item.xml
         return LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        final TextView playerOneName = view.findViewById(R.id.player_one_name);
+        final TextView playerTwoName = view.findViewById(R.id.player_two_name);
+        final TextView playerOneScore  = view.findViewById(R.id.player_one_score);
+        final TextView playerTwoScore = view.findViewById(R.id.player_two_score);
+        final TextView gameEndTimeStamp = view.findViewById(R.id.game_end_timestamp);
 
-        TextView playerOneName = (TextView) view.findViewById(R.id.home_name);
-        TextView playerTwoName = (TextView) view.findViewById(R.id.away_name);
+        final int playerOneNameCol = cursor.getColumnIndex(COLUMN_PLAYER_ONE_NAME_TITLE);
+        final int playerTwoNameCol = cursor.getColumnIndex(COLUMN_PLAYER_TWO_NAME_TITLE);
+        final int playerOneScoreCol = cursor.getColumnIndex(COLUMN_PLAYER_ONE_SETS_WON_TITLE);
+        final int playerTwoScoreCol = cursor.getColumnIndex(COLUMN_PLAYER_TWO_SETS_WON_TITLE);
+        final int gameEndTimeLocal = cursor.getColumnIndex(COLUMN_GAME_TIME_DONE_LOCAL_TITLE);
 
-        TextView r  = view.findViewById(R.id.player_one_score);
-        TextView s = view.findViewById(R.id.player_two_score);
+        playerOneName.setText(cursor.getString(playerOneNameCol));
+        playerTwoName.setText(cursor.getString(playerTwoNameCol));
 
-        int playerOneCol = cursor.getColumnIndex(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_NAME_TITLE);
-        int playerTwoCol = cursor.getColumnIndex(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_NAME_TITLE);
+        final int playerOneSetsWon = cursor.getInt(playerOneScoreCol);
+        final int playerTwoSetsWon = cursor.getInt(playerTwoScoreCol);
 
+        gameEndTimeStamp.setText(cursor.getString(gameEndTimeLocal).substring(0,16));
 
-        int p1Col = cursor.getColumnIndex(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE);
-        int p2Col = cursor.getColumnIndex(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE);
+        playerOneScore.setText(String.valueOf(playerOneSetsWon));
+        playerTwoScore.setText(String.valueOf(playerTwoSetsWon));
 
+        if(playerOneSetsWon > playerTwoSetsWon)
+            makeTextViewBold(playerOneScore);
+        else
+            makeTextViewBold(playerTwoScore);
+    }
 
-        String p1 = cursor.getString(playerOneCol);
-        String p2 = cursor.getString(playerTwoCol);
-
-        int p1sets = cursor.getInt(p1Col);
-        int p2sets = cursor.getInt(p2Col);
-
-        int done = cursor.getColumnIndex(PingPongContract.PingPongMatch.COLUMN_GAME_TIME_DONE_TITLE);
-
-        String x = cursor.getString(done);
-
-        TextView q = view.findViewById(R.id.date_game);
-        q.setText(x);
-
-        r.setText(p1sets + "");
-        s.setText(p2sets + "");
-        if(p1sets > p2sets) r.setTypeface(r.getTypeface(), Typeface.BOLD);
-        else s.setTypeface(r.getTypeface(), Typeface.BOLD);
-
-        playerOneName.setText(p1);
-        playerTwoName.setText(p2);
+    private void makeTextViewBold(TextView textView)
+    {
+        textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
     }
 }
