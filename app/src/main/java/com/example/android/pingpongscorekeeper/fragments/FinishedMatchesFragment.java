@@ -22,6 +22,7 @@ public class FinishedMatchesFragment extends Fragment implements  LoaderManager.
     private static final int PING_PONG_LOADER = 0;
 
     FinishedMatchesAdapter mCursorAdapter;
+    private ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,7 +31,7 @@ public class FinishedMatchesFragment extends Fragment implements  LoaderManager.
 
 
 
-        ListView listView = (ListView) rootView.findViewById(R.id.list);
+        listView = (ListView) rootView.findViewById(R.id.list);
 
         mCursorAdapter = new FinishedMatchesAdapter(getActivity(), null);
         listView.setAdapter(mCursorAdapter);
@@ -53,6 +54,7 @@ public class FinishedMatchesFragment extends Fragment implements  LoaderManager.
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
         mCursorAdapter.swapCursor(cursor);
+        listView.setSelection(mCursorAdapter.getCount() - 1);
     }
 
     @Override

@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
 
 import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.adapters.CategoryAdapter;
@@ -48,21 +47,29 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    // TODO: This is a "hack" way to update the menu
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.action_settings).setTitle("Insert Dummy Data");
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                insertMatch();
+                insertDummyMatchData();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void insertMatch() {
+    private void insertDummyMatchData()
+    {
         ContentValues values = new ContentValues();
-        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_NAME_TITLE, "Red");
-        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_NAME_TITLE, "Blue");
-        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE, 7);
-        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE, 2);
+        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_NAME_TITLE, "Dhivo");
+        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_NAME_TITLE, "Michael");
+        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE, 3);
+        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE, 4);
 
         getContentResolver().insert(PingPongContract.PingPongMatch.CONTENT_URI, values);
     }
