@@ -19,7 +19,6 @@ public class PingPongDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Create a String that contains the SQL statement to create the pets table
         String SQL_CREATE_PING_PONG_TABLE =  "CREATE TABLE " + PingPongMatch.TABLE_NAME + " ("
                 + PingPongMatch._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + PingPongMatch.COLUMN_PLAYER_ONE_NAME_TITLE + " TEXT NOT NULL, "
