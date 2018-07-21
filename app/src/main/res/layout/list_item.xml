@@ -45,17 +45,34 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/data_textview"
+                    android:id="@+id/player_one_score"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
-                    tools:text="5 - 1"
-                    android:textSize="@dimen/Score" />
+                    tools:text="5"
+                    android:textSize="@dimen/Score"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text=" - "
+                    android:textSize="@dimen/Score"/>
+                <TextView
+                    android:id="@+id/player_two_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    tools:text="1"
+                    android:textSize="@dimen/Score"/>
 
             </LinearLayout>
 
@@ -82,7 +99,5 @@
                     tools:text="Dan"/>
             </LinearLayout>
         </LinearLayout>
-
-
     </LinearLayout>
 </android.support.v7.widget.CardView>

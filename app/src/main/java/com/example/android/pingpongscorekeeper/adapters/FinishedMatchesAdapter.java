@@ -3,6 +3,7 @@ package com.example.android.pingpongscorekeeper.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,8 @@ public class FinishedMatchesAdapter  extends CursorAdapter
         TextView playerOneName = (TextView) view.findViewById(R.id.home_name);
         TextView playerTwoName = (TextView) view.findViewById(R.id.away_name);
 
-        TextView r  = view.findViewById(R.id.data_textview);
+        TextView r  = view.findViewById(R.id.player_one_score);
+        TextView s = view.findViewById(R.id.player_two_score);
 
         int playerOneCol = cursor.getColumnIndex(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_NAME_TITLE);
         int playerTwoCol = cursor.getColumnIndex(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_NAME_TITLE);
@@ -52,7 +54,11 @@ public class FinishedMatchesAdapter  extends CursorAdapter
         int p1sets = cursor.getInt(p1Col);
         int p2sets = cursor.getInt(p2Col);
 
-        r.setText(p1sets + " - " + p2sets);
+        r.setText(p1sets + "");
+        s.setText(p2sets + "");
+        if(p1sets > p2sets) r.setTypeface(r.getTypeface(), Typeface.BOLD);
+        else s.setTypeface(r.getTypeface(), Typeface.BOLD);
+
         playerOneName.setText(p1);
         playerTwoName.setText(p2);
     }
