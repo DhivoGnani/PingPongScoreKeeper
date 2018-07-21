@@ -1,6 +1,7 @@
 package com.example.android.pingpongscorekeeper.activities;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -45,18 +46,8 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mainmenu, menu);
         menu.add(0, 0, 0, "Delete All");
+        menu.add(0, 1, 0, "Insert Dummy Data");
         return true;
-    }
-
-    // TODO: This is a "hack" way to update the menu
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.action_settings).setTitle("Insert Dummy Data");
-
-       // menu.add(0, 0, Menu.NONE, "Delete All");
-
-
-        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -65,9 +56,13 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 deleteAllMatches();
                 break;
-            case R.id.action_settings:
+            case 1:
                 insertDummyMatchData();
                 break;
+            case R.id.action_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -29,11 +29,7 @@
         </activity>
         <activity
             android:name=".activities.SettingsActivity"
-            android:label="Settings"
-            android:parentActivityName=".activities.GameActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.GameActivity" />
+            android:label="Settings">
         </activity>
         <provider
             android:name=".data.PingPongProvider"
