@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_NAME_TITLE, "Michael");
         values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE, 3);
         values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE, 4);
-
         getContentResolver().insert(PingPongContract.PingPongMatch.CONTENT_URI, values);
     }
 

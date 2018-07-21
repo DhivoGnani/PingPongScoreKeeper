@@ -54,6 +54,13 @@ public class FinishedMatchesAdapter  extends CursorAdapter
         int p1sets = cursor.getInt(p1Col);
         int p2sets = cursor.getInt(p2Col);
 
+        int done = cursor.getColumnIndex(PingPongContract.PingPongMatch.COLUMN_GAME_TIME_DONE_TITLE);
+
+        String x = cursor.getString(done);
+
+        TextView q = view.findViewById(R.id.date_game);
+        q.setText(x.substring(0, 10));
+
         r.setText(p1sets + "");
         s.setText(p2sets + "");
         if(p1sets > p2sets) r.setTypeface(r.getTypeface(), Typeface.BOLD);

@@ -48,13 +48,13 @@ public class FinishedMatchesFragment extends Fragment implements  LoaderManager.
                 null,
                 null,
                 null,
-                null);
+                PingPongContract.PingPongMatch.COLUMN_GAME_TIME_DONE_TITLE + " DESC");
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
         mCursorAdapter.swapCursor(cursor);
-        listView.setSelection(mCursorAdapter.getCount() - 1);
+//        listView.setSelection(mCursorAdapter.getCount() - 1);
     }
 
     @Override

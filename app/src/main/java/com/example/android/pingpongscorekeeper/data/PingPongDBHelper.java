@@ -25,7 +25,8 @@ public class PingPongDBHelper extends SQLiteOpenHelper {
                 + PingPongMatch.COLUMN_PLAYER_ONE_NAME_TITLE + " TEXT NOT NULL, "
                 + PingPongMatch.COLUMN_PLAYER_TWO_NAME_TITLE + " TEXT NOT NULL, "
                 + PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE + " INTEGER NOT NULL, "
-                + PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE + " INTEGER NOT NULL);";
+                + PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE + " INTEGER NOT NULL, "
+                + PingPongMatch.COLUMN_GAME_TIME_DONE_TITLE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL);";
 
         db.execSQL(SQL_CREATE_PING_PONG_TABLE);
     }
