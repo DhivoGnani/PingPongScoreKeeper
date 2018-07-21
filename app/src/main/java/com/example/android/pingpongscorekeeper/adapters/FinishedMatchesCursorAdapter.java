@@ -53,14 +53,23 @@ public class FinishedMatchesCursorAdapter extends CursorAdapter
         playerOneScore.setText(String.valueOf(playerOneSetsWon));
         playerTwoScore.setText(String.valueOf(playerTwoSetsWon));
 
-        if(playerOneSetsWon > playerTwoSetsWon)
+        if(playerOneSetsWon > playerTwoSetsWon) {
             makeTextViewBold(playerOneScore);
-        else
+            removeTextViewBold(playerTwoScore);
+        }
+        else {
             makeTextViewBold(playerTwoScore);
+            removeTextViewBold(playerOneScore);
+        }
     }
 
     private void makeTextViewBold(TextView textView)
     {
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+    }
+
+    private void removeTextViewBold(TextView textView)
+    {
+        textView.setTypeface(textView.getTypeface(), Typeface.NORMAL);
     }
 }
