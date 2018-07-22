@@ -1,8 +1,12 @@
 package com.example.android.pingpongscorekeeper.activities;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -22,8 +26,10 @@ import android.widget.TextView;
 import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.components.PingPongGame;
 import com.example.android.pingpongscorekeeper.components.PingPongPlayer;
+import com.example.android.pingpongscorekeeper.components.PingPongSet;
 import com.example.android.pingpongscorekeeper.data.PingPongContract;
 
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 
@@ -36,7 +42,6 @@ public class GameActivity extends AppCompatActivity
     private EditText playerOneNameDisplay;
     private EditText playerTwoNameDisplay;
     private Button reset;
-
     // TODO: Remove hardcoded strings
     private static final String [] congratulatingWords =
             {"Good Job", "Great Shot", "Nice Move", "Incredible"};
@@ -290,17 +295,33 @@ public class GameActivity extends AppCompatActivity
             values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE,  pingPongGame.getNumSetsPlayerOneWon());
             values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE, pingPongGame.getNumSetsPlayerTwoWon());
 
-            getContentResolver().insert(PingPongContract.PingPongMatch.CONTENT_URI, values);
+            Uri uri =getContentResolver().insert(PingPongContract.PingPongMatch.CONTENT_URI, values);
 
-            changeResetButton();
+            long id = Long.valueOf(uri.getLastPathSegment());
 
+            for(PingPongSet set: pingPongGame.pingPongSets)
+            {
+                values = new ContentValues();
+                values.put(PingPongContract.Set.MATCH_ID, id+ "");
+                values.put(PingPongContract.Set.SET_NUMBER, set.getSetNumber());
+                values.put(PingPongContract.Set.PLAYER_ONE_SCORE,  set.getPlayerOneScore());
+                values.put(PingPongContract.Set.PLAYER_TWO_SCORE, set.getPlayerTwoScore());
 
+                getContentResolver().insert(PingPongContract.Set.CONTENT_URI, values);
+            }
 
-            playAudio(getString(
-                    R.string.player_won_match,
-                    player.getName()
-            ), false);
+            Intent intent = new Intent(this, MatchActivity.class);
+            intent.setData(PingPongContract.Set.CONTENT_URI);
+            String matchId = id + "";
+            intent.putExtra("matchId", matchId);
+            startActivity(intent);
+
+//            playAudio(getString(
+//                    R.string.player_won_match,
+//                    player.getName()
+//            ), false);
             clearServingPlayer();
+            changeResetButton();
         }
         else
         {
@@ -377,19 +398,25 @@ public class GameActivity extends AppCompatActivity
         clearMessage();
         pingPongGame.resetGame();
         displayCurrentServingPlayer();
+        TextView reset = (TextView) view;
+        if(reset.getText().equals("Restart")) {
+            reset.setText("RESET");
+        }
+        pingPongGame.pingPongSets = new ArrayList<>();
+
     }
 
     public void changeResetButton()
     {
-        reset.setText("Done");
-        reset.setOnClickListener(null);
-        reset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(GameActivity.this, MainActivity.class);
-                intent.putExtra("cool", "test");
-                startActivity(intent);
-            }
-        });
+        reset.setText("Restart");
+//        reset.setOnClickListener(null);
+//        reset.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(GameActivity.this, MainActivity.class);
+//                intent.putExtra("cool", "test");
+//                startActivity(intent);
+//            }
+//        });
     }
 }

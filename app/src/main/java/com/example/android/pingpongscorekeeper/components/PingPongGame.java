@@ -1,5 +1,7 @@
 package com.example.android.pingpongscorekeeper.components;
 
+import java.util.ArrayList;
+
 public class PingPongGame
 {
     public PingPongPlayer playerOne;
@@ -14,6 +16,8 @@ public class PingPongGame
     public String playerOneName = "Player 1";
     public String playerTwoName = "Player 2";
 
+    public ArrayList<PingPongSet> pingPongSets;
+
     private final static int minNumberOfPointsToWinASet = 11;
     private final static int numberOfPointsPlayerNeedsToBeatOpponent = 2;
     private int winningNumberOfSets = 3;
@@ -24,6 +28,7 @@ public class PingPongGame
         playerOne = new PingPongPlayer(playerOneName);
         playerTwo = new PingPongPlayer(playerTwoName);
 
+
         currentServingPlayer = playerOne;
         previousSetFirstServingPlayer = currentServingPlayer;
     }
@@ -32,7 +37,7 @@ public class PingPongGame
     {
         this.playerOneName = playerOneName;
         this.playerTwoName = playerTwoName;
-
+        pingPongSets = new ArrayList<>();
         winningNumberOfSets = numSets % 2 == 1 ? numSets/2 + 1 : numSets / 2;
 
 
@@ -165,7 +170,11 @@ public class PingPongGame
 
     public void incrementNumberOfSetsWon(PingPongPlayer player)
     {
+        pingPongSets.add(new PingPongSet(playerOne.getNumberOfSetsWon() + playerTwo.getNumberOfSetsWon()
+                + 1, playerOne.getCurrentSetScore(), playerTwo.getCurrentSetScore()));
+
         player.incrementNumberOfSetsWon();
+
 
         switchStartingServerForSet();
     }

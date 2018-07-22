@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.example.android.pingpongscorekeeper.components.PingPongSet;
 import com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch;
 
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.TABLE_NAME;
@@ -20,11 +21,13 @@ public class PingPongProvider extends ContentProvider {
     public static final String LOG_TAG = PingPongProvider.class.getSimpleName();
 
     private static final int MATCHES = 100;
+    private static final int SETS = 101;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_MATCH, MATCHES);
+        sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_SET, SETS);
     }
 
     private PingPongDBHelper mDbHelper;
@@ -43,13 +46,16 @@ public class PingPongProvider extends ContentProvider {
         Cursor cursor;
 
         int match = sUriMatcher.match(uri);
-        switch (match) {
-            case MATCHES:
-                cursor = database.query(TABLE_NAME, projection, selection, selectionArgs, null,
-                        null, sortOrder);
+        switch(match)
+        {
+            case MATCHES :
+                cursor = database.query(TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
-            default:
-                throw new IllegalArgumentException("Cannot query unknown URI " + uri);
+            case SETS :
+                cursor = database.query(PingPongContract.Set.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            default :
+                throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
         }
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
@@ -74,6 +80,49 @@ public class PingPongProvider extends ContentProvider {
         }
 
         return rowsDeleted;
+    }
+
+    @Override
+    public String getType(Uri uri) {
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case MATCHES:
+                return PingPongMatch.CONTENT_LIST_TYPE;
+            case SETS:
+                return PingPongContract.Set.CONTENT_LIST_TYPE;
+            default:
+                throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
+        }
+    }
+
+    @Nullable
+    @Override
+    public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
+        int match = sUriMatcher.match(uri);
+
+        switch (match) {
+            case MATCHES:
+                return insertPingPongMatch(uri, contentValues);
+            case SETS:
+                return insertPingPongSet(uri, contentValues);
+            default:
+                throw new IllegalArgumentException("Cannot query unknown URI " + uri);
+        }
+    }
+
+    private Uri insertPingPongSet(Uri uri, ContentValues contentValues) {
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        long id = database.insert(PingPongContract.Set.TABLE_NAME, null, contentValues);
+
+        if (id == -1) {
+            Log.e(LOG_TAG, "Failed to insert row for " + uri);
+            return null;
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+
+        return ContentUris.withAppendedId(uri, id);
     }
 
     @Override
@@ -115,22 +164,5 @@ public class PingPongProvider extends ContentProvider {
         getContext().getContentResolver().notifyChange(uri, null);
 
         return ContentUris.withAppendedId(uri, id);
-    }
-
-    @Override
-    public String getType(Uri uri) {
-        final int match = sUriMatcher.match(uri);
-        switch (match) {
-            case MATCHES:
-                return PingPongMatch.CONTENT_LIST_TYPE;
-            default:
-                throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
-        }
-    }
-
-    @Nullable
-    @Override
-    public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
-        return insertPingPongMatch(uri, contentValues);
     }
 }

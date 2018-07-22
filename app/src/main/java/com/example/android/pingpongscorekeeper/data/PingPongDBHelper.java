@@ -27,10 +27,20 @@ public class PingPongDBHelper extends SQLiteOpenHelper {
                 + PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE + " INTEGER NOT NULL, "
                 + PingPongMatch.COLUMN_GAME_TIME_DONE_TITLE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL);";
 
+        String SQL_CREATE_SET_TABLE =  "CREATE TABLE " + PingPongContract.Set.TABLE_NAME + " ("
+                + PingPongContract.Set._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + PingPongContract.Set.MATCH_ID + " INTEGER NOT NULL, "
+                + PingPongContract.Set.SET_NUMBER + " INTEGER NOT NULL, "
+                + PingPongContract.Set.PLAYER_ONE_SCORE + " INTEGER NOT NULL, "
+                + PingPongContract.Set.PLAYER_TWO_SCORE + " INTEGER NOT NULL);";
+
+
         db.execSQL(SQL_CREATE_PING_PONG_TABLE);
+        db.execSQL(SQL_CREATE_SET_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
     }
+
 }
