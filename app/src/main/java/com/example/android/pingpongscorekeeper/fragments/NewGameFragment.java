@@ -14,11 +14,11 @@ import android.widget.TextView;
 
 import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.activities.GameActivity;
-import com.example.android.pingpongscorekeeper.components.PingPongGameConfiguration;
+import com.example.android.pingpongscorekeeper.components.GameConfiguration;
 
 public class NewGameFragment extends Fragment
 {
-    private PingPongGameConfiguration  configuration;
+    private GameConfiguration configuration;
 
     private EditText playerOneDisplay;
     private EditText playerTwoDisplay;
@@ -69,7 +69,7 @@ public class NewGameFragment extends Fragment
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.activity_new_game, container, false);
 
-        configuration = new PingPongGameConfiguration();
+        configuration = new GameConfiguration();
 
         playerOneDisplay = rootView.findViewById(R.id.player_one);
         playerTwoDisplay = rootView.findViewById(R.id.player_two);

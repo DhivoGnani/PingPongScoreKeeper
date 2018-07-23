@@ -1,6 +1,6 @@
 package com.example.android.pingpongscorekeeper.components
 
-class PingPongGameConfiguration {
+internal class GameConfiguration {
 
     // Default number of sets in a match
     var numberOfSets: Int = 3
@@ -12,13 +12,13 @@ class PingPongGameConfiguration {
     var playerOneName: String = PlayerEnum.PLAYER_ONE.toString()
         set(name){
             if (name.isNullOrBlank()) return
-            playerOneName = name
+            field = name
         }
 
     var playerTwoName: String = PlayerEnum.PLAYER_TWO.toString()
         set(name) {
             if (name.isNullOrBlank()) return
-            playerTwoName = name
+            field = name
         }
 
     fun incrementNumberOfSets() {
