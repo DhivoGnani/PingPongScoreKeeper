@@ -8,32 +8,24 @@ public class PingPongGame
     public PingPongPlayer playerTwo;
     public PingPongPlayer previousSetFirstServingPlayer;
     public PingPongPlayer currentServingPlayer;
-
-    // TODO: This global variable is only needed for reset functionality. Not really needed in the
-    // future.
     private PingPongPlayer initialServingPlayer;
 
-    public String playerOneName = "Player 1";
-    public String playerTwoName = "Player 2";
+    public String playerOneName;
+    public String playerTwoName;
 
     public ArrayList<PingPongSet> pingPongSets;
 
     private final static int minNumberOfPointsToWinASet = 11;
     private final static int numberOfPointsPlayerNeedsToBeatOpponent = 2;
-    private int winningNumberOfSets = 3;
 
-    // TODO: Unnecessary constructor anymore.
-    public PingPongGame()
-    {
-        playerOne = new PingPongPlayer(playerOneName);
-        playerTwo = new PingPongPlayer(playerTwoName);
+    private int winningNumberOfSets;
 
-
-        currentServingPlayer = playerOne;
-        previousSetFirstServingPlayer = currentServingPlayer;
-    }
-
-    public PingPongGame(String playerOneName,String playerTwoName, int numSets, String servingPlayer)
+    public PingPongGame(
+            String playerOneName,
+            String playerTwoName,
+            int numSets,
+            String servingPlayer
+    )
     {
         this.playerOneName = playerOneName;
         this.playerTwoName = playerTwoName;
@@ -44,7 +36,8 @@ public class PingPongGame
         playerOne = new PingPongPlayer(playerOneName);
         playerTwo = new PingPongPlayer(playerTwoName);
 
-        currentServingPlayer = servingPlayer.equals(PlayerEnum.PLAYER_ONE.toString()) ? playerOne : playerTwo;
+        currentServingPlayer = servingPlayer
+                .equals(PlayerEnum.PLAYER_ONE.toString()) ? playerOne : playerTwo;
         initialServingPlayer = currentServingPlayer;
         previousSetFirstServingPlayer = currentServingPlayer;
     }
@@ -62,10 +55,10 @@ public class PingPongGame
 
     public void resetGame()
     {
-        playerOne.resetCurrentSetScore();
-        playerOne.resetNumberOfSetsWon();
-        playerTwo.resetCurrentSetScore();
-        playerTwo.resetNumberOfSetsWon();
+        playerOne.reset();
+        playerTwo.reset();
+
+        pingPongSets = new ArrayList<>();
 
         currentServingPlayer = initialServingPlayer;
         previousSetFirstServingPlayer = currentServingPlayer;
@@ -74,12 +67,6 @@ public class PingPongGame
     public int getCurrentSetNumber()
     {
         return playerOne.getNumberOfSetsWon() + playerTwo.getNumberOfSetsWon();
-    }
-
-    public int getCurrentSet()
-    {
-        return (playerOne.getNumberOfSetsWon() + playerTwo.getNumberOfSetsWon() + 1 > winningNumberOfSets) ?  playerOne.getNumberOfSetsWon() + playerTwo.getNumberOfSetsWon() :
-            playerOne.getNumberOfSetsWon() + playerTwo.getNumberOfSetsWon() + 1;
     }
 
     public int getPlayerOneCurrentSetScore()
@@ -170,8 +157,9 @@ public class PingPongGame
 
     public void incrementNumberOfSetsWon(PingPongPlayer player)
     {
-        pingPongSets.add(new PingPongSet(playerOne.getNumberOfSetsWon() + playerTwo.getNumberOfSetsWon()
-                + 1, playerOne.getCurrentSetScore(), playerTwo.getCurrentSetScore()));
+        pingPongSets.add(new PingPongSet(
+                playerOne.getNumberOfSetsWon() + playerTwo.getNumberOfSetsWon() + 1,
+                playerOne.getCurrentSetScore(), playerTwo.getCurrentSetScore()));
 
         player.incrementNumberOfSetsWon();
 
@@ -193,7 +181,7 @@ public class PingPongGame
         }
     }
 
-    public void resetCurrentScore()
+    public void resetPlayersCurrentSetScore()
     {
         playerOne.resetCurrentSetScore();
         playerTwo.resetCurrentSetScore();

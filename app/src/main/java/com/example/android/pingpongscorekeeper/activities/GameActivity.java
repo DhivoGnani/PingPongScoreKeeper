@@ -272,7 +272,7 @@ public class GameActivity extends AppCompatActivity
         }
 
         pingPongGame.incrementNumberOfSetsWon(player);
-        pingPongGame.resetCurrentScore();
+        pingPongGame.resetPlayersCurrentSetScore();
 
         if(pingPongGame.hasPlayerWonMatch(player))
         {
