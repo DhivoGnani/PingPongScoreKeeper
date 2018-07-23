@@ -12,5 +12,9 @@
         android:id="@+id/settings"
         android:title="Settings">
     </item>
+    <item
+        android:id="@+id/delete_a"
+        android:title="Delete">
+    </item>
 
 </menu>
