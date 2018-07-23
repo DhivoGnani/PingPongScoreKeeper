@@ -2,6 +2,7 @@ package com.example.android.pingpongscorekeeper.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +23,14 @@ public class MatchSetsAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate( R.layout.test_list_item, parent, false);
+        return LayoutInflater.from(context).inflate( R.layout.details_item, parent, false);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        final TextView setNumberView = view.findViewById(R.id.setNumber);
-        final TextView setScoreView = view.findViewById(R.id.setScore);
+        final TextView setNumberView = view.findViewById(R.id.set_n);
+        final TextView playerOneScoreView = view.findViewById(R.id.player_one_num);
+        final TextView playerTwoScoreView = view.findViewById(R.id.player_two_num);
 
         final int playerOneSetScoreCol = cursor.getColumnIndex(PLAYER_ONE_SCORE);
         final int playerTwoSetScoreCol = cursor.getColumnIndex(PLAYER_TWO_SCORE);
@@ -38,7 +40,24 @@ public class MatchSetsAdapter extends CursorAdapter {
         final int playerTwoScore = cursor.getInt(playerTwoSetScoreCol);
         final int setNumber = cursor.getInt(setNumberCol);
 
-        setNumberView.setText("Set Number: " + setNumber);
-        setScoreView.setText(playerOneScore + " - " + playerTwoScore);
+        setNumberView.setText("SET " + setNumber);
+        playerOneScoreView.setText(playerOneScore + "");
+        playerTwoScoreView.setText(playerTwoScore + "");
+
+        playerOneScoreView.setTypeface(
+                Typeface.create(playerOneScoreView.getTypeface(), Typeface.NORMAL), Typeface.NORMAL
+        );
+        playerTwoScoreView.setTypeface(
+                Typeface.create(playerTwoScoreView.getTypeface(), Typeface.NORMAL), Typeface.NORMAL
+        );
+
+        if(playerOneScore > playerTwoScore) {
+            playerOneScoreView.setTypeface(playerOneScoreView.getTypeface(), Typeface.BOLD);
+        }
+        else {
+            playerTwoScoreView.setTypeface(playerTwoScoreView.getTypeface(), Typeface.BOLD);
+        }
+
+
     }
 }

@@ -35,7 +35,7 @@ public class MatchActivity extends AppCompatActivity implements  LoaderCallbacks
         Intent intent = getIntent();
         mCurrentUri = intent.getData();
 
-        matchId =    Integer.valueOf(getIntent().getExtras().getString("matchId"));
+        matchId =   Integer.valueOf(getIntent().getExtras().getString("matchId"));
 
         ListView list =  findViewById(R.id.setlist);
         adapter = new MatchSetsAdapter(this , null);
