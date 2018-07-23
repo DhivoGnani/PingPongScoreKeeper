@@ -2,6 +2,7 @@ package com.example.android.pingpongscorekeeper.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,10 +14,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.adapters.MatchSetsAdapter;
 import com.example.android.pingpongscorekeeper.data.PingPongContract;
+
+import org.w3c.dom.Text;
 
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.Set.SORTED_SETS;
 
@@ -36,6 +40,31 @@ public class MatchActivity extends AppCompatActivity implements  LoaderCallbacks
         mCurrentUri = intent.getData();
 
         matchId =   Integer.valueOf(getIntent().getExtras().getString("matchId"));
+
+        String playerOneName = getIntent().getExtras().getString("playerOneName");
+        String playerTwoName = getIntent().getExtras().getString("playerTwoName");
+
+        TextView p1 = findViewById(R.id.player_one_id);
+        p1.setText(playerOneName);
+
+        TextView p2 = findViewById(R.id.player_two_id);
+        p2.setText(playerTwoName);
+
+        p1.setTypeface(
+                Typeface.create(p1.getTypeface(), Typeface.NORMAL), Typeface.NORMAL
+        );
+        p2.setTypeface(
+                Typeface.create(p2.getTypeface(), Typeface.NORMAL), Typeface.NORMAL
+        );
+
+
+        boolean won =  getIntent().getExtras().getString("won").equals("p1");
+        if(won) {
+            p1.setTypeface(p1.getTypeface(), Typeface.BOLD);
+        }
+        else {
+            p2.setTypeface(p2.getTypeface(), Typeface.BOLD);
+        }
 
         ListView list =  findViewById(R.id.setlist);
         adapter = new MatchSetsAdapter(this , null);

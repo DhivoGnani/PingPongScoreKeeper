@@ -314,6 +314,13 @@ public class GameActivity extends AppCompatActivity
             intent.setData(PingPongContract.Set.CONTENT_URI);
             String matchId = id + "";
             intent.putExtra("matchId", matchId);
+            intent.putExtra("playerOneName", pingPongGame.playerOne.getName());
+            intent.putExtra("playerTwoName", pingPongGame.playerTwo.getName());
+            if(pingPongGame.playerOne.getNumberOfSetsWon() > pingPongGame.playerTwo.getNumberOfSetsWon()) {
+                intent.putExtra("won", "p1");
+            } else {
+                intent.putExtra("won", "p2");
+            }
             startActivity(intent);
 
 //            playAudio(getString(
