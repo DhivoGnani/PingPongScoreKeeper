@@ -1,11 +1,8 @@
 package com.example.android.pingpongscorekeeper.activities;
 
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +24,7 @@ import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.components.PingPongGame;
 import com.example.android.pingpongscorekeeper.components.PingPongPlayer;
 import com.example.android.pingpongscorekeeper.components.PingPongSet;
+import com.example.android.pingpongscorekeeper.constants.Audio;
 import com.example.android.pingpongscorekeeper.data.PingPongContract;
 
 import java.util.ArrayList;
@@ -42,11 +40,7 @@ public class GameActivity extends AppCompatActivity
     private EditText playerOneNameDisplay;
     private EditText playerTwoNameDisplay;
     private Button reset;
-    // TODO: Remove hardcoded strings
-    private static final String [] congratulatingWords =
-            {"Good Job", "Great Shot", "Nice Move", "Incredible"};
 
-    // TODO: Remove hardcoded strings
     private TextToSpeech.OnInitListener textToSpeechListener = new TextToSpeech.OnInitListener() {
         @Override
         public void onInit(int status) {
@@ -244,9 +238,9 @@ public class GameActivity extends AppCompatActivity
     public String getRandomEncouragingWord()
     {
         int Low = 0;
-        int High = congratulatingWords.length;
+        int High = Audio.congratulatingWords.length;
         int Result = rand.nextInt(High-Low) + Low;
-        return congratulatingWords[Result];
+        return Audio.congratulatingWords[Result];
     }
 
     public void playerTwoScoreOnClick(View view)
