@@ -1,5 +1,6 @@
 package com.example.android.pingpongscorekeeper.activities;
 
+import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
@@ -112,7 +113,15 @@ public class MatchActivity extends AppCompatActivity implements  LoaderCallbacks
             case R.id.action_close:
                 finish();
                 return true;
+            case R.id.delete_a:
+                deleteMatch();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteMatch() {
+        Uri mId = ContentUris.withAppendedId(PingPongContract.PingPongMatch.CONTENT_URI, matchId);
+        getContentResolver().delete(mId, null, null);
+        finish();
     }
 }

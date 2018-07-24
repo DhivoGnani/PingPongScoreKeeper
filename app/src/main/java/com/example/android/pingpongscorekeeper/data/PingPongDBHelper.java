@@ -32,7 +32,11 @@ public class PingPongDBHelper extends SQLiteOpenHelper {
                 + PingPongContract.Set.MATCH_ID + " INTEGER NOT NULL, "
                 + PingPongContract.Set.SET_NUMBER + " INTEGER NOT NULL, "
                 + PingPongContract.Set.PLAYER_ONE_SCORE + " INTEGER NOT NULL, "
-                + PingPongContract.Set.PLAYER_TWO_SCORE + " INTEGER NOT NULL);";
+                + PingPongContract.Set.PLAYER_TWO_SCORE + " INTEGER NOT NULL, "
+                + " FOREIGN KEY ("+PingPongContract.Set.MATCH_ID+") REFERENCES "
+                + PingPongMatch.TABLE_NAME +"("+PingPongMatch._ID+") ON DELETE CASCADE)";
+
+
 
 
         db.execSQL(SQL_CREATE_PING_PONG_TABLE);
@@ -43,4 +47,9 @@ public class PingPongDBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
     }
 
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        db.execSQL("PRAGMA foreign_keys = ON;");
+    }
 }

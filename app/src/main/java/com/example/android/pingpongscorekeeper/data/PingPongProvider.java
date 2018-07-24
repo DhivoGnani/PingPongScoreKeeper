@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.example.android.pingpongscorekeeper.components.PingPongSet;
 import com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch;
 
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.TABLE_NAME;
@@ -22,12 +21,14 @@ public class PingPongProvider extends ContentProvider {
 
     private static final int MATCHES = 100;
     private static final int SETS = 101;
+    private static final int MATCHES_ID = 102;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_MATCH, MATCHES);
         sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_SET, SETS);
+        sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_MATCH + "/#", MATCHES_ID);
     }
 
     private PingPongDBHelper mDbHelper;
@@ -63,13 +64,18 @@ public class PingPongProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
+    public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
         int match = sUriMatcher.match(uri);
         int rowsDeleted;
         switch (match) {
             case MATCHES:
-                rowsDeleted = database.delete(TABLE_NAME, s, strings);
+                rowsDeleted = database.delete(TABLE_NAME, selection, selectionArgs);
+                break;
+            case MATCHES_ID:
+                selection = PingPongMatch._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                rowsDeleted = database.delete(PingPongMatch.TABLE_NAME, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Cannot query unknown URI " + uri);
