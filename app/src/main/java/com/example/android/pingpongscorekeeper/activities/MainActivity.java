@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 deleteAllMatches();
                 break;
             case 1:
-                new DummyDataHelper(getContentResolver()).insertDummyMatchData();
+                DummyDataHelper.insertDummyMatchData(getContentResolver());
                 break;
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);

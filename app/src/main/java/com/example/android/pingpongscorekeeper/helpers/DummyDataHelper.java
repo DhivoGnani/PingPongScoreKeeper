@@ -14,20 +14,14 @@ public class DummyDataHelper {
 
     private static final String testPlayerOneName = "Test Player 1";
     private static final String testPlayerTwoName = "Test Player 2";
-    private final ContentResolver contentResolver;
 
-    public DummyDataHelper(ContentResolver contentResolver)
-    {
-        this.contentResolver = contentResolver;
-    }
-
-    public void insertDummyMatchData()
+    public static void insertDummyMatchData(ContentResolver contentResolver)
     {
         PingPongAsyncHandler.AsyncQueryListener listener = new PingPongAsyncHandler.AsyncQueryListener() {
             @Override
             public void onInsertComplete(int token, Object cookie, Uri uri) {
                 final long matchId = Long.valueOf(uri.getLastPathSegment());
-                insertDummySetData(matchId);
+                insertDummySetData(matchId, (ContentResolver) cookie);
             }
         };
 
@@ -41,10 +35,10 @@ public class DummyDataHelper {
 
 
         pingPongAsyncHandler
-                .startInsert(-1 ,null, PingPongContract.PingPongMatch.CONTENT_URI, values);
+                .startInsert(-1 ,contentResolver, PingPongContract.PingPongMatch.CONTENT_URI, values);
     }
 
-    private void insertDummySetData(long matchId) {
+    private static void insertDummySetData(long matchId, ContentResolver contentResolver) {
         final ArrayList<PingPongSet> pingPongSets = new ArrayList<>();
         pingPongSets.add(new PingPongSet(1, 2, 11) );
         pingPongSets.add(new PingPongSet(1, 11, 8) );
@@ -58,7 +52,7 @@ public class DummyDataHelper {
             values.put(PingPongContract.Set.PLAYER_ONE_SCORE,  set.getPlayerOneScore());
             values.put(PingPongContract.Set.PLAYER_TWO_SCORE, set.getPlayerTwoScore());
 
-            PingPongAsyncHandler pingPongAsyncHandler = new PingPongAsyncHandler(contentResolver);
+            PingPongAsyncHandler pingPongAsyncHandler = new PingPongAsyncHandler(contentResolver, null);
             pingPongAsyncHandler.startInsert(-1, null, PingPongContract.Set.CONTENT_URI, values);
         }
     }

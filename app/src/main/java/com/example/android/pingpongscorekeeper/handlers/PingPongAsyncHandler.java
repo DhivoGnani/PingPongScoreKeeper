@@ -26,6 +26,7 @@ public class PingPongAsyncHandler extends AsyncQueryHandler {
     @Override
     protected void onInsertComplete(int token, Object cookie, Uri uri) {
         super.onInsertComplete(token, cookie, uri);
+
         final AsyncQueryListener listener = mListener.get();
         if (listener != null) listener.onInsertComplete(token, cookie, uri);
     }
