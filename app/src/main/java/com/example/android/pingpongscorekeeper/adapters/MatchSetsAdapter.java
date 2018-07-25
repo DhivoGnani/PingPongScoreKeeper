@@ -41,8 +41,8 @@ public class MatchSetsAdapter extends CursorAdapter {
         final int setNumber = cursor.getInt(setNumberCol);
 
         setNumberView.setText("SET " + setNumber);
-        playerOneScoreView.setText(playerOneScore + "");
-        playerTwoScoreView.setText(playerTwoScore + "");
+        playerOneScoreView.setText(String.valueOf(playerOneScore));
+        playerTwoScoreView.setText(String.valueOf(playerTwoScore));
 
         playerOneScoreView.setTypeface(
                 Typeface.create(playerOneScoreView.getTypeface(), Typeface.NORMAL), Typeface.NORMAL
