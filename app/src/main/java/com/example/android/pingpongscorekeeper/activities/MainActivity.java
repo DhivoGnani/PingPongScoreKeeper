@@ -1,6 +1,5 @@
 package com.example.android.pingpongscorekeeper.activities;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -13,6 +12,7 @@ import android.view.MenuItem;
 import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.adapters.CategoryAdapter;
 import com.example.android.pingpongscorekeeper.data.PingPongContract;
+import com.example.android.pingpongscorekeeper.helpers.DummyDataHelper;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -20,25 +20,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main2);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = findViewById(R.id.viewpager);
 
         CategoryAdapter adapter = new CategoryAdapter(this, getSupportFragmentManager());
 
         viewPager.setAdapter(adapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
 
         tabLayout.setupWithViewPager(viewPager);
-
-        String id = getIntent().getStringExtra("cool");
-
-        if(id != null) {
-            tabLayout.getTabAt(1).select();
-//            ((ListView)findViewById(R.id.list)).setSelection(adapter.getCount() - 1);
-        }
     }
 
     @Override
@@ -57,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 deleteAllMatches();
                 break;
             case 1:
-                insertDummyMatchData();
+                new DummyDataHelper(getContentResolver()).insertDummyMatchData();
                 break;
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
@@ -70,15 +62,4 @@ public class MainActivity extends AppCompatActivity {
     private void deleteAllMatches() {
         getContentResolver().delete(PingPongContract.PingPongMatch.CONTENT_URI, null, null);
     }
-
-    private void insertDummyMatchData()
-    {
-        ContentValues values = new ContentValues();
-        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_NAME_TITLE, "Dhivo");
-        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_NAME_TITLE, "Michael");
-        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE, 3);
-        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE, 4);
-        getContentResolver().insert(PingPongContract.PingPongMatch.CONTENT_URI, values);
-    }
-
 }

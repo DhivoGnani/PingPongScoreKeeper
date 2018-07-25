@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 
-//TODO: Why is AppCompactActivity and not Activity used here?
 public class GameActivity extends AppCompatActivity
 {
     private PingPongGame pingPongGame;
@@ -410,14 +409,5 @@ public class GameActivity extends AppCompatActivity
     public void changeResetButton()
     {
         reset.setText("Restart");
-//        reset.setOnClickListener(null);
-//        reset.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(GameActivity.this, MainActivity.class);
-//                intent.putExtra("cool", "test");
-//                startActivity(intent);
-//            }
-//        });
     }
 }
