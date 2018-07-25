@@ -16,6 +16,8 @@ public final class PingPongContract {
 
     public static final String PATH_SET = "sets";
 
+    public static final String PATH_PLAYER = "players";
+
     public static class PingPongMatch implements BaseColumns {
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_MATCH);
 
@@ -57,5 +59,20 @@ public final class PingPongContract {
         public final static String PLAYER_TWO_SCORE = "PlayerTwoScore";
 
         public static final String SORTED_SETS = SET_NUMBER + " ASC";
+    }
+
+    public static class Player implements BaseColumns {
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_PLAYER);
+
+        public static final String CONTENT_LIST_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PLAYER;
+
+        public static final String TABLE_NAME = "Players";
+
+        public final static String _ID = BaseColumns._ID;
+
+        public final static String COLUMN_NAME_TITLE = "Name";
+
+        public final static String COLUMN_PROFILE_PICTURE_TITLE = "ProfilePicture";
     }
 }

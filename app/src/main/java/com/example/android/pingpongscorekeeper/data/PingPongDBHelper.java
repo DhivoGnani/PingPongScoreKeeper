@@ -36,11 +36,14 @@ public class PingPongDBHelper extends SQLiteOpenHelper {
                 + " FOREIGN KEY ("+PingPongContract.Set.MATCH_ID+") REFERENCES "
                 + PingPongMatch.TABLE_NAME +"("+PingPongMatch._ID+") ON DELETE CASCADE)";
 
-
-
+        String SQL_CREATE_PLAYERS_TABLE =  "CREATE TABLE " + PingPongContract.Player.TABLE_NAME + " ("
+                + PingPongContract.Player._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + PingPongContract.Player.COLUMN_NAME_TITLE + " TEXT NOT NULL, "
+                + PingPongContract.Player.COLUMN_PROFILE_PICTURE_TITLE + " TEXT);";
 
         db.execSQL(SQL_CREATE_PING_PONG_TABLE);
         db.execSQL(SQL_CREATE_SET_TABLE);
+        db.execSQL(SQL_CREATE_PLAYERS_TABLE);
     }
 
     @Override
