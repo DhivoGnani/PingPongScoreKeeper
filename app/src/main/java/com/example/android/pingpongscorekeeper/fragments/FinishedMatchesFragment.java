@@ -53,18 +53,6 @@ public class FinishedMatchesFragment extends Fragment implements  LoaderManager.
         View emptyView = rootView.findViewById(R.id.empty_view);
         finishedMatchesListView.setEmptyView(emptyView);
 
-//        finishedMatchesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-//                Intent intent = new Intent(getActivity(), MatchActivity.class);
-//                intent.setData(PingPongContract.Set.CONTENT_URI);
-//                String matchId = id + "";
-//                intent.putExtra("matchId", matchId);
-//
-//                startActivity(intent);
-//            }
-//        });
-
         return rootView;
     }
 
