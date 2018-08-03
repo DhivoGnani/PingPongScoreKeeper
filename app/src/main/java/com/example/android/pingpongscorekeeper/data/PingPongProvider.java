@@ -12,26 +12,30 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch;
+import com.example.android.pingpongscorekeeper.data.PingPongContract.Player;
+import com.example.android.pingpongscorekeeper.data.PingPongContract.Set;
 
-import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.TABLE_NAME;
 
 public class PingPongProvider extends ContentProvider {
 
     public static final String LOG_TAG = PingPongProvider.class.getSimpleName();
+    private PingPongDBHelper mDbHelper;
 
     private static final int MATCHES = 100;
-    private static final int SETS = 101;
     private static final int MATCHES_ID = 102;
+    private static final int SETS = 101;
+    private static final int PLAYERS = 103;
+    private static final int PLAYERS_ID = 104;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_MATCH, MATCHES);
-        sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_SET, SETS);
         sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_MATCH + "/#", MATCHES_ID);
+        sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_SET, SETS);
+        sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_PLAYER, PLAYERS);
+        sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_PLAYER + "/#", PLAYERS_ID);
     }
-
-    private PingPongDBHelper mDbHelper;
 
     @Override
     public boolean onCreate() {
@@ -43,17 +47,29 @@ public class PingPongProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
         SQLiteDatabase database = mDbHelper.getReadableDatabase();
-
         Cursor cursor;
+        final int match = sUriMatcher.match(uri);
 
-        int match = sUriMatcher.match(uri);
         switch(match)
         {
             case MATCHES :
-                cursor = database.query(TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                cursor = database.query(PingPongMatch.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            case MATCHES_ID:
+                selection = PingPongMatch._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                cursor = database.query(PingPongMatch.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case SETS :
-                cursor = database.query(PingPongContract.Set.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                cursor = database.query(Set.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            case PLAYERS :
+                cursor = database.query(Player.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            case PLAYERS_ID :
+                selection = Player._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                cursor = database.query(Player.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             default :
                 throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
@@ -70,12 +86,20 @@ public class PingPongProvider extends ContentProvider {
         int rowsDeleted;
         switch (match) {
             case MATCHES:
-                rowsDeleted = database.delete(TABLE_NAME, selection, selectionArgs);
+                rowsDeleted = database.delete(PingPongMatch.TABLE_NAME, selection, selectionArgs);
                 break;
             case MATCHES_ID:
                 selection = PingPongMatch._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
                 rowsDeleted = database.delete(PingPongMatch.TABLE_NAME, selection, selectionArgs);
+                break;
+            case PLAYERS:
+                rowsDeleted = database.delete(Player.TABLE_NAME, selection, selectionArgs);
+                break;
+            case PLAYERS_ID:
+                selection = Player._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                rowsDeleted = database.delete(Player.TABLE_NAME, selection, selectionArgs);;
                 break;
             default:
                 throw new IllegalArgumentException("Cannot query unknown URI " + uri);
@@ -89,16 +113,23 @@ public class PingPongProvider extends ContentProvider {
     }
 
     @Override
-    public String getType(Uri uri) {
+    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String selection, @Nullable String[] selectionArgs) {
         final int match = sUriMatcher.match(uri);
+        int rowsUpdated;
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
         switch (match) {
-            case MATCHES:
-                return PingPongMatch.CONTENT_LIST_TYPE;
-            case SETS:
-                return PingPongContract.Set.CONTENT_LIST_TYPE;
+            case PLAYERS_ID:
+                selection = Player._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                rowsUpdated = database.update(Player.TABLE_NAME, contentValues, selection, selectionArgs);;
+                break;
             default:
-                throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
+                throw new IllegalArgumentException("Cannot query unknown URI " + uri);
         }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+        return rowsUpdated;
     }
 
     @Nullable
@@ -111,6 +142,8 @@ public class PingPongProvider extends ContentProvider {
                 return insertPingPongMatch(uri, contentValues);
             case SETS:
                 return insertPingPongSet(uri, contentValues);
+            case PLAYERS:
+                return insertPingPongPlayer(uri, contentValues);
             default:
                 throw new IllegalArgumentException("Cannot query unknown URI " + uri);
         }
@@ -119,7 +152,7 @@ public class PingPongProvider extends ContentProvider {
     private Uri insertPingPongSet(Uri uri, ContentValues contentValues) {
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
-        long id = database.insert(PingPongContract.Set.TABLE_NAME, null, contentValues);
+        long id = database.insert(Set.TABLE_NAME, null, contentValues);
 
         if (id == -1) {
             Log.e(LOG_TAG, "Failed to insert row for " + uri);
@@ -131,9 +164,20 @@ public class PingPongProvider extends ContentProvider {
         return ContentUris.withAppendedId(uri, id);
     }
 
-    @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+    private Uri insertPingPongPlayer(Uri uri, ContentValues values)
+    {
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        long id = database.insert(Player.TABLE_NAME, null, values);
+
+        if (id == -1) {
+            Log.e(LOG_TAG, "Failed to insert row for " + uri);
+            return null;
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+
+        return ContentUris.withAppendedId(uri, id);
     }
 
     private Uri insertPingPongMatch(Uri uri, ContentValues values) {
@@ -160,7 +204,7 @@ public class PingPongProvider extends ContentProvider {
 
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
-        long id = database.insert(TABLE_NAME, null, values);
+        long id = database.insert(PingPongMatch.TABLE_NAME, null, values);
 
         if (id == -1) {
             Log.e(LOG_TAG, "Failed to insert row for " + uri);
@@ -170,5 +214,20 @@ public class PingPongProvider extends ContentProvider {
         getContext().getContentResolver().notifyChange(uri, null);
 
         return ContentUris.withAppendedId(uri, id);
+    }
+
+    @Override
+    public String getType(Uri uri) {
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case MATCHES:
+                return PingPongMatch.CONTENT_LIST_TYPE;
+            case SETS:
+                return PingPongContract.Set.CONTENT_LIST_TYPE;
+            case PLAYERS:
+                return PingPongContract.Player.CONTENT_LIST_TYPE;
+            default:
+                throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
+        }
     }
 }
