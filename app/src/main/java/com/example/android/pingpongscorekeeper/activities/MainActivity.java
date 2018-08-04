@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mainmenu, menu);
         menu.add(0, 0, 0, "Delete All");
-        menu.add(0, 1, 0, "Insert Dummy Data");
+        menu.add(0, 1, 0, "Insert Match Dummy Data");
+        menu.add(0, 2, 0, "Insert Player Dummy Data");
         return true;
     }
 
@@ -50,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 1:
                 DummyDataHelper.insertDummyMatchData(getContentResolver());
+                break;
+            case 2:
+                DummyDataHelper.insertDummyPlayer("Neymar", getContentResolver());
                 break;
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
