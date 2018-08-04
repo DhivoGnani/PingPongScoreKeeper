@@ -181,12 +181,12 @@ public class PingPongProvider extends ContentProvider {
     }
 
     private Uri insertPingPongMatch(Uri uri, ContentValues values) {
-        String playerOneName = values.getAsString(PingPongMatch.COLUMN_PLAYER_ONE_NAME_TITLE);
+        String playerOneName = values.getAsString(PingPongMatch.COLUMN_PLAYER_ONE_ID_TITLE);
         if (playerOneName == null) {
             throw new IllegalArgumentException("Player One requires a name");
         }
 
-        String playerTwoName = values.getAsString(PingPongMatch.COLUMN_PLAYER_TWO_NAME_TITLE);
+        String playerTwoName = values.getAsString(PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE);
         if (playerTwoName == null) {
             throw new IllegalArgumentException("Player Two requires a name");
         }

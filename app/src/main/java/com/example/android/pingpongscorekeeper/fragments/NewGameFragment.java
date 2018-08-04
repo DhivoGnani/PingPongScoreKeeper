@@ -42,6 +42,8 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
     private CheckBox playerOneServe;
     private CheckBox playerTwoServe;
 
+    private long playerOneId;
+    private long playerTwoId;
     private String playerOneName;
     private String playerTwoName;
 
@@ -49,8 +51,6 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
 
     private SimpleCursorAdapter madapter;
     private SimpleCursorAdapter madapter2;
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,7 +106,6 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
         int[] toViews = {
                 android.R.id.text1
         };
-
 
         madapter = new SimpleCursorAdapter(
                 getActivity(),
@@ -164,6 +163,8 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
         Intent intent = new Intent(getActivity(), GameActivity.class);
         intent.putExtra("playerOneName", playerOneName);
         intent.putExtra("playerTwoName", playerTwoName);
+        intent.putExtra("playerOneId", playerOneId);
+        intent.putExtra("playerTwoId", playerTwoId);
         intent.putExtra("numSets", numSets);
         intent.putExtra("servingPlayer", servingPlayer);
         startActivity(intent);
@@ -219,11 +220,13 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             Cursor x = (Cursor)adapterView.getItemAtPosition(i);
             String f  = x.getString(x.getColumnIndex(PingPongContract.Player.COLUMN_NAME_TITLE));
-
+            long id = x.getLong(x.getColumnIndex(PingPongContract.Player._ID));
             if(adapterView == playerOneDisplay) {
                 playerOneName = f;
+                playerOneId = id;
             } else {
                 playerTwoName = f;
+                playerTwoId = id;
             }
     }
 

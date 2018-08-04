@@ -121,8 +121,11 @@ public class GameActivity extends AppCompatActivity
         final String playerTwoName = getIntent().getExtras().getString("playerTwoName");
         final int numSets = Integer.valueOf(getIntent().getExtras().getString("numSets"));
         final String servingPlayer = getIntent().getExtras().getString("servingPlayer");
+        long playerOneId = getIntent().getExtras().getLong("playerOneId");
+        long playerTwoId = getIntent().getExtras().getLong("playerTwoId");
 
-        pingPongGame = new PingPongGame(playerOneName, playerTwoName, numSets, servingPlayer);
+        pingPongGame = new PingPongGame(playerOneName, playerTwoName, numSets, servingPlayer,
+                playerOneId, playerTwoId);
 
         displayPlayersName();
         displayCurrentServingPlayer();
@@ -283,8 +286,8 @@ public class GameActivity extends AppCompatActivity
             );
 
             ContentValues values = new ContentValues();
-            values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_NAME_TITLE, pingPongGame.playerOne.getName());
-            values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_NAME_TITLE,  pingPongGame.playerTwo.getName());
+            values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_ID_TITLE, pingPongGame.playerOneId);
+            values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE,  pingPongGame.playerTwoId);
             values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE,  pingPongGame.getNumSetsPlayerOneWon());
             values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE, pingPongGame.getNumSetsPlayerTwoWon());
 

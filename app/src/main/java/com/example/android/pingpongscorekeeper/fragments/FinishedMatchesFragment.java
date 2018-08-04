@@ -17,9 +17,9 @@ import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.adapters.FinishedMatchesCursorAdapter;
 
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_GAME_TIME_DONE_LOCAL_TITLE;
-import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_NAME_TITLE;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_ID_TITLE;
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE;
-import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_NAME_TITLE;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE;
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE;
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.CONTENT_URI;
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.SORTED_GAME_TIME_DONE_LOCAL_DESC;
@@ -54,7 +54,7 @@ public class FinishedMatchesFragment extends Fragment implements  LoaderManager.
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int i, @Nullable Bundle bundle) {
-        String[] projection = {_ID, COLUMN_PLAYER_ONE_NAME_TITLE, COLUMN_PLAYER_TWO_NAME_TITLE,
+        String[] projection = {_ID, COLUMN_PLAYER_ONE_ID_TITLE, COLUMN_PLAYER_TWO_ID_TITLE,
                 COLUMN_PLAYER_ONE_SETS_WON_TITLE, COLUMN_PLAYER_TWO_SETS_WON_TITLE,
                 COLUMN_GAME_TIME_DONE_LOCAL_TITLE};
 
