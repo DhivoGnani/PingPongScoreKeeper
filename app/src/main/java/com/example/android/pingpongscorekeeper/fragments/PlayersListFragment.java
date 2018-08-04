@@ -1,5 +1,6 @@
 package com.example.android.pingpongscorekeeper.fragments;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.android.pingpongscorekeeper.R;
+import com.example.android.pingpongscorekeeper.activities.PlayerEditorActivity;
 import com.example.android.pingpongscorekeeper.adapters.PlayersAdapter;
 import com.example.android.pingpongscorekeeper.data.PingPongContract;
 
@@ -37,6 +39,13 @@ public class PlayersListFragment extends Fragment implements  LoaderManager.Load
 
         this.getLoaderManager().initLoader(PING_PONG_LOADER, null, this);
 
+        rootView.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PlayerEditorActivity.class);
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 

@@ -70,6 +70,7 @@ public class MatchActivity extends AppCompatActivity implements  LoaderCallbacks
         ListView list =  findViewById(R.id.setlist);
         adapter = new MatchSetsAdapter(this , null);
 
+
         list.setAdapter(adapter);
 
         this.getSupportLoaderManager().initLoader(SET_LOADER, null, this);
