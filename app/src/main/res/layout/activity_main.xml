@@ -34,7 +34,7 @@
                     android:id="@+id/player_one"
                     android:maxLines="1"
                     android:lines="1"
-                    android:inputType="textCapSentences"
+                    android:inputType="none"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -43,7 +43,9 @@
                     android:textColor="#616161"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:hint="Player 1"/>
+                    android:hint="Player 1"
+                    android:editable="false"
+                    />
 
                 <TextView
                     android:id="@+id/player_one_serve"
@@ -125,7 +127,7 @@
                     android:id="@+id/player_two"
                     android:maxLines="1"
                     android:lines="1"
-                    android:inputType="textCapSentences"
+                    android:inputType="none"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -134,7 +136,8 @@
                     android:textColor="#616161"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:hint="Player 2"/>
+                    android:hint="Player 2"
+                    android:editable="false"/>
 
                 <TextView
                     android:id="@+id/player_two_serve"
