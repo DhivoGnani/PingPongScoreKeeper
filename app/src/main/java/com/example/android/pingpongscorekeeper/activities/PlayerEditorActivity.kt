@@ -65,6 +65,7 @@ class PlayerEditorActivity : AppCompatActivity() {
         if(playerName == null || playerName.isNullOrBlank()) {
             Toast.makeText(this, "Enter a name",
                     Toast.LENGTH_SHORT).show()
+            return
         }
         insertDummyPlayer(playerName!!, contentResolver)
         finish()
