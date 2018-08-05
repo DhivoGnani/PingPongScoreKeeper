@@ -62,7 +62,10 @@ class PlayerEditorActivity : AppCompatActivity() {
     }
 
     private fun addNewPlayer() {
-        if(playerName == null || playerName.isNullOrBlank()) return
+        if(playerName == null || playerName.isNullOrBlank()) {
+            Toast.makeText(this, "Enter a name",
+                    Toast.LENGTH_SHORT).show()
+        }
         insertDummyPlayer(playerName!!, contentResolver)
         finish()
         Toast.makeText(this, "player saved",
