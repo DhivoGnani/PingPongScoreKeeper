@@ -21,6 +21,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.activities.GameActivity;
@@ -154,7 +155,8 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
 
     public void startGameOnClick(View view)
     {
-        if(playerOneName == null || playerTwoName == null) return;
+
+        if(!playersChosenAreValid()) return;
 
         String numSets = configuration.getNumberOfSets() + "";
         String servingPlayer = configuration.getServingPlayer().toString();
@@ -233,5 +235,20 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+
+    public boolean playersChosenAreValid()
+    {
+        if(playerOneName == null || playerTwoName == null)  {
+            return false;
+        }
+
+        if(playerOneId == playerTwoId) {
+            Toast.makeText(getActivity(), "Chosen players are the same",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 }

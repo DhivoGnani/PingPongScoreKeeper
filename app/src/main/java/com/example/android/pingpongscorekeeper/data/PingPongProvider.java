@@ -15,6 +15,10 @@ import com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMat
 import com.example.android.pingpongscorekeeper.data.PingPongContract.Player;
 import com.example.android.pingpongscorekeeper.data.PingPongContract.Set;
 
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_GAME_TIME_DONE_LOCAL_TITLE_ALIAS;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE;
+
 
 public class PingPongProvider extends ContentProvider {
 
@@ -53,7 +57,8 @@ public class PingPongProvider extends ContentProvider {
         switch(match)
         {
             case MATCHES :
-                cursor = database.query(PingPongMatch.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+//                cursor = database.query(PingPongMatch.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                cursor = getMatchesWithPlayerInfo();
                 break;
             case MATCHES_ID:
                 selection = PingPongMatch._ID + "=?";
@@ -192,7 +197,7 @@ public class PingPongProvider extends ContentProvider {
         }
 
 
-        Integer playerOneSetsWon = values.getAsInteger(PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE);
+        Integer playerOneSetsWon = values.getAsInteger(COLUMN_PLAYER_ONE_SETS_WON_TITLE);
         if (playerOneSetsWon == null) {
             throw new IllegalArgumentException("Player One Sets Won requires a number");
         }
@@ -229,5 +234,30 @@ public class PingPongProvider extends ContentProvider {
             default:
                 throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
         }
+    }
+
+    final String pingPongMatchTableName = "matchTable";
+    final String playerOneTableName = "playerOneTable";
+    final String playerTwoTableName = "playerTwoTable";
+
+    public Cursor getMatchesWithPlayerInfo()
+    {
+        SQLiteDatabase database = mDbHelper.getReadableDatabase();
+
+        String query = "SELECT " + pingPongMatchTableName + "." + PingPongMatch._ID + ","
+                +  pingPongMatchTableName + "." + COLUMN_PLAYER_ONE_SETS_WON_TITLE + ","
+                +  pingPongMatchTableName + "." + COLUMN_PLAYER_TWO_SETS_WON_TITLE + ","
+                + COLUMN_GAME_TIME_DONE_LOCAL_TITLE_ALIAS + "time,"
+                + playerOneTableName + "." + Player.COLUMN_NAME_TITLE + " PlayerOneName,"
+                + playerTwoTableName + "." + Player.COLUMN_NAME_TITLE + " PlayerTwoName"
+                + " FROM " + PingPongMatch.TABLE_NAME + " " + pingPongMatchTableName
+                + " INNER JOIN " + Player.TABLE_NAME  + " " + playerOneTableName + " ON "
+                +  pingPongMatchTableName + "." + PingPongMatch.COLUMN_PLAYER_ONE_ID_TITLE + "=" + playerOneTableName + "." + Player._ID
+                + " INNER JOIN " + Player.TABLE_NAME + " " + playerTwoTableName + " ON "
+                + pingPongMatchTableName + "." + PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE + "=" + playerTwoTableName + "." + Player._ID
+                + " ORDER BY time DESC;";
+
+        Cursor test =  database.rawQuery(query, null);
+        return test;
     }
 }

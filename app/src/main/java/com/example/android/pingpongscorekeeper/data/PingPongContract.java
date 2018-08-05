@@ -37,6 +37,9 @@ public final class PingPongContract {
                 = "datetime(" + PingPongMatch.COLUMN_GAME_TIME_DONE_TITLE +", 'localtime')";
         public static final String SORTED_GAME_TIME_DONE_LOCAL_DESC
                 = COLUMN_GAME_TIME_DONE_TITLE + " DESC";
+
+        public static final String COLUMN_GAME_TIME_DONE_LOCAL_TITLE_ALIAS
+                = "datetime(matchTable." + PingPongMatch.COLUMN_GAME_TIME_DONE_TITLE +", 'localtime')";
     }
 
     public static class Set implements BaseColumns {
