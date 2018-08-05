@@ -39,7 +39,6 @@
             android:exported="false" />
 
         <activity android:name=".activities.MatchActivity" />
-        <activity android:name=".activities.ProfileEditorActivity" />
         <activity android:name=".activities.PlayerEditorActivity"></activity>
     </application>
 

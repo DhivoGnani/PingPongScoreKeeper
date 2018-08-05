@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.android.pingpongscorekeeper.R;
-import com.example.android.pingpongscorekeeper.activities.PlayerEditorActivity;
 import com.example.android.pingpongscorekeeper.adapters.PlayersAdapter;
 import com.example.android.pingpongscorekeeper.data.PingPongContract;
 
