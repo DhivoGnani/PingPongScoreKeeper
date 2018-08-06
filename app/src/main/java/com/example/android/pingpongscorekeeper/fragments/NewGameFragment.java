@@ -1,68 +1,57 @@
 package com.example.android.pingpongscorekeeper.fragments;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.activities.GameActivity;
 import com.example.android.pingpongscorekeeper.components.GameConfiguration;
+import com.example.android.pingpongscorekeeper.data.PingPongContract;
 
-public class NewGameFragment extends Fragment
+import java.util.ArrayList;
+
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.CONTENT_URI;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.SORTED_GAME_TIME_DONE_LOCAL_DESC;
+
+public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemSelectedListener
 {
+    private static final int PING_PONG_LOADER = 0;
     private GameConfiguration configuration;
 
-    private EditText playerOneDisplay;
-    private EditText playerTwoDisplay;
+    private Spinner playerOneDisplay;
+    private Spinner playerTwoDisplay;
     private CheckBox playerOneServe;
     private CheckBox playerTwoServe;
 
+    private long playerOneId;
+    private long playerTwoId;
+    private String playerOneName;
+    private String playerTwoName;
+
     private View rootView;
 
-    // TODO: Duplicate code in TextWatcher
-    private TextWatcher playerOneDisplayWatcher = new TextWatcher() {
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            configuration.setPlayerOneName(playerOneDisplay.getText().toString());
-
-        }
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count,
-                                      int after) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-        }
-
-    };
-
-    // TODO: Duplicate code in TextWatcher
-    private TextWatcher playerTwoDisplayWatcher = new TextWatcher() {
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            configuration.setPlayerTwoName(playerTwoDisplay.getText().toString());
-
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count,
-                                      int after) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-        }
-    };
+    private SimpleCursorAdapter madapter;
+    private SimpleCursorAdapter madapter2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,9 +62,6 @@ public class NewGameFragment extends Fragment
 
         playerOneDisplay = rootView.findViewById(R.id.player_one);
         playerTwoDisplay = rootView.findViewById(R.id.player_two);
-
-        playerOneDisplay.addTextChangedListener(playerOneDisplayWatcher);
-        playerTwoDisplay.addTextChangedListener(playerTwoDisplayWatcher);
 
         playerOneServe = rootView.findViewById(R.id.player_one_serve);
         playerTwoServe = rootView.findViewById(R.id.player_two_serve);
@@ -115,6 +101,39 @@ public class NewGameFragment extends Fragment
             }
         });
 
+        String[] fromColumns = {
+                PingPongContract.Player.COLUMN_NAME_TITLE
+        };
+        int[] toViews = {
+                android.R.id.text1
+        };
+
+        madapter = new SimpleCursorAdapter(
+                getActivity(),
+                android.R.layout.simple_spinner_item,
+                null,
+                fromColumns,
+                toViews,
+                0);
+
+        madapter2 = new SimpleCursorAdapter(
+                getActivity(),
+                android.R.layout.simple_spinner_item,
+                null,
+                fromColumns,
+                toViews,
+                0);
+
+        madapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        madapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        playerOneDisplay.setAdapter(madapter);
+        playerTwoDisplay.setAdapter(madapter2);
+
+        this.getLoaderManager().initLoader(PING_PONG_LOADER, null, this);
+
+        playerTwoDisplay.setOnItemSelectedListener(this);
+        playerOneDisplay.setOnItemSelectedListener(this);
         return rootView;
     }
 
@@ -136,8 +155,9 @@ public class NewGameFragment extends Fragment
 
     public void startGameOnClick(View view)
     {
-        String playerOneName = configuration.getPlayerOneName();
-        String playerTwoName =  configuration.getPlayerTwoName();
+
+        if(!playersChosenAreValid()) return;
+
         String numSets = configuration.getNumberOfSets() + "";
         String servingPlayer = configuration.getServingPlayer().toString();
 
@@ -145,6 +165,8 @@ public class NewGameFragment extends Fragment
         Intent intent = new Intent(getActivity(), GameActivity.class);
         intent.putExtra("playerOneName", playerOneName);
         intent.putExtra("playerTwoName", playerTwoName);
+        intent.putExtra("playerOneId", playerOneId);
+        intent.putExtra("playerTwoId", playerTwoId);
         intent.putExtra("numSets", numSets);
         intent.putExtra("servingPlayer", servingPlayer);
         startActivity(intent);
@@ -174,5 +196,59 @@ public class NewGameFragment extends Fragment
         {
             if(!playerTwoServe.isChecked()) playerTwoServe.toggle();
         }
+    }
+
+    @NonNull
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, @Nullable Bundle bundle) {
+
+        return new CursorLoader(getActivity(), PingPongContract.Player.CONTENT_URI, null, null, null,
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
+        madapter.swapCursor(cursor);
+        madapter2.swapCursor(cursor);
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+        madapter.swapCursor(null);
+        madapter2.swapCursor(null);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            Cursor x = (Cursor)adapterView.getItemAtPosition(i);
+            String f  = x.getString(x.getColumnIndex(PingPongContract.Player.COLUMN_NAME_TITLE));
+            long id = x.getLong(x.getColumnIndex(PingPongContract.Player._ID));
+            if(adapterView == playerOneDisplay) {
+                playerOneName = f;
+                playerOneId = id;
+            } else {
+                playerTwoName = f;
+                playerTwoId = id;
+            }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+
+    public boolean playersChosenAreValid()
+    {
+        if(playerOneName == null || playerTwoName == null)  {
+            return false;
+        }
+
+        if(playerOneId == playerTwoId) {
+            Toast.makeText(getActivity(), "Chosen players are the same",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 }

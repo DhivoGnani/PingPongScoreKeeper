@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.example.android.pingpongscorekeeper.R
 import com.example.android.pingpongscorekeeper.data.PingPongContract.Set.*
 
-class MatchSetsAdapter(context: Context, c: Cursor?) : CursorAdapter(context, c, 0) {
+class MatchSetsAdapter(context: Context, c: Cursor?)  : CursorAdapter(context, c, 0)  {
 
     override fun newView(context: Context, cursor: Cursor, parent: ViewGroup): View {
         return LayoutInflater.from(context).inflate(R.layout.details_item, parent, false)

@@ -3,7 +3,6 @@ package com.example.android.pingpongscorekeeper.helpers;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.net.Uri;
-import android.view.animation.PathInterpolator;
 
 import com.example.android.pingpongscorekeeper.components.PingPongSet;
 import com.example.android.pingpongscorekeeper.data.PingPongContract;
@@ -29,8 +28,8 @@ public class DummyDataHelper {
         PingPongAsyncHandler pingPongAsyncHandler = new PingPongAsyncHandler(contentResolver, listener);
 
         final ContentValues values = new ContentValues();
-        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_NAME_TITLE, testPlayerOneName);
-        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_NAME_TITLE, testPlayerTwoName);
+        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_ID_TITLE, testPlayerOneName);
+        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE, testPlayerTwoName);
         values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE, 1);
         values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE, 2);
 

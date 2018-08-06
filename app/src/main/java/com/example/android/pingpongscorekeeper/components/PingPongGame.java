@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class PingPongGame
 {
+    public final long playerOneId;
+    public final long playerTwoId;
     public PingPongPlayer playerOne;
     public PingPongPlayer playerTwo;
     public PingPongPlayer previousSetFirstServingPlayer;
@@ -24,9 +26,13 @@ public class PingPongGame
             String playerOneName,
             String playerTwoName,
             int numSets,
-            String servingPlayer
+            String servingPlayer,
+            long playerOneId,
+            long playerTwoId
     )
     {
+        this.playerOneId = playerOneId;
+        this.playerTwoId = playerTwoId;
         this.playerOneName = playerOneName;
         this.playerTwoName = playerTwoName;
         pingPongSets = new ArrayList<>();

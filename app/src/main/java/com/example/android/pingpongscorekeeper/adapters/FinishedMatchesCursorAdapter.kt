@@ -27,11 +27,11 @@ class FinishedMatchesCursorAdapter(context: Context, c: Cursor?) : CursorAdapter
         val playerTwoScoreView = view.findViewById<TextView>(R.id.player_two_score)
         val gameEndTimeStamp = view.findViewById<TextView>(R.id.game_end_timestamp)
 
-        val playerOneNameCol = cursor.getColumnIndex(COLUMN_PLAYER_ONE_NAME_TITLE)
-        val playerTwoNameCol = cursor.getColumnIndex(COLUMN_PLAYER_TWO_NAME_TITLE)
+        val playerOneNameCol = cursor.getColumnIndex("PlayerOneName")
+        val playerTwoNameCol = cursor.getColumnIndex("PlayerTwoName")
         val playerOneScoreCol = cursor.getColumnIndex(COLUMN_PLAYER_ONE_SETS_WON_TITLE)
         val playerTwoScoreCol = cursor.getColumnIndex(COLUMN_PLAYER_TWO_SETS_WON_TITLE)
-        val gameEndTimeLocal = cursor.getColumnIndex(COLUMN_GAME_TIME_DONE_LOCAL_TITLE)
+        val gameEndTimeLocal = cursor.getColumnIndex("time")
         val matchIdCol = cursor.getColumnIndex(_ID)
 
         playerOneNameView.text = cursor.getString(playerOneNameCol)
