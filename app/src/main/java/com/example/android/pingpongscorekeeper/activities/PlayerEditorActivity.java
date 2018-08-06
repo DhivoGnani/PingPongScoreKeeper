@@ -154,6 +154,16 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
                     Toast.LENGTH_SHORT).show();
             return;
         }
+        if(getIntent().getData() != null)
+        {
+            ContentValues values = new ContentValues();
+            values.put(PingPongContract.Player.COLUMN_NAME_TITLE, playerName);
+            if(uriStr != null) {
+                values.put(PingPongContract.Player.COLUMN_PROFILE_PICTURE_TITLE, uriStr);
+            }
+            getContentResolver().update(mCurrentPlayerUri, values, null, null);
+            finish();
+        }
         insertDummyPlayer(playerName, getContentResolver());
         finish();
         Toast.makeText(this, "player saved",
