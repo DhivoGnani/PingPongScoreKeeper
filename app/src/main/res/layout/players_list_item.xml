@@ -13,20 +13,21 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/twitterSmallIcon"
+        <de.hdodenhof.circleimageview.CircleImageView
+
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="0dp"
-            android:layout_height="73sp"
+            android:layout_height="80dp"
             android:layout_weight="1"
-            android:width="73sp"
-            android:height="73sp"
             android:padding="10dp"
-            android:scaleType="fitCenter"
             app:riv_border_color="#333333"
             app:riv_border_width="1dip"
             app:riv_corner_radius="30dip"
-            app:riv_oval="true"
-            android:rotation="-90"/>
+            android:id="@+id/profile_image"
+            android:src="@drawable/default_profile"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#FF000000"
+            android:layout_gravity="center_horizontal"/>
 
         <TextView
             android:text="Dhivo"
