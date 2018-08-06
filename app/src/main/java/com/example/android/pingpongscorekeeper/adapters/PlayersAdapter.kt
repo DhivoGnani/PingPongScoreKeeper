@@ -16,6 +16,12 @@ import com.example.android.pingpongscorekeeper.data.PingPongContract
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.players_list_item.view.*
+import android.os.AsyncTask
+import android.os.AsyncTask.execute
+
+
+
+
 
 class PlayersAdapter(context: Context, c: Cursor?) : CursorAdapter(context, c, 0) {
 
@@ -30,10 +36,40 @@ class PlayersAdapter(context: Context, c: Cursor?) : CursorAdapter(context, c, 0
         val setProfileCol = cursor.getColumnIndex(PingPongContract.Player.COLUMN_PROFILE_PICTURE_TITLE)
 
         if(cursor.getString(setProfileCol) != null) {
-            val bitmap: Bitmap= MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.parse(cursor.getString(setProfileCol)) )
-            view.profile_image.setImageBitmap(bitmap)
+            val myTask = Task1()
+            myTask.context = context
+            myTask.view = view
+            myTask.uri = Uri.parse(cursor.getString(setProfileCol))
+            myTask.execute()
+
+        } else {
+            view.profile_image.setImageResource(R.drawable.default_profile)
         }
         playerNameView.text = cursor.getString(setNumberCol)
 
     }
+
+    internal inner class Task1 : AsyncTask<Void, Void, Bitmap>() {
+
+        var context: Context? = null
+        var uri: Uri? = null;
+        var view: View? = null;
+
+        override fun onPreExecute() {
+            super.onPreExecute()
+        }
+
+        override fun doInBackground(vararg arg0: Void): Bitmap? {
+            //Record method
+            val bitmap: Bitmap= MediaStore.Images.Media.getBitmap(context?.getContentResolver(), uri )
+            return bitmap
+        }
+
+        override fun onPostExecute(result: Bitmap?) {
+            view?.profile_image?.setImageBitmap(result)
+
+        }
+    }
 }
+
+
