@@ -163,6 +163,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
             }
             getContentResolver().update(mCurrentPlayerUri, values, null, null);
             finish();
+            return;
         }
         insertDummyPlayer(playerName, getContentResolver());
         finish();
