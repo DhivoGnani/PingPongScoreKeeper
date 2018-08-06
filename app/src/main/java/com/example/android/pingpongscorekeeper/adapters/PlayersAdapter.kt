@@ -1,19 +1,14 @@
 package com.example.android.pingpongscorekeeper.adapters
 
 import android.content.Context
-import android.content.Intent
 import android.database.Cursor
-import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CursorAdapter
 import android.widget.TextView
 import com.example.android.pingpongscorekeeper.R
-import com.example.android.pingpongscorekeeper.activities.MatchActivity
-import com.example.android.pingpongscorekeeper.activities.PlayerEditorActivity
 import com.example.android.pingpongscorekeeper.data.PingPongContract
-import com.example.android.pingpongscorekeeper.data.PingPongContract.Set.*
 
 class PlayersAdapter(context: Context, c: Cursor?) : CursorAdapter(context, c, 0) {
 

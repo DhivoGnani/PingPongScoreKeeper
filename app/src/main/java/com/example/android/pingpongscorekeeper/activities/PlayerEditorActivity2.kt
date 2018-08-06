@@ -33,7 +33,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class PlayerEditorActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
+class PlayerEditorActivity2 : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
     private var mCurrentPlayerUri: Uri? = null
     private var nameEditText: EditText? = null
@@ -193,9 +193,6 @@ class PlayerEditorActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
         }
-
-
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
