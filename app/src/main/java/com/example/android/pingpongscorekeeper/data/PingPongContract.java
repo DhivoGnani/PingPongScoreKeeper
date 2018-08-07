@@ -18,6 +18,19 @@ public final class PingPongContract {
 
     public static final String PATH_PLAYER = "players";
 
+    public static final String PATH_TOURNAMENT = "tournaments";
+
+    public static class Tournament implements BaseColumns {
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_TOURNAMENT);
+        public static final String CONTENT_LIST_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_TOURNAMENT;
+
+        public static final String TABLE_NAME = "Tournament";
+
+        public final static String _ID = BaseColumns._ID;
+        public final static String COLUMN_NAME_TITLE = "Name";
+    }
+
     public static class PingPongMatch implements BaseColumns {
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_MATCH);
 
@@ -28,6 +41,7 @@ public final class PingPongContract {
 
         public final static String _ID = BaseColumns._ID;
 
+        public static final String COLUMN_TOURNAMENT_TITLE = "TournamentId";
         public static final String COLUMN_PLAYER_ONE_ID_TITLE = "PlayerOneId";
         public static final String COLUMN_PLAYER_TWO_ID_TITLE = "PlayerTwoId";
         public static final String COLUMN_PLAYER_ONE_SETS_WON_TITLE = "PlayerOneSetsWon";

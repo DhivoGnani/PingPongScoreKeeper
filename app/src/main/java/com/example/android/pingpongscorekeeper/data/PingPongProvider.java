@@ -30,6 +30,8 @@ public class PingPongProvider extends ContentProvider {
     private static final int SETS = 101;
     private static final int PLAYERS = 103;
     private static final int PLAYERS_ID = 104;
+    private static final int TOURNAMENTS = 105;
+    private static final int TOURNAMENTS_ID = 106;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -39,6 +41,8 @@ public class PingPongProvider extends ContentProvider {
         sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_SET, SETS);
         sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_PLAYER, PLAYERS);
         sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_PLAYER + "/#", PLAYERS_ID);
+        sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_TOURNAMENT, TOURNAMENTS);
+        sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_TOURNAMENT + "/#", TOURNAMENTS_ID);
     }
 
     @Override
@@ -75,6 +79,14 @@ public class PingPongProvider extends ContentProvider {
                 selection = Player._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
                 cursor = database.query(Player.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            case TOURNAMENTS :
+                cursor = database.query(PingPongContract.Tournament.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            case TOURNAMENTS_ID :
+                selection = PingPongContract.Tournament._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                cursor = database.query(PingPongContract.Tournament.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             default :
                 throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
@@ -149,9 +161,26 @@ public class PingPongProvider extends ContentProvider {
                 return insertPingPongSet(uri, contentValues);
             case PLAYERS:
                 return insertPingPongPlayer(uri, contentValues);
+            case TOURNAMENTS:
+                return insertTournament(uri, contentValues);
             default:
                 throw new IllegalArgumentException("Cannot query unknown URI " + uri);
         }
+    }
+
+    private Uri insertTournament(Uri uri, ContentValues contentValues) {
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        long id = database.insert(PingPongContract.Tournament.TABLE_NAME, null, contentValues);
+
+        if (id == -1) {
+            Log.e(LOG_TAG, "Failed to insert row for " + uri);
+            return null;
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+
+        return ContentUris.withAppendedId(uri, id);
     }
 
     private Uri insertPingPongSet(Uri uri, ContentValues contentValues) {

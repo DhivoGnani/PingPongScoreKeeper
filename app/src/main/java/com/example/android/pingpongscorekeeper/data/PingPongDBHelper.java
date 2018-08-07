@@ -19,18 +19,25 @@ public class PingPongDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String SQL_CREATE_PLAYERS_TABLE =  "CREATE TABLE " + PingPongContract.Player.TABLE_NAME + " ("
+        String SQL_CREATE_TOURNAMENT_TABLE = "CREATE TABLE " + PingPongContract.Tournament.TABLE_NAME + " ("
+                + PingPongContract.Tournament._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + PingPongContract.Tournament.COLUMN_NAME_TITLE + " TEXT NOT NULL);" ;
+
+        String SQL_CREATE_PLAYER_TABLE =  "CREATE TABLE " + PingPongContract.Player.TABLE_NAME + " ("
                 + PingPongContract.Player._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + PingPongContract.Player.COLUMN_NAME_TITLE + " TEXT NOT NULL, "
                 + PingPongContract.Player.COLUMN_PROFILE_PICTURE_TITLE + " TEXT);";
 
-        String SQL_CREATE_PING_PONG_TABLE =  "CREATE TABLE " + PingPongMatch.TABLE_NAME + " ("
+        String SQL_CREATE_MATCH_TABLE =  "CREATE TABLE " + PingPongMatch.TABLE_NAME + " ("
                 + PingPongMatch._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + PingPongMatch.COLUMN_TOURNAMENT_TITLE + " INTEGER, "
                 + PingPongMatch.COLUMN_PLAYER_ONE_ID_TITLE + " INTEGER NOT NULL, "
                 + PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE + " INTEGER NOT NULL, "
                 + PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE + " INTEGER NOT NULL, "
                 + PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE + " INTEGER NOT NULL, "
                 + PingPongMatch.COLUMN_GAME_TIME_DONE_TITLE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, "
+                + " FOREIGN KEY ("+PingPongMatch.COLUMN_TOURNAMENT_TITLE + ") REFERENCES "
+                + PingPongContract.Tournament.TABLE_NAME +"("+PingPongContract.Tournament._ID+"), "
                 + " FOREIGN KEY ("+PingPongMatch.COLUMN_PLAYER_ONE_ID_TITLE + ") REFERENCES "
                 + PingPongContract.Player.TABLE_NAME +"("+PingPongContract.Player._ID+"), "
                 + " FOREIGN KEY ("+PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE + ") REFERENCES "
@@ -46,9 +53,10 @@ public class PingPongDBHelper extends SQLiteOpenHelper {
                 + PingPongMatch.TABLE_NAME +"("+PingPongMatch._ID+") ON DELETE CASCADE)";
 
 
-        db.execSQL(SQL_CREATE_PING_PONG_TABLE);
+        db.execSQL(SQL_CREATE_TOURNAMENT_TABLE);
+        db.execSQL(SQL_CREATE_MATCH_TABLE);
         db.execSQL(SQL_CREATE_SET_TABLE);
-        db.execSQL(SQL_CREATE_PLAYERS_TABLE);
+        db.execSQL(SQL_CREATE_PLAYER_TABLE);
     }
 
     @Override
