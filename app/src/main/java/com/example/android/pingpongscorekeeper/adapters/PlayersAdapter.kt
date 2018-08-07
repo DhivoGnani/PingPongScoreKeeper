@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.AsyncTask
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -11,16 +12,8 @@ import android.view.ViewGroup
 import android.widget.CursorAdapter
 import android.widget.TextView
 import com.example.android.pingpongscorekeeper.R
-import com.example.android.pingpongscorekeeper.R.id.profile_image
 import com.example.android.pingpongscorekeeper.data.PingPongContract
-import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.players_list_item.view.*
-import android.os.AsyncTask
-import android.os.AsyncTask.execute
-
-
-
 
 
 class PlayersAdapter(context: Context, c: Cursor?) : CursorAdapter(context, c, 0) {
@@ -61,7 +54,7 @@ class PlayersAdapter(context: Context, c: Cursor?) : CursorAdapter(context, c, 0
 
         override fun doInBackground(vararg arg0: Void): Bitmap? {
             //Record method
-            val bitmap: Bitmap= MediaStore.Images.Media.getBitmap(context?.getContentResolver(), uri )
+            val bitmap: Bitmap= MediaStore.Images.Media.getBitmap(context?.contentResolver, uri )
             return bitmap
         }
 

@@ -54,6 +54,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        if (playerName != null) return null;
         return new CursorLoader(this,
                 mCurrentPlayerUri,
                 new String[] {PingPongContract.Player._ID, PingPongContract.Player.COLUMN_NAME_TITLE, PingPongContract.Player.COLUMN_PROFILE_PICTURE_TITLE}, null, null, null);
@@ -61,7 +62,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        if(data == null) return;
+        if(data == null || loader == null) return;
 
         data.moveToFirst();
 
@@ -163,6 +164,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
             }
             getContentResolver().update(mCurrentPlayerUri, values, null, null);
             finish();
+            return;
         }
         insertDummyPlayer(playerName, getContentResolver());
         finish();
