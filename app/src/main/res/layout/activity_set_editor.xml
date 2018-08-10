@@ -7,12 +7,6 @@
     android:orientation="vertical"
     tools:context="com.example.android.pingpongscorekeeper.activities.SetEditorActivity">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Done"
-        android:onClick="done"/>
-
     <LinearLayout
         android:layout_marginTop="24dp"
         android:layout_width="match_parent"

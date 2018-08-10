@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.adapters.SetAdapter;
@@ -84,12 +87,18 @@ public class SetEditorActivity extends AppCompatActivity {
         }
     }
 
-    public void done(View view)
+    public boolean done()
     {
         int numOfPlayerOneWon = 0;
         int numOfPlayerTwoWon = 0;
 
         for(int i = 0; i < sets.size(); i++ ) {
+            if(sets.get(i).getPlayerOneScore() == -1 || sets.get(i).getPlayerTwoScore() == -1)
+            {
+                Toast.makeText(this, "Add set values",
+                        Toast.LENGTH_SHORT).show();
+                return false;
+            }
             if(sets.get(i).getPlayerOneScore() > sets.get(i).getPlayerTwoScore())
             {
                 numOfPlayerOneWon++;
@@ -98,6 +107,31 @@ public class SetEditorActivity extends AppCompatActivity {
             }
          }
         insertFinishedMatch(playerOneId, playerTwoId, numOfPlayerOneWon, numOfPlayerTwoWon, sets);
-        finish();
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.new_player_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        } else if(item.getItemId()  == R.id.action_close)  {
+            finish();
+            return true;
+        } else if(item.getItemId() == R.id.action_done) {
+            if(done()) {
+                finish();
+                return true;
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
