@@ -2,11 +2,14 @@ package com.example.android.pingpongscorekeeper.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.components.PingPongSet;
@@ -14,11 +17,13 @@ import com.example.android.pingpongscorekeeper.components.PingPongSet;
 import java.util.List;
 
 public class SetAdapter extends ArrayAdapter<PingPongSet> {
+    private final List<PingPongSet> sets;
     private Context context;
 
     public SetAdapter(@NonNull Context context, int resource, @NonNull List<PingPongSet> objects) {
         super(context, resource, objects);
         this.context = context;
+        sets = objects;
     }
 
 
@@ -33,7 +38,7 @@ public class SetAdapter extends ArrayAdapter<PingPongSet> {
 
         EditText playerOneScore = convertView.findViewById(R.id.player_one_num);
         EditText playerTwoScore = convertView.findViewById(R.id.player_two_num);
-        EditText title = convertView.findViewById(R.id.set_n);
+        TextView title = convertView.findViewById(R.id.set_n);
 
         title.setText("SET " + set.getSetNumber());
 
@@ -48,6 +53,52 @@ public class SetAdapter extends ArrayAdapter<PingPongSet> {
         } else {
             playerTwoScore.setText("");
         }
+
+        final PingPongSet currentSet = sets.get(position);
+
+        playerOneScore.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                try {
+
+                    currentSet.setPlayerOneScore(Integer.valueOf(s.toString()));
+                }
+                catch(Exception ex)
+                {
+
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+
+            }
+        });
+
+        playerTwoScore.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                try {
+
+                    currentSet.setPlayerTwoScore(Integer.valueOf(s.toString()));
+                }
+                catch(Exception ex)
+                {
+
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+
+            }
+        });
 
         return convertView;
     }

@@ -5,15 +5,22 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.android.pingpongscorekeeper.R;
+import com.example.android.pingpongscorekeeper.adapters.SetAdapter;
 import com.example.android.pingpongscorekeeper.components.PingPongSet;
 import com.example.android.pingpongscorekeeper.data.PingPongContract;
 
 import java.util.ArrayList;
 
 public class SetEditorActivity extends AppCompatActivity {
+
+    private ArrayList<PingPongSet> sets;
+    private long playerOneId;
+    private long playerTwoId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +29,23 @@ public class SetEditorActivity extends AppCompatActivity {
 
         String playerOneName = getIntent().getExtras().getString("playerOneName");
         String playerTwoName = getIntent().getExtras().getString("playerTwoName");
-        long playerOneId = getIntent().getExtras().getLong("playerOneId");
-        long playerTwoId = getIntent().getExtras().getLong("playerTwoId");
+        playerOneId = getIntent().getExtras().getLong("playerOneId");
+        playerTwoId = getIntent().getExtras().getLong("playerTwoId");
+        int numOfSets = Integer.valueOf(getIntent().getExtras().getString("numSets"));
+
         TextView p1 = findViewById(R.id.player_one_id);
         p1.setText(playerOneName);
 
         TextView p2 = findViewById(R.id.player_two_id);
         p2.setText(playerTwoName);
 
+        sets = createTempPingPongSets(numOfSets);
 
+        ListView setList = findViewById(R.id.setlist);
+
+        SetAdapter adapter = new SetAdapter(this, 0, sets );
+
+        setList.setAdapter(adapter);
     }
 
     private ArrayList<PingPongSet> createTempPingPongSets(int numOfSets)
@@ -67,5 +82,22 @@ public class SetEditorActivity extends AppCompatActivity {
 
             getContentResolver().insert(PingPongContract.Set.CONTENT_URI, values);
         }
+    }
+
+    public void done(View view)
+    {
+        int numOfPlayerOneWon = 0;
+        int numOfPlayerTwoWon = 0;
+
+        for(int i = 0; i < sets.size(); i++ ) {
+            if(sets.get(i).getPlayerOneScore() > sets.get(i).getPlayerTwoScore())
+            {
+                numOfPlayerOneWon++;
+            } else {
+                numOfPlayerTwoWon++;
+            }
+         }
+        insertFinishedMatch(playerOneId, playerTwoId, numOfPlayerOneWon, numOfPlayerTwoWon, sets);
+        finish();
     }
 }
