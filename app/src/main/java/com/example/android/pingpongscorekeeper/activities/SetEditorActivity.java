@@ -24,6 +24,7 @@ public class SetEditorActivity extends AppCompatActivity {
     private ArrayList<PingPongSet> sets;
     private long playerOneId;
     private long playerTwoId;
+    private long servingPlayerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,9 @@ public class SetEditorActivity extends AppCompatActivity {
         playerOneId = getIntent().getExtras().getLong("playerOneId");
         playerTwoId = getIntent().getExtras().getLong("playerTwoId");
         int numOfSets = Integer.valueOf(getIntent().getExtras().getString("numSets"));
+        final String servingPlayer = getIntent().getExtras().getString("servingPlayer");
+
+        servingPlayerId = "Player 1".equals(servingPlayer) ? playerOneId : playerTwoId;
 
         TextView p1 = findViewById(R.id.player_one_id);
         p1.setText(playerOneName);
@@ -70,6 +74,7 @@ public class SetEditorActivity extends AppCompatActivity {
         values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE,  playerTwoId);
         values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE,  numberOfSetsPlayerOneWon);
         values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE, numberOfSetsPlayerTwoWon);
+        values.put(PingPongContract.PingPongMatch.COLUMN_SERVING_PLAYER_ID_TITLE, servingPlayerId);
 
         Uri uri =getContentResolver().insert(PingPongContract.PingPongMatch.CONTENT_URI, values);
 

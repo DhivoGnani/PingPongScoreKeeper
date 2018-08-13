@@ -125,7 +125,7 @@ public class GameActivity extends AppCompatActivity
         long playerOneId = getIntent().getExtras().getLong("playerOneId");
         long playerTwoId = getIntent().getExtras().getLong("playerTwoId");
 
-        servingPlayerId = playerOneName.equals(servingPlayer) ? playerOneId : playerTwoId;
+        servingPlayerId = "Player 1".equals(servingPlayer) ? playerOneId : playerTwoId;
 
         pingPongGame = new PingPongGame(playerOneName, playerTwoName, numSets, servingPlayer,
                 playerOneId, playerTwoId);

@@ -29,13 +29,18 @@ class FinishedMatchesCursorAdapter(context: Context, c: Cursor?) : CursorAdapter
 
         val playerOneNameCol = cursor.getColumnIndex("PlayerOneName")
         val playerTwoNameCol = cursor.getColumnIndex("PlayerTwoName")
+        val servingPlayerNameCol = cursor.getColumnIndex("ServingPlayerName");
         val playerOneScoreCol = cursor.getColumnIndex(COLUMN_PLAYER_ONE_SETS_WON_TITLE)
         val playerTwoScoreCol = cursor.getColumnIndex(COLUMN_PLAYER_TWO_SETS_WON_TITLE)
         val gameEndTimeLocal = cursor.getColumnIndex("time")
         val matchIdCol = cursor.getColumnIndex(_ID)
 
-        playerOneNameView.text = cursor.getString(playerOneNameCol)
-        playerTwoNameView .text = cursor.getString(playerTwoNameCol)
+        val servingPlayerName = cursor.getString(servingPlayerNameCol)
+        val playerOneName: String  = cursor.getString(playerOneNameCol)
+        val playerTwoName: String = cursor.getString(playerTwoNameCol)
+
+        playerOneNameView.text = if(playerOneName == servingPlayerName) "$playerOneName *" else playerOneName
+        playerTwoNameView .text = if(playerTwoName == servingPlayerName) "$playerTwoName *" else playerTwoName
 
         val playerOneSetsWon = cursor.getInt(playerOneScoreCol)
         val playerTwoSetsWon = cursor.getInt(playerTwoScoreCol)

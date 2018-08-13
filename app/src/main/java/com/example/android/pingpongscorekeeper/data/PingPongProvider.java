@@ -240,6 +240,7 @@ public class PingPongProvider extends ContentProvider {
     final String pingPongMatchTableName = "matchTable";
     final String playerOneTableName = "playerOneTable";
     final String playerTwoTableName = "playerTwoTable";
+    final String servingPlayerTableName = "servingPlayerTable";
 
     public Cursor getMatchesWithPlayerInfo()
     {
@@ -248,15 +249,17 @@ public class PingPongProvider extends ContentProvider {
         String query = "SELECT " + pingPongMatchTableName + "." + PingPongMatch._ID + ","
                 +  pingPongMatchTableName + "." + COLUMN_PLAYER_ONE_SETS_WON_TITLE + ","
                 +  pingPongMatchTableName + "." + COLUMN_PLAYER_TWO_SETS_WON_TITLE + ","
-                +  pingPongMatchTableName + "." + COLUMN_SERVING_PLAYER_ID_TITLE + ","
                 + COLUMN_GAME_TIME_DONE_LOCAL_TITLE_ALIAS + "time,"
                 + playerOneTableName + "." + Player.COLUMN_NAME_TITLE + " PlayerOneName,"
-                + playerTwoTableName + "." + Player.COLUMN_NAME_TITLE + " PlayerTwoName"
+                + playerTwoTableName + "." + Player.COLUMN_NAME_TITLE + " PlayerTwoName,"
+                + servingPlayerTableName + "." + Player.COLUMN_NAME_TITLE + " ServingPlayerName"
                 + " FROM " + PingPongMatch.TABLE_NAME + " " + pingPongMatchTableName
                 + " INNER JOIN " + Player.TABLE_NAME  + " " + playerOneTableName + " ON "
                 +  pingPongMatchTableName + "." + PingPongMatch.COLUMN_PLAYER_ONE_ID_TITLE + "=" + playerOneTableName + "." + Player._ID
                 + " INNER JOIN " + Player.TABLE_NAME + " " + playerTwoTableName + " ON "
                 + pingPongMatchTableName + "." + PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE + "=" + playerTwoTableName + "." + Player._ID
+                + " INNER JOIN " + Player.TABLE_NAME + " " + servingPlayerTableName + " ON "
+                + pingPongMatchTableName + "." + PingPongMatch.COLUMN_SERVING_PLAYER_ID_TITLE + "=" + servingPlayerTableName + "." + Player._ID
                 + " ORDER BY time DESC;";
 
         Cursor test =  database.rawQuery(query, null);
