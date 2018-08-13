@@ -100,6 +100,9 @@ public class GameActivity extends AppCompatActivity
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
+            case android.R.id.home:
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -147,6 +150,7 @@ public class GameActivity extends AppCompatActivity
                 resetOnClick(view);
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void speak(String text){
