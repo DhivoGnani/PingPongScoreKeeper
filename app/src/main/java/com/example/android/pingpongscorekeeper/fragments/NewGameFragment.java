@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.activities.GameActivity;
+import com.example.android.pingpongscorekeeper.activities.SetEditorActivity;
 import com.example.android.pingpongscorekeeper.components.GameConfiguration;
 import com.example.android.pingpongscorekeeper.data.PingPongContract;
 
@@ -94,10 +95,17 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
             }
         });
 
+        rootView.findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startGameOnClick(view, false);
+            }
+        });
+
         rootView.findViewById(R.id.start_game).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startGameOnClick(view);
+                startGameOnClick(view, true);
             }
         });
 
@@ -153,7 +161,7 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
                 setText(Integer.toString(configuration.getNumberOfSets()));
     }
 
-    public void startGameOnClick(View view)
+    public void startGameOnClick(View view, boolean start)
     {
 
         if(!playersChosenAreValid()) return;
@@ -162,7 +170,8 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
         String servingPlayer = configuration.getServingPlayer().toString();
 
         // TODO: Find better way to pass necessary data to GameActivity
-        Intent intent = new Intent(getActivity(), GameActivity.class);
+        Intent intent = start? new Intent(getActivity(), GameActivity.class) :
+                new Intent(getActivity(), SetEditorActivity.class) ;
         intent.putExtra("playerOneName", playerOneName);
         intent.putExtra("playerTwoName", playerTwoName);
         intent.putExtra("playerOneId", playerOneId);

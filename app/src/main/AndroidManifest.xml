@@ -39,7 +39,7 @@
             android:exported="false" />
 
         <activity android:name=".activities.MatchActivity" />
-        <activity android:name=".activities.PlayerEditorActivity"></activity>
+        <activity android:name=".activities.PlayerEditorActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -48,9 +48,10 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
+        <activity android:name=".activities.SetEditorActivity"></activity>
     </application>
 
 </manifest>

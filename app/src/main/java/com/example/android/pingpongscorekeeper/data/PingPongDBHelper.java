@@ -28,12 +28,15 @@ public class PingPongDBHelper extends SQLiteOpenHelper {
                 + PingPongMatch._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + PingPongMatch.COLUMN_PLAYER_ONE_ID_TITLE + " INTEGER NOT NULL, "
                 + PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE + " INTEGER NOT NULL, "
+                + PingPongMatch.COLUMN_SERVING_PLAYER_ID_TITLE + " INTEGER NOT NULL, "
                 + PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE + " INTEGER NOT NULL, "
                 + PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE + " INTEGER NOT NULL, "
                 + PingPongMatch.COLUMN_GAME_TIME_DONE_TITLE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, "
                 + " FOREIGN KEY ("+PingPongMatch.COLUMN_PLAYER_ONE_ID_TITLE + ") REFERENCES "
                 + PingPongContract.Player.TABLE_NAME +"("+PingPongContract.Player._ID+"), "
                 + " FOREIGN KEY ("+PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE + ") REFERENCES "
+                + PingPongContract.Player.TABLE_NAME +"("+PingPongContract.Player._ID+"), "
+                + " FOREIGN KEY ("+PingPongMatch.COLUMN_SERVING_PLAYER_ID_TITLE + ") REFERENCES "
                 + PingPongContract.Player.TABLE_NAME +"("+PingPongContract.Player._ID+"));";
 
         String SQL_CREATE_SET_TABLE =  "CREATE TABLE " + PingPongContract.Set.TABLE_NAME + " ("

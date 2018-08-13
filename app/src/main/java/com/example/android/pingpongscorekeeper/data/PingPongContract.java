@@ -30,6 +30,7 @@ public final class PingPongContract {
 
         public static final String COLUMN_PLAYER_ONE_ID_TITLE = "PlayerOneId";
         public static final String COLUMN_PLAYER_TWO_ID_TITLE = "PlayerTwoId";
+        public static final String COLUMN_SERVING_PLAYER_ID_TITLE = "ServingPlayerId";
         public static final String COLUMN_PLAYER_ONE_SETS_WON_TITLE = "PlayerOneSetsWon";
         public static final String COLUMN_PLAYER_TWO_SETS_WON_TITLE = "PlayerTwoSetsWon";
         public static final String COLUMN_GAME_TIME_DONE_TITLE = "GameFinishedDate";
