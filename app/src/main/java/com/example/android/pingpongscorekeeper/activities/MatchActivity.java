@@ -30,7 +30,7 @@ public class MatchActivity extends AppCompatActivity implements  LoaderCallbacks
     private static final int SET_LOADER = 0;
     private Uri mCurrentUri;
     private MatchSetsAdapter adapter;
-    private int matchId;
+    private long matchId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class MatchActivity extends AppCompatActivity implements  LoaderCallbacks
         Intent intent = getIntent();
         mCurrentUri = intent.getData();
 
-        matchId =   Integer.valueOf(getIntent().getExtras().getString("matchId"));
+        matchId =  getIntent().getExtras().getLong("matchId");
 
         String playerOneName = getIntent().getExtras().getString("playerOneName");
         String playerTwoName = getIntent().getExtras().getString("playerTwoName");
