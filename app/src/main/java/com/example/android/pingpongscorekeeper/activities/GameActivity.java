@@ -39,6 +39,7 @@ public class GameActivity extends AppCompatActivity
     private EditText playerOneNameDisplay;
     private EditText playerTwoNameDisplay;
     private Button reset;
+    private long servingPlayerId;
 
     private TextToSpeech.OnInitListener textToSpeechListener = new TextToSpeech.OnInitListener() {
         @Override
@@ -123,6 +124,8 @@ public class GameActivity extends AppCompatActivity
         final String servingPlayer = getIntent().getExtras().getString("servingPlayer");
         long playerOneId = getIntent().getExtras().getLong("playerOneId");
         long playerTwoId = getIntent().getExtras().getLong("playerTwoId");
+
+        servingPlayerId = playerOneName.equals(servingPlayer) ? playerOneId : playerTwoId;
 
         pingPongGame = new PingPongGame(playerOneName, playerTwoName, numSets, servingPlayer,
                 playerOneId, playerTwoId);
@@ -288,6 +291,7 @@ public class GameActivity extends AppCompatActivity
             ContentValues values = new ContentValues();
             values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_ID_TITLE, pingPongGame.playerOneId);
             values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE,  pingPongGame.playerTwoId);
+            values.put(PingPongContract.PingPongMatch.COLUMN_SERVING_PLAYER_ID_TITLE, servingPlayerId);
             values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE,  pingPongGame.getNumSetsPlayerOneWon());
             values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE, pingPongGame.getNumSetsPlayerTwoWon());
 

@@ -24,6 +24,15 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/server_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="@dimen/TeamNames"
+                    tools:text="First Serve" />
+
                 <ImageView
                     android:id="@+id/home_crest"
                     android:layout_width="@dimen/crest_image_size"
@@ -98,6 +107,15 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/server_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="@dimen/TeamNames"
+                    tools:text="" />
 
                 <ImageView
                     android:id="@+id/away_crest"

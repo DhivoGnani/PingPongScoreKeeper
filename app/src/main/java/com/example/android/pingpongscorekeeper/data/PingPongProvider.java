@@ -18,6 +18,7 @@ import com.example.android.pingpongscorekeeper.data.PingPongContract.Set;
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_GAME_TIME_DONE_LOCAL_TITLE_ALIAS;
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE;
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE;
+import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_SERVING_PLAYER_ID_TITLE;
 
 
 public class PingPongProvider extends ContentProvider {
@@ -247,6 +248,7 @@ public class PingPongProvider extends ContentProvider {
         String query = "SELECT " + pingPongMatchTableName + "." + PingPongMatch._ID + ","
                 +  pingPongMatchTableName + "." + COLUMN_PLAYER_ONE_SETS_WON_TITLE + ","
                 +  pingPongMatchTableName + "." + COLUMN_PLAYER_TWO_SETS_WON_TITLE + ","
+                +  pingPongMatchTableName + "." + COLUMN_SERVING_PLAYER_ID_TITLE + ","
                 + COLUMN_GAME_TIME_DONE_LOCAL_TITLE_ALIAS + "time,"
                 + playerOneTableName + "." + Player.COLUMN_NAME_TITLE + " PlayerOneName,"
                 + playerTwoTableName + "." + Player.COLUMN_NAME_TITLE + " PlayerTwoName"
