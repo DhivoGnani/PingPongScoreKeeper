@@ -39,6 +39,8 @@ class FinishedMatchesCursorAdapter(context: Context, c: Cursor?) : CursorAdapter
         val playerOneName: String  = cursor.getString(playerOneNameCol)
         val playerTwoName: String = cursor.getString(playerTwoNameCol)
 
+        val matchId =  cursor.getLong(matchIdCol);
+
         playerOneNameView.text = if(playerOneName == servingPlayerName) "$playerOneName *" else playerOneName
         playerTwoNameView .text = if(playerTwoName == servingPlayerName) "$playerTwoName *" else playerTwoName
 
@@ -53,7 +55,6 @@ class FinishedMatchesCursorAdapter(context: Context, c: Cursor?) : CursorAdapter
         view.setOnClickListener {
             val intent = Intent(context, MatchActivity::class.java)
             intent.data = PingPongContract.Set.CONTENT_URI
-            val matchId = cursor.getLong(matchIdCol).toString()
             intent.putExtra("matchId", matchId)
             intent.putExtra("playerOneName", cursor.getString(playerOneNameCol))
             intent.putExtra("playerTwoName", cursor.getString(playerTwoNameCol))
