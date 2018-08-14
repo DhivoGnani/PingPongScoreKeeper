@@ -9,4 +9,5 @@
     <string name="reset">Reset</string>
     <string name="new_game">New Game</string>
     <string name="empty_view_title_text">Start a new game</string>
+    <string name="choose_player">Choose Player</string>
 </resources>

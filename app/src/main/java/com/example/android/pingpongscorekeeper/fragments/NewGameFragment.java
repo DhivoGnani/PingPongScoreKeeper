@@ -27,6 +27,7 @@ import com.example.android.pingpongscorekeeper.R;
 import com.example.android.pingpongscorekeeper.activities.GameActivity;
 import com.example.android.pingpongscorekeeper.activities.SetEditorActivity;
 import com.example.android.pingpongscorekeeper.components.GameConfiguration;
+import com.example.android.pingpongscorekeeper.customviews.NoDefaultSpinner;
 import com.example.android.pingpongscorekeeper.data.PingPongContract;
 
 import java.util.ArrayList;
@@ -39,8 +40,8 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
     private static final int PING_PONG_LOADER = 0;
     private GameConfiguration configuration;
 
-    private Spinner playerOneDisplay;
-    private Spinner playerTwoDisplay;
+    private NoDefaultSpinner playerOneDisplay;
+    private NoDefaultSpinner playerTwoDisplay;
     private CheckBox playerOneServe;
     private CheckBox playerTwoServe;
 
@@ -219,6 +220,10 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
         madapter.swapCursor(cursor);
         madapter2.swapCursor(cursor);
+
+        // TODO: Fix this
+        playerOneDisplay.setAdapter(madapter);
+        playerTwoDisplay.setAdapter(madapter2);
     }
 
     @Override
