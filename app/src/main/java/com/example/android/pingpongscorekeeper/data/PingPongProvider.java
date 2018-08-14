@@ -18,7 +18,6 @@ import com.example.android.pingpongscorekeeper.data.PingPongContract.Set;
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_GAME_TIME_DONE_LOCAL_TITLE_ALIAS;
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE;
 import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE;
-import static com.example.android.pingpongscorekeeper.data.PingPongContract.PingPongMatch.COLUMN_SERVING_PLAYER_ID_TITLE;
 
 
 public class PingPongProvider extends ContentProvider {
