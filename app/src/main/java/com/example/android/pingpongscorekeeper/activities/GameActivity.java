@@ -317,7 +317,7 @@ public class GameActivity extends AppCompatActivity
             Intent intent = new Intent(this, MatchActivity.class);
             intent.setData(PingPongContract.Set.CONTENT_URI);
             String matchId = id + "";
-            intent.putExtra("matchId", matchId);
+            intent.putExtra("matchId", Long.valueOf(matchId));
             intent.putExtra("playerOneName", pingPongGame.playerOne.getName());
             intent.putExtra("playerTwoName", pingPongGame.playerTwo.getName());
             if(pingPongGame.playerOne.getNumberOfSetsWon() > pingPongGame.playerTwo.getNumberOfSetsWon()) {
