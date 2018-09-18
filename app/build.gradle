@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.android.pingpongscorekeeper"
+        applicationId "me.dhivo.android.pingpongscorekeeper"
         minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
