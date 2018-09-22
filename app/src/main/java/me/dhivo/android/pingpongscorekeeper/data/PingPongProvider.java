@@ -250,7 +250,9 @@ public class PingPongProvider extends ContentProvider {
                 +  pingPongMatchTableName + "." + COLUMN_PLAYER_TWO_SETS_WON_TITLE + ","
                 + COLUMN_GAME_TIME_DONE_LOCAL_TITLE_ALIAS + "time,"
                 + playerOneTableName + "." + Player.COLUMN_NAME_TITLE + " PlayerOneName,"
+                + playerOneTableName + "." + Player.COLUMN_PROFILE_PICTURE_TITLE + " PlayerOnePicture,"
                 + playerTwoTableName + "." + Player.COLUMN_NAME_TITLE + " PlayerTwoName,"
+                + playerTwoTableName + "." + Player.COLUMN_PROFILE_PICTURE_TITLE + " PlayerTwoPicture,"
                 + servingPlayerTableName + "." + Player.COLUMN_NAME_TITLE + " ServingPlayerName"
                 + " FROM " + PingPongMatch.TABLE_NAME + " " + pingPongMatchTableName
                 + " INNER JOIN " + Player.TABLE_NAME  + " " + playerOneTableName + " ON "
