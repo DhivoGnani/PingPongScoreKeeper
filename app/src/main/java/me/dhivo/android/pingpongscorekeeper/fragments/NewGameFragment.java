@@ -209,8 +209,6 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
     }
 
 
-
-
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int i, @Nullable Bundle bundle) {
@@ -260,7 +258,12 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
 
     public boolean playersChosenAreValid()
     {
+        if(madapter.isEmpty()) {
+            Toast.makeText(getActivity(), "Add players", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         if(playerOneName == null || playerTwoName == null)  {
+            Toast.makeText(getActivity(), "Choose players", Toast.LENGTH_SHORT).show();
             return false;
         }
 

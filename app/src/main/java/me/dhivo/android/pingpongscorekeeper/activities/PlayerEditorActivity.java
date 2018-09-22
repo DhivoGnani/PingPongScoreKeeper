@@ -6,8 +6,6 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,20 +26,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import me.dhivo.android.pingpongscorekeeper.R;
-import me.dhivo.android.pingpongscorekeeper.data.PingPongContract;
-import me.dhivo.android.pingpongscorekeeper.fragments.PlayersListFragment;
-import me.dhivo.android.pingpongscorekeeper.handlers.PingPongAsyncHandler;
-
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.dhivo.android.pingpongscorekeeper.R;
+import me.dhivo.android.pingpongscorekeeper.data.PingPongContract;
+import me.dhivo.android.pingpongscorekeeper.fragments.PlayersListFragment;
+import me.dhivo.android.pingpongscorekeeper.handlers.PingPongAsyncHandler;
 import me.dhivo.android.pingpongscorekeeper.helpers.ImageHelper;
 
 public class PlayerEditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -53,8 +48,6 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
     EditText nameEditText;
     CircleImageView imageView;
     String playerName;
-
-
 
     final int REQUEST_TAKE_PHOTO =  1;
 
