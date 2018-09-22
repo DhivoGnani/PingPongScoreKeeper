@@ -14,6 +14,7 @@ import android.widget.TextView
 import me.dhivo.android.pingpongscorekeeper.data.PingPongContract
 import kotlinx.android.synthetic.main.players_list_item.view.*
 import me.dhivo.android.pingpongscorekeeper.R
+import me.dhivo.android.pingpongscorekeeper.helpers.ImageHelper
 
 
 class PlayersAdapter(context: Context, c: Cursor?) : CursorAdapter(context, c, 0) {
@@ -55,7 +56,9 @@ class PlayersAdapter(context: Context, c: Cursor?) : CursorAdapter(context, c, 0
         override fun doInBackground(vararg arg0: Void): Bitmap? {
             //Record method
             val bitmap: Bitmap= MediaStore.Images.Media.getBitmap(context?.contentResolver, uri )
-            return bitmap
+            val orientation = ImageHelper.getOrientation(context?.contentResolver,uri)
+            val rotatedBitmap = ImageHelper.rotateBitmap(bitmap, orientation.toFloat())
+            return rotatedBitmap
         }
 
         override fun onPostExecute(result: Bitmap?) {

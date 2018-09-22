@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.FileProvider;
@@ -28,14 +30,19 @@ import android.widget.Toast;
 
 import me.dhivo.android.pingpongscorekeeper.R;
 import me.dhivo.android.pingpongscorekeeper.data.PingPongContract;
+import me.dhivo.android.pingpongscorekeeper.fragments.PlayersListFragment;
 import me.dhivo.android.pingpongscorekeeper.handlers.PingPongAsyncHandler;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.dhivo.android.pingpongscorekeeper.helpers.ImageHelper;
 
 public class PlayerEditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -82,7 +89,10 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            imageView.setImageBitmap(bitmap);
+            int rotation = ImageHelper.getOrientation(getContentResolver(), Uri.parse(picture));
+
+            Bitmap rotatedImage = ImageHelper.rotateBitmap(bitmap, rotation);
+            imageView.setImageBitmap(rotatedImage);
         }
     }
 
@@ -144,6 +154,14 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
             return true;
         } else if(item.getItemId() == R.id.action_done) {
             addNewPlayer();
+            List<Fragment> fms = getSupportFragmentManager().getFragments();
+            for(Fragment fm: fms) {
+                if(fm instanceof PlayersListFragment) {
+                    PlayersListFragment rm = (PlayersListFragment) fm;
+                    rm.refreshList();
+                }
+
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -204,7 +222,6 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
         return image;
     }
 
-
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -240,16 +257,10 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            imageView.setImageBitmap(bitmap);
+            int rotation = ImageHelper.getOrientation(getContentResolver(), Uri.parse(uriStr));
+
+            Bitmap rotatedImage = ImageHelper.rotateBitmap(bitmap, rotation);
+            imageView.setImageBitmap(rotatedImage);
         }
-    }
-
-    private Bitmap getRotatedBitmap(Bitmap bitmap) {
-        Matrix matrix = new Matrix();
-
-        matrix.postRotate(90);
-
-        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        return rotatedBitmap;
     }
 }
