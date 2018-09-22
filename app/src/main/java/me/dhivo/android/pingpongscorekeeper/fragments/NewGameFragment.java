@@ -42,6 +42,9 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
 
     private View rootView;
 
+    int playerOneDisplayPosition;
+    int playerTwoDisplayPosition;
+
     private SimpleCursorAdapter madapter;
     private SimpleCursorAdapter madapter2;
 
@@ -51,7 +54,6 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
         rootView = inflater.inflate(R.layout.activity_new_game, container, false);
 
         configuration = new GameConfiguration();
-
         playerOneDisplay = rootView.findViewById(R.id.player_one);
         playerTwoDisplay = rootView.findViewById(R.id.player_two);
 
@@ -185,6 +187,14 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        playerOneDisplay.setSelection(playerOneDisplayPosition);
+        playerTwoDisplay.setSelection(playerTwoDisplayPosition);
+    }
+
     // TODO: remove duplicate code
     public void player_one_check_box(View view) {
         configuration.switchServingPlayer();
@@ -197,6 +207,9 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
             if(!playerTwoServe.isChecked()) playerTwoServe.toggle();
         }
     }
+
+
+
 
     @NonNull
     @Override
@@ -233,7 +246,10 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
             } else {
                 playerTwoName = f;
                 playerTwoId = id;
+                playerTwoDisplayPosition = playerTwoDisplay.getSelectedItemPosition();
             }
+        playerOneDisplayPosition = playerOneDisplay.getSelectedItemPosition();
+        playerTwoDisplayPosition = playerTwoDisplay.getSelectedItemPosition();
     }
 
     @Override
