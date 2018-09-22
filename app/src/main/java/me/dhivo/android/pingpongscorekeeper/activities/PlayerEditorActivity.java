@@ -5,14 +5,12 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.FileProvider;
@@ -24,18 +22,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.dhivo.android.pingpongscorekeeper.R;
 import me.dhivo.android.pingpongscorekeeper.data.PingPongContract;
-import me.dhivo.android.pingpongscorekeeper.fragments.PlayersListFragment;
 import me.dhivo.android.pingpongscorekeeper.handlers.PingPongAsyncHandler;
 import me.dhivo.android.pingpongscorekeeper.helpers.ImageHelper;
 
@@ -71,21 +70,12 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
 
 
         String name = data.getString(nameColumnIndex);
-        String picture = data.getString(pictureColumnIndex);
+        String profilePictureUri = data.getString(pictureColumnIndex);
         nameEditText.setText(name);
 
-        if(picture != null)
-        {
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(picture) );
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            int rotation = ImageHelper.getOrientation(getContentResolver(), Uri.parse(picture));
-
-            Bitmap rotatedImage = ImageHelper.rotateBitmap(bitmap, rotation);
-            imageView.setImageBitmap(rotatedImage);
+        // TODO: remove the uriStr == null condition
+        if(profilePictureUri != null && uriStr == null) {
+            displayImage(Uri.parse(profilePictureUri), imageView);
         }
     }
 
@@ -125,10 +115,8 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
         if(mCurrentPlayerUri != null)
         {
             this.getSupportLoaderManager().initLoader(0, null, this);
-//            loaderManager.initLoader<Cursor>(0, null, this as LoaderManager.LoaderCallbacks<Cursor?>)
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -147,14 +135,6 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
             return true;
         } else if(item.getItemId() == R.id.action_done) {
             addNewPlayer();
-            List<Fragment> fms = getSupportFragmentManager().getFragments();
-            for(Fragment fm: fms) {
-                if(fm instanceof PlayersListFragment) {
-                    PlayersListFragment rm = (PlayersListFragment) fm;
-                    rm.refreshList();
-                }
-
-            }
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -177,13 +157,13 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
             finish();
             return;
         }
-        insertDummyPlayer(playerName, getContentResolver());
+        insertPlayer(playerName, getContentResolver());
         finish();
         Toast.makeText(this, "player saved",
                 Toast.LENGTH_SHORT).show();
     }
 
-    public void insertDummyPlayer(String name, ContentResolver contentResolver) {
+    public void insertPlayer(String name, ContentResolver contentResolver) {
         ContentValues values = new ContentValues();
         values.put(PingPongContract.Player.COLUMN_NAME_TITLE, name);
         if(uriStr != null)
@@ -194,6 +174,13 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
         pingPongAsyncHandler.startInsert(-1, null, PingPongContract.Player.CONTENT_URI, values);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
+            displayImage(Uri.parse(uriStr), imageView);
+        }
+    }
 
     public void takePicture(View view) {
         dispatchTakePictureIntent();
@@ -238,22 +225,10 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
         }
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
-
-            Bitmap bitmap  = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(uriStr) );
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            int rotation = ImageHelper.getOrientation(getContentResolver(), Uri.parse(uriStr));
-
-            Bitmap rotatedImage = ImageHelper.rotateBitmap(bitmap, rotation);
-            imageView.setImageBitmap(rotatedImage);
-        }
+    private void displayImage(Uri uri, ImageView imageView)
+    {
+        int rotation = ImageHelper.getOrientation(getContentResolver(), uri);
+        Picasso.get().load(uri).resize(1000,1000)
+                .centerCrop().rotate(rotation).into(imageView);
     }
 }
