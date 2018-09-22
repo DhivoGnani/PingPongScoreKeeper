@@ -15,6 +15,7 @@ import me.dhivo.android.pingpongscorekeeper.R;
 import me.dhivo.android.pingpongscorekeeper.adapters.SetAdapter;
 import me.dhivo.android.pingpongscorekeeper.components.PingPongSet;
 import me.dhivo.android.pingpongscorekeeper.data.PingPongContract;
+import me.dhivo.android.pingpongscorekeeper.validators.SetValidator;
 
 import java.util.ArrayList;
 
@@ -110,6 +111,13 @@ public class SetEditorActivity extends AppCompatActivity {
                 numOfPlayerTwoWon++;
             }
          }
+
+        boolean isSetsValid = SetValidator.validateSets(sets, 11);
+        if(!isSetsValid) {
+            Toast.makeText(this, "Set points are invalid",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
         insertFinishedMatch(playerOneId, playerTwoId, numOfPlayerOneWon, numOfPlayerTwoWon, sets);
         return true;
     }

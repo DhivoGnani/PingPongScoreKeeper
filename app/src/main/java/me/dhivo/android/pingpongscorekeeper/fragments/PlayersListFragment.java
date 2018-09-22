@@ -29,6 +29,11 @@ public class PlayersListFragment extends Fragment implements  LoaderManager.Load
     PlayersAdapter playersAdapter;
     private ListView playersListView;
 
+    public void refreshList()
+    {
+        playersAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
