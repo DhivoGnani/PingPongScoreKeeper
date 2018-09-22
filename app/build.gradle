@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.android.pingpongscorekeeper"
+        applicationId "me.dhivo.android.pingpongscorekeeper"
         minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
@@ -30,6 +30,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.makeramen:roundedimageview:2.2.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.android.support:exifinterface:28.0.0-alpha1'
 }
 repositories {
     mavenCentral()

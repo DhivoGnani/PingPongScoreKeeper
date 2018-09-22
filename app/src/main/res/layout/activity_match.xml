@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.android.pingpongscorekeeper.activities.MatchActivity">
+    tools:context="me.dhivo.android.pingpongscorekeeper.activities.MatchActivity">
 
     <LinearLayout
         android:layout_marginTop="24dp"

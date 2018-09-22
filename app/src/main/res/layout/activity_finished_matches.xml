@@ -15,7 +15,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="com.example.android.pingpongscorekeeper.fragments.FinishedMatchesFragment"/>
+        tools:context="me.dhivo.android.pingpongscorekeeper.fragments.FinishedMatchesFragment"/>
 
     <RelativeLayout
         android:id="@+id/empty_view"
