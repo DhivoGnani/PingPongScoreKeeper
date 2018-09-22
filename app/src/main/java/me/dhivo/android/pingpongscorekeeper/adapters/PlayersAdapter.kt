@@ -2,18 +2,16 @@ package me.dhivo.android.pingpongscorekeeper.adapters
 
 import android.content.Context
 import android.database.Cursor
-import android.graphics.Bitmap
 import android.net.Uri
-import android.os.AsyncTask
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CursorAdapter
 import android.widget.TextView
-import me.dhivo.android.pingpongscorekeeper.data.PingPongContract
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.players_list_item.view.*
 import me.dhivo.android.pingpongscorekeeper.R
+import me.dhivo.android.pingpongscorekeeper.data.PingPongContract
 import me.dhivo.android.pingpongscorekeeper.helpers.ImageHelper
 
 
@@ -30,43 +28,16 @@ class PlayersAdapter(context: Context, c: Cursor?) : CursorAdapter(context, c, 0
         val setProfileCol = cursor.getColumnIndex(PingPongContract.Player.COLUMN_PROFILE_PICTURE_TITLE)
 
         if(cursor.getString(setProfileCol) != null) {
-            val myTask = Task1()
-            myTask.context = context
-            myTask.view = view
-            myTask.uri = Uri.parse(cursor.getString(setProfileCol))
-            myTask.execute()
+            var uri: Uri= Uri.parse(cursor.getString(setProfileCol))
+            var degrees = ImageHelper.getOrientation(context.contentResolver, uri)
+            Picasso.get().load(uri).resize(1000, 1000)
+            .centerCrop().rotate(degrees.toFloat()).into(view.profile_image)
 
         } else {
             view.profile_image.setImageResource(R.drawable.default_profile)
         }
         playerNameView.text = cursor.getString(setNumberCol)
 
-    }
-
-    internal inner class Task1 : AsyncTask<Void, Void, Bitmap>() {
-
-        var context: Context? = null
-        var uri: Uri? = null;
-        var view: View? = null;
-
-        override fun onPreExecute() {
-            super.onPreExecute()
-        }
-
-        override fun doInBackground(vararg arg0: Void): Bitmap? {
-            //Record method
-            val bitmap: Bitmap= MediaStore.Images.Media.getBitmap(context?.contentResolver, uri )
-            val orientation = ImageHelper.getOrientation(context?.contentResolver,uri)
-            val rotatedBitmap = ImageHelper.rotateBitmap(bitmap, orientation.toFloat())
-            return rotatedBitmap
-        }
-
-        override fun onPostExecute(result: Bitmap?) {
-            // TODO: needs to be fixed
-            //var scaled: Bitmap = Bitmap.createScaledBitmap(result, 100, 100, false)
-            view?.profile_image?.setImageBitmap(result)
-
-        }
     }
 }
 
