@@ -60,8 +60,8 @@ class PlayersAdapter(context: Context, c: Cursor?) : CursorAdapter(context, c, 0
 
         override fun onPostExecute(result: Bitmap?) {
             // TODO: needs to be fixed
-            var scaled: Bitmap = Bitmap.createScaledBitmap(result, 100, 100, false)
-            view?.profile_image?.setImageBitmap(scaled)
+            //var scaled: Bitmap = Bitmap.createScaledBitmap(result, 100, 100, false)
+            view?.profile_image?.setImageBitmap(result)
 
         }
     }

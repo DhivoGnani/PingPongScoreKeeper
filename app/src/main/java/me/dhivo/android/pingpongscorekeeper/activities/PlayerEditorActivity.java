@@ -82,7 +82,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            imageView.setImageBitmap(getRotatedBitmap(bitmap));
+            imageView.setImageBitmap(bitmap);
         }
     }
 
@@ -94,12 +94,12 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
     private TextWatcher playerNameWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            playerName = charSequence.toString();
+
         }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            playerName = charSequence.toString();
         }
 
         @Override
@@ -240,7 +240,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            imageView.setImageBitmap(getRotatedBitmap(bitmap));
+            imageView.setImageBitmap(bitmap);
         }
     }
 
