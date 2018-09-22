@@ -7,8 +7,8 @@ import me.dhivo.android.pingpongscorekeeper.components.PingPongSet;
 public class SetValidator {
     public static boolean validateSets(List<PingPongSet> pingPongSets, int setPoints) {
         for(PingPongSet set: pingPongSets) {
-            int playerOneScore = set.getPlayerOneScore();
-            int playerTwoSCore = set.getPlayerTwoScore();
+            final int playerOneScore = set.getPlayerOneScore();
+            final int playerTwoSCore = set.getPlayerTwoScore();
 
             if(playerOneScore < 0 || playerTwoSCore < 0) return false;
 

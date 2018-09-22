@@ -104,7 +104,7 @@ public class PingPongProvider extends ContentProvider {
             case PLAYERS_ID:
                 selection = Player._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
-                rowsDeleted = database.delete(Player.TABLE_NAME, selection, selectionArgs);;
+                rowsDeleted = database.delete(Player.TABLE_NAME, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Cannot query unknown URI " + uri);
@@ -127,7 +127,8 @@ public class PingPongProvider extends ContentProvider {
             case PLAYERS_ID:
                 selection = Player._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
-                rowsUpdated = database.update(Player.TABLE_NAME, contentValues, selection, selectionArgs);;
+                rowsUpdated = database.update(Player.TABLE_NAME, contentValues, selection, selectionArgs);
+                getContext().getContentResolver().notifyChange(PingPongMatch.CONTENT_URI, null);
                 break;
             default:
                 throw new IllegalArgumentException("Cannot query unknown URI " + uri);
