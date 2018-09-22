@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.pingpongscorekeeper">
+    package="me.dhivo.android.pingpongscorekeeper">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.MainActivity"
+            android:name="me.dhivo.android.pingpongscorekeeper.activities.MainActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,35 +22,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.GameActivity"
-            android:launchMode="singleTop"
-            android:parentActivityName=".activities.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
+            android:name="me.dhivo.android.pingpongscorekeeper.activities.GameActivity">
         </activity>
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name="me.dhivo.android.pingpongscorekeeper.activities.SettingsActivity"
             android:label="Settings" />
 
         <provider
-            android:name=".data.PingPongProvider"
-            android:authorities="com.example.android.pingpongscorekeeper"
+            android:name="me.dhivo.android.pingpongscorekeeper.data.PingPongProvider"
+            android:authorities="me.dhivo.android.pingpongscorekeeper"
             android:exported="false" />
 
-        <activity android:name=".activities.MatchActivity" />
-        <activity android:name=".activities.PlayerEditorActivity"></activity>
+        <activity android:name="me.dhivo.android.pingpongscorekeeper.activities.MatchActivity" />
+        <activity android:name="me.dhivo.android.pingpongscorekeeper.activities.PlayerEditorActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.example.android.fileprovider"
+            android:authorities="me.dhivo.android.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
+        <activity android:name="me.dhivo.android.pingpongscorekeeper.activities.SetEditorActivity"></activity>
     </application>
 
 </manifest>

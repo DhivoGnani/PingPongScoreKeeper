@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.NewGameFragment">
+    tools:context="me.dhivo.android.pingpongscorekeeper.fragments.NewGameFragment">
 
 
     <LinearLayout
@@ -34,11 +34,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Spinner
+            <me.dhivo.android.pingpongscorekeeper.customviews.NoDefaultSpinner
                 android:id="@+id/player_one"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="10"/>
+                android:layout_weight="10"
+                android:prompt="@string/choose_player"/>
 
             <CheckBox
                 android:id="@+id/player_one_serve"
@@ -55,11 +56,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Spinner
+            <me.dhivo.android.pingpongscorekeeper.customviews.NoDefaultSpinner
                 android:id="@+id/player_two"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="10" />
+                android:layout_weight="10"
+                android:prompt="@string/choose_player"/>
 
             <CheckBox
                 android:id="@+id/player_two_serve"
@@ -119,6 +121,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Start"
+            />
+        <Button
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Add"
             />
 
     </LinearLayout>

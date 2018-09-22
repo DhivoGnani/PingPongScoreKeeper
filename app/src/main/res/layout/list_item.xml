@@ -38,7 +38,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textSize="@dimen/TeamNames"
-                    tools:text="Dhivo" />
+                    tools:text="Dhivo *" />
             </LinearLayout>
 
             <LinearLayout
