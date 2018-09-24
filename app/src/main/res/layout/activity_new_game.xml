@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="me.dhivo.android.pingpongscorekeeper.fragments.NewGameFragment">
+    tools:context="me.dhivo.android.pingpongmatchtracker.fragments.NewGameFragment">
 
 
     <LinearLayout
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <me.dhivo.android.pingpongscorekeeper.customviews.NoDefaultSpinner
+            <me.dhivo.android.pingpongmatchtracker.customviews.NoDefaultSpinner
                 android:id="@+id/player_one"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <me.dhivo.android.pingpongscorekeeper.customviews.NoDefaultSpinner
+            <me.dhivo.android.pingpongmatchtracker.customviews.NoDefaultSpinner
                 android:id="@+id/player_two"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -107,28 +107,67 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <TextView
+            style="@style/HeaderTextStyle"
+            android:layout_gravity="center_horizontal"
+            android:text="Set Points" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingTop="8dp">
 
-        <Button
-            android:id="@+id/start_game"
+            <Button
+                android:id="@+id/decrease_set_points"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:text="-" />
+
+            <TextView
+                android:id="@+id/num_of_sets_points"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="11"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/increase_set_points"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:text="+" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Start"
-            />
-        <Button
-            android:id="@+id/add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Add"
-            />
+            android:orientation="horizontal"
+            android:layout_marginTop="48dp"
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/start_game"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Start"
+                android:layout_marginRight="8dp"
+                />
+            <Button
+                android:id="@+id/add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Add"
+                android:layout_marginLeft="8dp"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
 
