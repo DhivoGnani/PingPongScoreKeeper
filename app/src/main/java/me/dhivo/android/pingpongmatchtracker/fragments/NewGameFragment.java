@@ -88,6 +88,19 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
             }
         });
 
+        rootView.findViewById(R.id.increase_set_points).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                incrementSetPoints(view);
+            }
+        });
+
+        rootView.findViewById(R.id.decrease_set_points).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                decrementSetPoints(view);
+            }
+        });
         rootView.findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,6 +151,16 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
         return rootView;
     }
 
+    private void decrementSetPoints(View view) {
+        configuration.decrementNumberOfPointsPerSet();
+        displayNumberOfPointsPerSet();
+    }
+
+    private void incrementSetPoints(View view) {
+        configuration.incrementNumberOfPointersPerSet();
+        displayNumberOfPointsPerSet();
+    }
+
     public void decrementSets(View view) {
         configuration.decrementNumberOfSets();
         displayNumberOfSets();
@@ -152,6 +175,12 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
     {
         ((TextView)rootView.findViewById(R.id.num_of_sets)).
                 setText(Integer.toString(configuration.getNumberOfSets()));
+    }
+
+    public void displayNumberOfPointsPerSet()
+    {
+        ((TextView)rootView.findViewById(R.id.num_of_sets_points)).
+                setText(Integer.toString(configuration.getNumberOfPointsPerSet()));
     }
 
     public void startGameOnClick(View view, boolean start)
@@ -170,6 +199,7 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
         intent.putExtra("playerOneId", playerOneId);
         intent.putExtra("playerTwoId", playerTwoId);
         intent.putExtra("numSets", numSets);
+        intent.putExtra("numPointsPerSet", configuration.getNumberOfPointsPerSet() + "");
         intent.putExtra("servingPlayer", servingPlayer);
         startActivity(intent);
     }

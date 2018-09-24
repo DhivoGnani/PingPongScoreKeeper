@@ -17,7 +17,7 @@ public class PingPongGame
 
     public ArrayList<PingPongSet> pingPongSets;
 
-    private final static int minNumberOfPointsToWinASet = 11;
+    private int minNumberOfPointsToWinASet;
     private final static int numberOfPointsPlayerNeedsToBeatOpponent = 2;
 
     private int winningNumberOfSets;
@@ -26,6 +26,7 @@ public class PingPongGame
             String playerOneName,
             String playerTwoName,
             int numSets,
+            int numberOfPointsPerSet,
             String servingPlayer,
             long playerOneId,
             long playerTwoId
@@ -35,6 +36,7 @@ public class PingPongGame
         this.playerTwoId = playerTwoId;
         this.playerOneName = playerOneName;
         this.playerTwoName = playerTwoName;
+        this.minNumberOfPointsToWinASet = numberOfPointsPerSet;
         pingPongSets = new ArrayList<>();
         winningNumberOfSets = numSets % 2 == 1 ? numSets/2 + 1 : numSets / 2;
 

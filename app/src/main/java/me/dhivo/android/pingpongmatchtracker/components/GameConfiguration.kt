@@ -6,6 +6,14 @@ internal class GameConfiguration {
     var numberOfSets: Int = 3
         private set
 
+    var maxNumSets: Int  = 9
+    var minNumSets: Int = 1
+
+    // Default number of points in a set
+    var numberOfPointsPerSet = 11
+    var minNumPointsPerSet = 11
+    var maxNumPointsPerSet = 21
+
     var servingPlayer: PlayerEnum = PlayerEnum.PLAYER_ONE
         private set
 
@@ -22,12 +30,23 @@ internal class GameConfiguration {
         }
 
     fun incrementNumberOfSets() {
+        if(numberOfSets == maxNumSets) return
         numberOfSets += 2
     }
 
     fun decrementNumberOfSets() {
-        if (numberOfSets - 2 < 1) return
+        if(numberOfSets == minNumSets) return
         numberOfSets -= 2
+    }
+
+    fun incrementNumberOfPointersPerSet()
+    {
+        numberOfPointsPerSet = maxNumPointsPerSet
+    }
+
+    fun decrementNumberOfPointsPerSet()
+    {
+        numberOfPointsPerSet = minNumPointsPerSet
     }
 
     fun switchServingPlayer() {

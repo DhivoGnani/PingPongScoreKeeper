@@ -124,13 +124,14 @@ public class GameActivity extends AppCompatActivity
         final String playerOneName = getIntent().getExtras().getString("playerOneName");
         final String playerTwoName = getIntent().getExtras().getString("playerTwoName");
         final int numSets = Integer.valueOf(getIntent().getExtras().getString("numSets"));
+        final int numPointsPerSet = Integer.valueOf(getIntent().getExtras().getString("numPointsPerSet"));
         final String servingPlayer = getIntent().getExtras().getString("servingPlayer");
         long playerOneId = getIntent().getExtras().getLong("playerOneId");
         long playerTwoId = getIntent().getExtras().getLong("playerTwoId");
 
         servingPlayerId = "Player 1".equals(servingPlayer) ? playerOneId : playerTwoId;
 
-        pingPongGame = new PingPongGame(playerOneName, playerTwoName, numSets, servingPlayer,
+        pingPongGame = new PingPongGame(playerOneName, playerTwoName, numSets, numPointsPerSet,  servingPlayer,
                 playerOneId, playerTwoId);
 
         displayPlayersName();

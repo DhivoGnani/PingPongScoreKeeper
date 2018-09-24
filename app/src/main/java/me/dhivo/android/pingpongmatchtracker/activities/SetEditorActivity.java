@@ -25,6 +25,7 @@ public class SetEditorActivity extends AppCompatActivity {
     private long playerOneId;
     private long playerTwoId;
     private long servingPlayerId;
+    private int numOfPointsPerSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class SetEditorActivity extends AppCompatActivity {
         playerOneId = getIntent().getExtras().getLong("playerOneId");
         playerTwoId = getIntent().getExtras().getLong("playerTwoId");
         int numOfSets = Integer.valueOf(getIntent().getExtras().getString("numSets"));
+        numOfPointsPerSet = Integer.valueOf(getIntent().getExtras().getString("numPointsPerSet"));
         final String servingPlayer = getIntent().getExtras().getString("servingPlayer");
 
         servingPlayerId = "Player 1".equals(servingPlayer) ? playerOneId : playerTwoId;
@@ -112,7 +114,7 @@ public class SetEditorActivity extends AppCompatActivity {
             }
          }
 
-        boolean isSetsValid = SetValidator.validateSets(sets, 11);
+        boolean isSetsValid = SetValidator.validateSets(sets, numOfPointsPerSet);
         if(!isSetsValid) {
             Toast.makeText(this, "Set points are invalid",
                     Toast.LENGTH_SHORT).show();
