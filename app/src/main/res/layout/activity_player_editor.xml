@@ -1,61 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
     tools:context="me.dhivo.android.pingpongmatchtracker.activities.PlayerEditorActivity">
 
-    <!-- Overview category -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <!-- Label -->
-        <TextView
-            style="@style/RCategoryStyle"
-            android:text="Overview" />
-
-        <!-- Input fields -->
+        <!-- Overview category -->
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:orientation="vertical"
-            android:paddingLeft="4dp">
+            android:orientation="horizontal">
 
-            <!-- Name field -->
-            <EditText
-                android:id="@+id/player_name_editor"
-                style="@style/EditorFieldStyle"
-                android:hint="Name"
-                android:inputType="textCapWords" />
+            <!-- Label -->
+            <TextView
+                style="@style/RCategoryStyle"
+                android:text="Overview" />
+
+            <!-- Input fields -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:paddingLeft="4dp">
+
+                <!-- Name field -->
+                <EditText
+                    android:id="@+id/player_name_editor"
+                    style="@style/EditorFieldStyle"
+                    android:hint="Name"
+                    android:inputType="textCapWords" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
+        <Button
+            android:layout_marginTop="48dp"
+            android:layout_marginBottom="32dp"
+            android:layout_gravity="center_horizontal"
+            android:onClick="takePicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile Picture"/>
 
+        <de.hdodenhof.circleimageview.CircleImageView
+
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:src="@drawable/default_profile"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#FF000000"
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
-
-    <Button
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="32dp"
-        android:layout_gravity="center_horizontal"
-        android:onClick="takePicture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile Picture"/>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/profile_image"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:src="@drawable/default_profile"
-        app:civ_border_width="1dp"
-        app:civ_border_color="#FF000000"
-        android:layout_gravity="center_horizontal"/>
-
-</LinearLayout>
+</ScrollView>
