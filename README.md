@@ -1,5 +1,7 @@
 # PingPongScoreKeeper
-Ping Pong Score Keeper Android application. App has been published to Google Play Store. App can be found [here](https://play.google.com/store/apps/details?id=me.dhivo.android.pingpongmatchtracker)
+Ping Pong Score Keeper allows users to save match data and player data. If you want to review past match data, it is easy to do so. 
+
+App has been published to Google Play Store. New users can find instructions under the full description of the app. App can be found [here](https://play.google.com/store/apps/details?id=me.dhivo.android.pingpongmatchtracker)
 
 
 <div align="center">
