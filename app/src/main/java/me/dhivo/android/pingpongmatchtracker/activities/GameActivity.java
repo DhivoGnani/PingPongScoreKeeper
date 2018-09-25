@@ -20,16 +20,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Random;
+
 import me.dhivo.android.pingpongmatchtracker.R;
 import me.dhivo.android.pingpongmatchtracker.components.PingPongGame;
 import me.dhivo.android.pingpongmatchtracker.components.PingPongPlayer;
 import me.dhivo.android.pingpongmatchtracker.components.PingPongSet;
 import me.dhivo.android.pingpongmatchtracker.constants.Audio;
 import me.dhivo.android.pingpongmatchtracker.data.PingPongContract;
-
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Random;
 
 public class GameActivity extends AppCompatActivity
 {
@@ -90,7 +90,6 @@ public class GameActivity extends AppCompatActivity
         @Override
         public void afterTextChanged(Editable s) {
         }
-
     };
 
     @Override
