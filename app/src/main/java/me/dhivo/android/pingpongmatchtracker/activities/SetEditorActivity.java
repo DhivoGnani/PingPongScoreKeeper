@@ -114,7 +114,7 @@ public class SetEditorActivity extends AppCompatActivity {
             }
          }
 
-        boolean isSetsValid = SetValidator.validateSets(sets, numOfPointsPerSet);
+        boolean isSetsValid = SetValidator.INSTANCE.validateSets(sets, numOfPointsPerSet);
         if(!isSetsValid) {
             Toast.makeText(this, "Set points are invalid",
                     Toast.LENGTH_SHORT).show();
