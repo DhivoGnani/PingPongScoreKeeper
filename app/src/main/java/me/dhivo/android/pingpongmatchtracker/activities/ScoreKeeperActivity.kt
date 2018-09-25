@@ -103,6 +103,12 @@ class ScoreKeeperActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        val prepared: Boolean = super.onPrepareOptionsMenu(menu)
+        menu?.findItem(R.id.action_close)?.isVisible = false
+        return prepared
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_score_keeper)

@@ -23,9 +23,15 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = adapter
         viewPager.offscreenPageLimit = 2
 
-        val tabLayout: TabLayout = findViewById(R.id.tabs)
+        val tabLayout: TabLayout = this.findViewById(R.id.tabs)
 
         tabLayout.setupWithViewPager(viewPager)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        val prepared: Boolean = super.onPrepareOptionsMenu(menu)
+        menu?.findItem(R.id.action_close)?.isVisible = false
+        return prepared
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
