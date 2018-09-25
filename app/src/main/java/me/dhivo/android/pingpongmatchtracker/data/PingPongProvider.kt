@@ -5,17 +5,11 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.UriMatcher
 import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
 import android.util.Log
-
-import me.dhivo.android.pingpongmatchtracker.data.PingPongContract.PingPongMatch
-import me.dhivo.android.pingpongmatchtracker.data.PingPongContract.Player
+import me.dhivo.android.pingpongmatchtracker.data.PingPongContract.*
+import me.dhivo.android.pingpongmatchtracker.data.PingPongContract.PingPongMatch.*
 import me.dhivo.android.pingpongmatchtracker.data.PingPongContract.Set
-
-import me.dhivo.android.pingpongmatchtracker.data.PingPongContract.PingPongMatch.COLUMN_GAME_TIME_DONE_LOCAL_TITLE_ALIAS
-import me.dhivo.android.pingpongmatchtracker.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE
-import me.dhivo.android.pingpongmatchtracker.data.PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE
 
 
 class PingPongProvider : ContentProvider() {
@@ -25,31 +19,6 @@ class PingPongProvider : ContentProvider() {
     private val playerOneTableName = "playerOneTable"
     private val playerTwoTableName = "playerTwoTable"
     private val servingPlayerTableName = "servingPlayerTable"
-
-    private val matchesWithPlayerInfo: Cursor
-        get() {
-            val database = mDbHelper.readableDatabase
-
-            val query = ("SELECT " + pingPongMatchTableName + "." + PingPongMatch._ID + ","
-                    + pingPongMatchTableName + "." + COLUMN_PLAYER_ONE_SETS_WON_TITLE + ","
-                    + pingPongMatchTableName + "." + COLUMN_PLAYER_TWO_SETS_WON_TITLE + ","
-                    + COLUMN_GAME_TIME_DONE_LOCAL_TITLE_ALIAS + "time,"
-                    + playerOneTableName + "." + Player.COLUMN_NAME_TITLE + " PlayerOneName,"
-                    + playerOneTableName + "." + Player.COLUMN_PROFILE_PICTURE_TITLE + " PlayerOnePicture,"
-                    + playerTwoTableName + "." + Player.COLUMN_NAME_TITLE + " PlayerTwoName,"
-                    + playerTwoTableName + "." + Player.COLUMN_PROFILE_PICTURE_TITLE + " PlayerTwoPicture,"
-                    + servingPlayerTableName + "." + Player.COLUMN_NAME_TITLE + " ServingPlayerName"
-                    + " FROM " + PingPongMatch.TABLE_NAME + " " + pingPongMatchTableName
-                    + " INNER JOIN " + Player.TABLE_NAME + " " + playerOneTableName + " ON "
-                    + pingPongMatchTableName + "." + PingPongMatch.COLUMN_PLAYER_ONE_ID_TITLE + "=" + playerOneTableName + "." + Player._ID
-                    + " INNER JOIN " + Player.TABLE_NAME + " " + playerTwoTableName + " ON "
-                    + pingPongMatchTableName + "." + PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE + "=" + playerTwoTableName + "." + Player._ID
-                    + " INNER JOIN " + Player.TABLE_NAME + " " + servingPlayerTableName + " ON "
-                    + pingPongMatchTableName + "." + PingPongMatch.COLUMN_SERVING_PLAYER_ID_TITLE + "=" + servingPlayerTableName + "." + Player._ID
-                    + " ORDER BY time DESC;")
-
-            return database.rawQuery(query, null)
-        }
 
     override fun onCreate(): Boolean {
         mDbHelper = PingPongDBHelper(context)
@@ -66,8 +35,7 @@ class PingPongProvider : ContentProvider() {
 
         when (match) {
             MATCHES ->
-                //                cursor = database.query(PingPongMatch.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
-                cursor = matchesWithPlayerInfo
+                cursor = matchesWithPlayerInfo()
             MATCHES_ID -> {
                 selection = PingPongMatch._ID + "=?"
                 selectionArgs = arrayOf(ContentUris.parseId(uri).toString())
@@ -221,11 +189,11 @@ class PingPongProvider : ContentProvider() {
         val LOG_TAG = PingPongProvider::class.java.simpleName
 
         private val MATCHES = 100
+
         private val MATCHES_ID = 102
         private val SETS = 101
         private val PLAYERS = 103
         private val PLAYERS_ID = 104
-
         private val sUriMatcher = UriMatcher(UriMatcher.NO_MATCH)
 
         init {
@@ -235,5 +203,30 @@ class PingPongProvider : ContentProvider() {
             sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_PLAYER, PLAYERS)
             sUriMatcher.addURI(PingPongContract.CONTENT_AUTHORITY, PingPongContract.PATH_PLAYER + "/#", PLAYERS_ID)
         }
+
+    }
+
+    private fun matchesWithPlayerInfo(): Cursor {
+        val database = mDbHelper.readableDatabase
+
+        val query = ("SELECT " + pingPongMatchTableName + "." + PingPongMatch._ID + ","
+                + pingPongMatchTableName + "." + COLUMN_PLAYER_ONE_SETS_WON_TITLE + ","
+                + pingPongMatchTableName + "." + COLUMN_PLAYER_TWO_SETS_WON_TITLE + ","
+                + COLUMN_GAME_TIME_DONE_LOCAL_TITLE_ALIAS + "time,"
+                + playerOneTableName + "." + Player.COLUMN_NAME_TITLE + " PlayerOneName,"
+                + playerOneTableName + "." + Player.COLUMN_PROFILE_PICTURE_TITLE + " PlayerOnePicture,"
+                + playerTwoTableName + "." + Player.COLUMN_NAME_TITLE + " PlayerTwoName,"
+                + playerTwoTableName + "." + Player.COLUMN_PROFILE_PICTURE_TITLE + " PlayerTwoPicture,"
+                + servingPlayerTableName + "." + Player.COLUMN_NAME_TITLE + " ServingPlayerName"
+                + " FROM " + PingPongMatch.TABLE_NAME + " " + pingPongMatchTableName
+                + " INNER JOIN " + Player.TABLE_NAME + " " + playerOneTableName + " ON "
+                + pingPongMatchTableName + "." + PingPongMatch.COLUMN_PLAYER_ONE_ID_TITLE + "=" + playerOneTableName + "." + Player._ID
+                + " INNER JOIN " + Player.TABLE_NAME + " " + playerTwoTableName + " ON "
+                + pingPongMatchTableName + "." + PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE + "=" + playerTwoTableName + "." + Player._ID
+                + " INNER JOIN " + Player.TABLE_NAME + " " + servingPlayerTableName + " ON "
+                + pingPongMatchTableName + "." + PingPongMatch.COLUMN_SERVING_PLAYER_ID_TITLE + "=" + servingPlayerTableName + "." + Player._ID
+                + " ORDER BY time DESC;")
+
+        return database.rawQuery(query, null)
     }
 }
