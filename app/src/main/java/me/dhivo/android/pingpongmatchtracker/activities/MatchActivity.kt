@@ -19,8 +19,9 @@ import me.dhivo.android.pingpongmatchtracker.data.PingPongContract
 import me.dhivo.android.pingpongmatchtracker.data.PingPongContract.Set.SORTED_SETS
 
 class MatchActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
-    private var mCurrentUri: Uri? = null
-    private var adapter: MatchSetsAdapter? = null
+
+    private lateinit var mCurrentUri: Uri
+    private lateinit var adapter: MatchSetsAdapter
     private var matchId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,24 +31,24 @@ class MatchActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         mCurrentUri = intent.data
         matchId = intent.extras.getLong("matchId")
 
-        val playerOneName = intent.extras.getString("playerOneName")
-        val playerTwoName = intent.extras.getString("playerTwoName")
+        val playerOneName: String = intent.extras.getString("playerOneName")
+        val playerTwoName: String = intent.extras.getString("playerTwoName")
 
-        val p1 = findViewById<TextView>(R.id.player_one_id)
-        p1.text = playerOneName
+        val playerOneNameDisplay: TextView = findViewById(R.id.player_one_id)
+        val playerTwoNameDisplay: TextView = findViewById(R.id.player_two_id)
 
-        val p2 = findViewById<TextView>(R.id.player_two_id)
-        p2.text = playerTwoName
+        playerOneNameDisplay.text = playerOneName
+        playerTwoNameDisplay.text = playerTwoName
 
-        p1.setTypeface(Typeface.create(p1.typeface, Typeface.NORMAL), Typeface.NORMAL)
-        p2.setTypeface(Typeface.create(p2.typeface, Typeface.NORMAL), Typeface.NORMAL)
+        playerOneNameDisplay.setTypeface(Typeface.create(playerOneNameDisplay.typeface, Typeface.NORMAL), Typeface.NORMAL)
+        playerTwoNameDisplay.setTypeface(Typeface.create(playerTwoNameDisplay.typeface, Typeface.NORMAL), Typeface.NORMAL)
 
         val won = intent.extras.getString("won") == "p1"
 
-        if (won) p1.setTypeface(p1.typeface, Typeface.BOLD)
-        else p2.setTypeface(p2.typeface, Typeface.BOLD)
+        if (won) playerOneNameDisplay.setTypeface(playerOneNameDisplay.typeface, Typeface.BOLD)
+        else playerTwoNameDisplay.setTypeface(playerTwoNameDisplay.typeface, Typeface.BOLD)
 
-        val list = findViewById<ListView>(R.id.setlist)
+        val list: ListView = findViewById(R.id.setlist)
         adapter = MatchSetsAdapter(this, null)
 
         list.adapter = adapter
@@ -59,16 +60,16 @@ class MatchActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         val selection = PingPongContract.Set.MATCH_ID + "=?"
         val selectionArgs = arrayOf(matchId.toString())
 
-        return CursorLoader(this, mCurrentUri!!, null, selection, selectionArgs,
+        return CursorLoader(this, mCurrentUri, null, selection, selectionArgs,
                 SORTED_SETS)
     }
 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor) {
-        adapter?.swapCursor(data)
+        adapter.swapCursor(data)
     }
 
     override fun onLoaderReset(loader: Loader<Cursor>) {
-        adapter?.swapCursor(null)
+        adapter.swapCursor(null)
     }
 
 

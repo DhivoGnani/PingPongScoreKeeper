@@ -40,13 +40,13 @@ import me.dhivo.android.pingpongmatchtracker.helpers.ImageHelper;
 
 public class PlayerEditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    String mCurrentPhotoPath;
-    String uriStr;
+    private String mCurrentPhotoPath;
+    private String uriStr;
 
     private Uri mCurrentPlayerUri;
-    EditText nameEditText;
-    CircleImageView imageView;
-    String playerName;
+    private EditText nameEditText;
+    private CircleImageView imageView;
+    private String playerName;
 
     final int REQUEST_TAKE_PHOTO =  1;
 
@@ -73,7 +73,6 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
         String profilePictureUri = data.getString(pictureColumnIndex);
         nameEditText.setText(name);
 
-        // TODO: remove the uriStr == null condition
         if(profilePictureUri != null && uriStr == null) {
             displayImage(Uri.parse(profilePictureUri), imageView);
         }
@@ -81,13 +80,11 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-
     }
 
     private TextWatcher playerNameWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
         }
 
         @Override
@@ -97,7 +94,6 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
 
         @Override
         public void afterTextChanged(Editable editable) {
-
         }
     };
 
@@ -186,11 +182,11 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
         dispatchTakePictureIntent();
     }
 
-    private File createImageFile() throws IOException {
+    private static File createImageFile(PlayerEditorActivity playerEditorActivity) throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = playerEditorActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName, /* prefix */
                 ".jpg", /* suffix */
@@ -198,7 +194,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
+        playerEditorActivity.mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
@@ -209,7 +205,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
             // Create the File where the photo should go
             File photoFile = null;
             try {
-                photoFile = createImageFile();
+                photoFile = createImageFile(this);
             } catch (IOException ex) {
                 // Error occurred while creating the File
             }

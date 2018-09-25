@@ -10,21 +10,20 @@ import android.view.MenuItem
 import me.dhivo.android.pingpongmatchtracker.R
 import me.dhivo.android.pingpongmatchtracker.adapters.CategoryAdapter
 
-
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val viewPager = findViewById<ViewPager>(R.id.viewpager)
+        val viewPager: ViewPager = findViewById(R.id.viewpager)
 
         val adapter = CategoryAdapter(supportFragmentManager)
 
         viewPager.adapter = adapter
         viewPager.offscreenPageLimit = 2
 
-        val tabLayout = findViewById<TabLayout>(R.id.tabs)
+        val tabLayout: TabLayout = findViewById(R.id.tabs)
 
         tabLayout.setupWithViewPager(viewPager)
     }

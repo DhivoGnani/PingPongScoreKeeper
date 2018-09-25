@@ -19,16 +19,16 @@ import me.dhivo.android.pingpongmatchtracker.data.PingPongContract.PingPongMatch
 
 
 class PingPongProvider : ContentProvider() {
-    private var mDbHelper: PingPongDBHelper? = null
+    private lateinit var mDbHelper: PingPongDBHelper
 
-    internal val pingPongMatchTableName = "matchTable"
-    internal val playerOneTableName = "playerOneTable"
-    internal val playerTwoTableName = "playerTwoTable"
-    internal val servingPlayerTableName = "servingPlayerTable"
+    private val pingPongMatchTableName = "matchTable"
+    private val playerOneTableName = "playerOneTable"
+    private val playerTwoTableName = "playerTwoTable"
+    private val servingPlayerTableName = "servingPlayerTable"
 
-    val matchesWithPlayerInfo: Cursor
+    private val matchesWithPlayerInfo: Cursor
         get() {
-            val database = mDbHelper!!.readableDatabase
+            val database = mDbHelper.readableDatabase
 
             val query = ("SELECT " + pingPongMatchTableName + "." + PingPongMatch._ID + ","
                     + pingPongMatchTableName + "." + COLUMN_PLAYER_ONE_SETS_WON_TITLE + ","
@@ -60,7 +60,7 @@ class PingPongProvider : ContentProvider() {
                        sortOrder: String?): Cursor? {
         var selection = selection
         var selectionArgs = selectionArgs
-        val database = mDbHelper!!.readableDatabase
+        val database = mDbHelper.readableDatabase
         val cursor: Cursor
         val match = sUriMatcher.match(uri)
 
@@ -82,7 +82,7 @@ class PingPongProvider : ContentProvider() {
             }
             else -> throw IllegalStateException("Unknown URI $uri with match $match")
         }
-        cursor.setNotificationUri(context!!.contentResolver, uri)
+        cursor.setNotificationUri(context.contentResolver, uri)
 
         return cursor
     }
@@ -90,7 +90,7 @@ class PingPongProvider : ContentProvider() {
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
         var selection = selection
         var selectionArgs = selectionArgs
-        val database = mDbHelper!!.writableDatabase
+        val database = mDbHelper.writableDatabase
         val match = sUriMatcher.match(uri)
         val rowsDeleted: Int
         when (match) {
@@ -110,7 +110,7 @@ class PingPongProvider : ContentProvider() {
         }
 
         if (rowsDeleted != 0) {
-            context!!.contentResolver.notifyChange(uri, null)
+            context.contentResolver.notifyChange(uri, null)
         }
 
         return rowsDeleted
@@ -121,35 +121,35 @@ class PingPongProvider : ContentProvider() {
         var selectionArgs = selectionArgs
         val match = sUriMatcher.match(uri)
         val rowsUpdated: Int
-        val database = mDbHelper!!.writableDatabase
+        val database = mDbHelper.writableDatabase
 
         when (match) {
             PLAYERS_ID -> {
                 selection = Player._ID + "=?"
                 selectionArgs = arrayOf(ContentUris.parseId(uri).toString())
                 rowsUpdated = database.update(Player.TABLE_NAME, contentValues, selection, selectionArgs)
-                context!!.contentResolver.notifyChange(PingPongMatch.CONTENT_URI, null)
+                context.contentResolver.notifyChange(PingPongMatch.CONTENT_URI, null)
             }
             else -> throw IllegalArgumentException("Cannot query unknown URI $uri")
         }
 
-        context!!.contentResolver.notifyChange(uri, null)
+        context.contentResolver.notifyChange(uri, null)
         return rowsUpdated
     }
 
     override fun insert(uri: Uri, contentValues: ContentValues?): Uri? {
         val match = sUriMatcher.match(uri)
 
-        when (match) {
-            MATCHES -> return insertPingPongMatch(uri, contentValues!!)
-            SETS -> return insertPingPongSet(uri, contentValues)
-            PLAYERS -> return insertPingPongPlayer(uri, contentValues)
+        return when (match) {
+            MATCHES -> insertPingPongMatch(uri, contentValues!!)
+            SETS -> insertPingPongSet(uri, contentValues)
+            PLAYERS -> insertPingPongPlayer(uri, contentValues)
             else -> throw IllegalArgumentException("Cannot query unknown URI $uri")
         }
     }
 
     private fun insertPingPongSet(uri: Uri, contentValues: ContentValues?): Uri? {
-        val database = mDbHelper!!.writableDatabase
+        val database = mDbHelper.writableDatabase
 
         val id = database.insert(Set.TABLE_NAME, null, contentValues)
 
@@ -158,13 +158,13 @@ class PingPongProvider : ContentProvider() {
             return null
         }
 
-        context!!.contentResolver.notifyChange(uri, null)
+        context.contentResolver.notifyChange(uri, null)
 
         return ContentUris.withAppendedId(uri, id)
     }
 
     private fun insertPingPongPlayer(uri: Uri, values: ContentValues?): Uri? {
-        val database = mDbHelper!!.writableDatabase
+        val database = mDbHelper.writableDatabase
 
         val id = database.insert(Player.TABLE_NAME, null, values)
 
@@ -173,7 +173,7 @@ class PingPongProvider : ContentProvider() {
             return null
         }
 
-        context!!.contentResolver.notifyChange(uri, null)
+        context.contentResolver.notifyChange(uri, null)
 
         return ContentUris.withAppendedId(uri, id)
     }
@@ -192,7 +192,7 @@ class PingPongProvider : ContentProvider() {
         val playerTwoSetsWon = values.getAsInteger(PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE)
                 ?: throw IllegalArgumentException("Player Twp Sets Won requires a number")
 
-        val database = mDbHelper!!.writableDatabase
+        val database = mDbHelper.writableDatabase
 
         val id = database.insert(PingPongMatch.TABLE_NAME, null, values)
 
@@ -201,7 +201,7 @@ class PingPongProvider : ContentProvider() {
             return null
         }
 
-        context!!.contentResolver.notifyChange(uri, null)
+        context.contentResolver.notifyChange(uri, null)
 
         return ContentUris.withAppendedId(uri, id)
     }
