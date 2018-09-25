@@ -288,16 +288,16 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
     public boolean playersChosenAreValid()
     {
         if(madapter.isEmpty()) {
-            Toast.makeText(getActivity(), "Add players", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.add_players), Toast.LENGTH_SHORT).show();
             return false;
         }
         if(playerOneName == null || playerTwoName == null)  {
-            Toast.makeText(getActivity(), "Choose players", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.choose_players), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if(playerOneId == playerTwoId) {
-            Toast.makeText(getActivity(), "Chosen players are the same",
+            Toast.makeText(getActivity(), getString(R.string.same_players_chosen),
                     Toast.LENGTH_SHORT).show();
             return false;
         }

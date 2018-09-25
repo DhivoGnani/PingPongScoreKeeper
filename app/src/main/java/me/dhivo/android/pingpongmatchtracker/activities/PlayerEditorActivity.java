@@ -142,7 +142,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
 
     private void addNewPlayer() {
         if(playerName == null || playerName.trim().length() <= 0) {
-            Toast.makeText(this, "Enter a name",
+            Toast.makeText(this, getString(R.string.enter_a_name),
                     Toast.LENGTH_SHORT).show();
             return;
         }
@@ -159,7 +159,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
         }
         insertPlayer(playerName, getContentResolver());
         finish();
-        Toast.makeText(this, "player saved",
+        Toast.makeText(this, getString(R.string.player_saved),
                 Toast.LENGTH_SHORT).show();
     }
 

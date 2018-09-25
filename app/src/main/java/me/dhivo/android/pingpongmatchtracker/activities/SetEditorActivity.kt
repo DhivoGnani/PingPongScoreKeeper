@@ -95,7 +95,7 @@ class SetEditorActivity : AppCompatActivity() {
 
         for (i in sets!!.indices) {
             if (sets!![i].playerOneScore == -1 || sets!![i].playerTwoScore == -1) {
-                Toast.makeText(this, "Add set values",
+                Toast.makeText(this, getString(R.string.add_set_values),
                         Toast.LENGTH_SHORT).show()
                 return false
             }
@@ -108,7 +108,7 @@ class SetEditorActivity : AppCompatActivity() {
 
         val isSetsValid = SetValidator.validateSets(sets!!, numOfPointsPerSet)
         if (!isSetsValid) {
-            Toast.makeText(this, "Set points are invalid",
+            Toast.makeText(this, getString(R.string.invalid_set_points),
                     Toast.LENGTH_SHORT).show()
             return false
         }

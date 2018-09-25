@@ -7,9 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:text="Serve" />
+                android:text="@string/serve" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,7 +42,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="10"
-                    android:prompt="@string/choose_player"/>
+                    android:prompt="@string/choose_player" />
 
                 <CheckBox
                     android:id="@+id/player_one_serve"
@@ -52,8 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:checked="true"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -66,21 +63,20 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="10"
-                    android:prompt="@string/choose_player"/>
+                    android:prompt="@string/choose_player" />
 
                 <CheckBox
                     android:id="@+id/player_two_serve"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <TextView
                 style="@style/HeaderTextStyle"
                 android:layout_gravity="center_horizontal"
-                android:text="Sets" />
+                android:text="@string/sets" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -92,7 +88,7 @@
                     android:id="@+id/decrease"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:text="-" />
+                    android:text="@string/decrease" />
 
                 <TextView
                     android:id="@+id/num_of_sets"
@@ -100,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
-                    android:text="3"
+                    android:text="@string/three"
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
 
@@ -108,7 +104,7 @@
                     android:id="@+id/increase"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:text="+" />
+                    android:text="@string/increase" />
 
             </LinearLayout>
 
@@ -128,7 +124,7 @@
                     android:id="@+id/decrease_set_points"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:text="-" />
+                    android:text="@string/decrease" />
 
                 <TextView
                     android:id="@+id/num_of_sets_points"
@@ -136,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
-                    android:text="11"
+                    android:text="@string/eleven"
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
 
@@ -144,34 +140,32 @@
                     android:id="@+id/increase_set_points"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:text="+" />
+                    android:text="@string/increase" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="48dp"
                 android:layout_gravity="center_horizontal"
-                >
+                android:layout_marginTop="48dp"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/start_game"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Start"
                     android:layout_marginRight="8dp"
-                    />
+                    android:text="@string/start_game" />
+
                 <Button
                     android:id="@+id/add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Add"
                     android:layout_marginLeft="8dp"
-                    />
+                    android:text="@string/add_game" />
 
             </LinearLayout>
 
