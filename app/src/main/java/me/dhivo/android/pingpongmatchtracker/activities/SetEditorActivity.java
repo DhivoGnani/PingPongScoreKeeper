@@ -72,25 +72,25 @@ public class SetEditorActivity extends AppCompatActivity {
     private void insertFinishedMatch(long playerOneId, long playerTwoId, int numberOfSetsPlayerOneWon, int numberOfSetsPlayerTwoWon, ArrayList<PingPongSet> pingPongSets)
     {
         ContentValues values = new ContentValues();
-        values.put(PingPongContract.PingPongMatch.Companion.getCOLUMN_PLAYER_ONE_ID_TITLE(), playerOneId);
-        values.put(PingPongContract.PingPongMatch.Companion.getCOLUMN_PLAYER_TWO_ID_TITLE(),  playerTwoId);
-        values.put(PingPongContract.PingPongMatch.Companion.getCOLUMN_PLAYER_ONE_SETS_WON_TITLE(),  numberOfSetsPlayerOneWon);
-        values.put(PingPongContract.PingPongMatch.Companion.getCOLUMN_PLAYER_TWO_SETS_WON_TITLE(), numberOfSetsPlayerTwoWon);
-        values.put(PingPongContract.PingPongMatch.Companion.getCOLUMN_SERVING_PLAYER_ID_TITLE(), servingPlayerId);
+        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_ID_TITLE, playerOneId);
+        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE,  playerTwoId);
+        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE,  numberOfSetsPlayerOneWon);
+        values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE, numberOfSetsPlayerTwoWon);
+        values.put(PingPongContract.PingPongMatch.COLUMN_SERVING_PLAYER_ID_TITLE, servingPlayerId);
 
-        Uri uri =getContentResolver().insert(PingPongContract.PingPongMatch.Companion.getCONTENT_URI(), values);
+        Uri uri =getContentResolver().insert(PingPongContract.PingPongMatch.CONTENT_URI, values);
 
         long id = Long.valueOf(uri.getLastPathSegment());
 
         for(PingPongSet set: pingPongSets)
         {
             values = new ContentValues();
-            values.put(PingPongContract.Set.Companion.getMATCH_ID(), id+ "");
-            values.put(PingPongContract.Set.Companion.getSET_NUMBER(), set.getSetNumber());
-            values.put(PingPongContract.Set.Companion.getPLAYER_ONE_SCORE(),  set.getPlayerOneScore());
-            values.put(PingPongContract.Set.Companion.getPLAYER_TWO_SCORE(), set.getPlayerTwoScore());
+            values.put(PingPongContract.Set.MATCH_ID, id+ "");
+            values.put(PingPongContract.Set.SET_NUMBER, set.getSetNumber());
+            values.put(PingPongContract.Set.PLAYER_ONE_SCORE,  set.getPlayerOneScore());
+            values.put(PingPongContract.Set.PLAYER_TWO_SCORE, set.getPlayerTwoScore());
 
-            getContentResolver().insert(PingPongContract.Set.Companion.getCONTENT_URI(), values);
+            getContentResolver().insert(PingPongContract.Set.CONTENT_URI, values);
         }
     }
 
