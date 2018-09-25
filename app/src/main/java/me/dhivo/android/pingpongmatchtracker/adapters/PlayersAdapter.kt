@@ -23,7 +23,6 @@ class PlayersAdapter(context: Context, c: Cursor?) : CursorAdapter(context, c, 0
 
     override fun bindView(view: View, context: Context, cursor: Cursor) {
         val playerNameView = view.findViewById<TextView>(R.id.usernameTextView)
-
         val setNumberCol = cursor.getColumnIndex(PingPongContract.Player.COLUMN_NAME_TITLE)
         val setProfileCol = cursor.getColumnIndex(PingPongContract.Player.COLUMN_PROFILE_PICTURE_TITLE)
 
