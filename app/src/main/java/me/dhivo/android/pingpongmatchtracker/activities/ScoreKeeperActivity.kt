@@ -74,7 +74,7 @@ class ScoreKeeperActivity : AppCompatActivity() {
         override fun afterTextChanged(s: Editable) {}
     }
 
-    val randomEncouragingWord: String
+    private val randomEncouragingWord: String
         get() {
             val Low = 0
             val High = Audio.congratulatingWords.size
@@ -340,13 +340,13 @@ class ScoreKeeperActivity : AppCompatActivity() {
         pingPongGame.resetGame()
         displayCurrentServingPlayer()
         val reset = view as TextView
-        if (reset.text == "Restart") {
-            reset.text = "RESET"
+        if (reset.text == getString(R.string.restart)) {
+            reset.text = getString(R.string.reset).toUpperCase()
         }
         pingPongGame.pingPongSets = ArrayList()
     }
 
     private fun changeResetButton() {
-        reset.text = "Restart"
+        reset.text = getString(R.string.restart)
     }
 }
