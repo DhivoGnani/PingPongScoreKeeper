@@ -77,12 +77,13 @@ class FinishedMatchesCursorAdapter(context: Context, c: Cursor?) : CursorAdapter
         playerOneScoreView.text = playerOneSetsWon.toString()
         playerTwoScoreView.text = playerTwoSetsWon.toString()
 
+
         view.setOnClickListener {
             val intent = Intent(context, MatchActivity::class.java)
             intent.data = PingPongContract.Set.CONTENT_URI
             intent.putExtra("matchId", matchId)
-            intent.putExtra("playerOneName", cursor.getString(playerOneNameCol))
-            intent.putExtra("playerTwoName", cursor.getString(playerTwoNameCol))
+            intent.putExtra("playerOneName", playerOneName)
+            intent.putExtra("playerTwoName", playerTwoName)
             if (playerOneSetsWon > playerTwoSetsWon) {
                 intent.putExtra("won", "p1")
             } else {
