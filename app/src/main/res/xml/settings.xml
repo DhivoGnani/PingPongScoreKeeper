@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
         android:defaultValue="false"
-        android:title="Audio"
         android:key="audio_switch"
-        android:summary="Turn this option on or off"/>
+        android:summary="@string/enable_disable_option"
+        android:title="@string/audio" />
 </PreferenceScreen>

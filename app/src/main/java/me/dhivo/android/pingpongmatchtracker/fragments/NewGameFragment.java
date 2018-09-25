@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import me.dhivo.android.pingpongmatchtracker.R;
-import me.dhivo.android.pingpongmatchtracker.activities.GameActivity;
+import me.dhivo.android.pingpongmatchtracker.activities.ScoreKeeperActivity;
 import me.dhivo.android.pingpongmatchtracker.activities.SetEditorActivity;
 import me.dhivo.android.pingpongmatchtracker.components.GameConfiguration;
 import me.dhivo.android.pingpongmatchtracker.customviews.NoDefaultSpinner;
@@ -51,7 +51,7 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.activity_new_game, container, false);
+        rootView = inflater.inflate(R.layout.fragment_new_game, container, false);
 
         configuration = new GameConfiguration();
         playerOneDisplay = rootView.findViewById(R.id.player_one);
@@ -192,7 +192,7 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
         String servingPlayer = configuration.getServingPlayer().toString();
 
         // TODO: Find better way to pass necessary data to GameActivity
-        Intent intent = start? new Intent(getActivity(), GameActivity.class) :
+        Intent intent = start? new Intent(getActivity(), ScoreKeeperActivity.class) :
                 new Intent(getActivity(), SetEditorActivity.class) ;
         intent.putExtra("playerOneName", playerOneName);
         intent.putExtra("playerTwoName", playerTwoName);
@@ -288,16 +288,16 @@ public class NewGameFragment extends Fragment implements  LoaderManager.LoaderCa
     public boolean playersChosenAreValid()
     {
         if(madapter.isEmpty()) {
-            Toast.makeText(getActivity(), "Add players", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.add_players), Toast.LENGTH_SHORT).show();
             return false;
         }
         if(playerOneName == null || playerTwoName == null)  {
-            Toast.makeText(getActivity(), "Choose players", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.choose_players), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if(playerOneId == playerTwoId) {
-            Toast.makeText(getActivity(), "Chosen players are the same",
+            Toast.makeText(getActivity(), getString(R.string.same_players_chosen),
                     Toast.LENGTH_SHORT).show();
             return false;
         }

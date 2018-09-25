@@ -6,7 +6,6 @@ import android.view.MenuItem
 
 import me.dhivo.android.pingpongmatchtracker.fragments.SettingsFragment
 
-//TODO: Why is AppCompactActivity and not Activity used here?
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

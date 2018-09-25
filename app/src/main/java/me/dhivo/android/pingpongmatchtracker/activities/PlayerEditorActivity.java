@@ -40,13 +40,11 @@ import me.dhivo.android.pingpongmatchtracker.helpers.ImageHelper;
 
 public class PlayerEditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    String mCurrentPhotoPath;
-    String uriStr;
-
+    private String uriStr;
     private Uri mCurrentPlayerUri;
-    EditText nameEditText;
-    CircleImageView imageView;
-    String playerName;
+    private EditText nameEditText;
+    private CircleImageView imageView;
+    private String playerName;
 
     final int REQUEST_TAKE_PHOTO =  1;
 
@@ -56,24 +54,22 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
         if (playerName != null) return null;
         return new CursorLoader(this,
                 mCurrentPlayerUri,
-                new String[] {PingPongContract.Player._ID, PingPongContract.Player.COLUMN_NAME_TITLE, PingPongContract.Player.COLUMN_PROFILE_PICTURE_TITLE}, null, null, null);
+                new String[] {PingPongContract.Player._ID, PingPongContract.Player.COLUMN_NAME_TITLE,
+                        PingPongContract.Player.COLUMN_PROFILE_PICTURE_TITLE}, null, null, null);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         if(data == null || loader == null) return;
-
         data.moveToFirst();
 
         int nameColumnIndex = data.getColumnIndex(PingPongContract.Player.COLUMN_NAME_TITLE);
         int pictureColumnIndex = data.getColumnIndex(PingPongContract.Player.COLUMN_PROFILE_PICTURE_TITLE);
 
-
         String name = data.getString(nameColumnIndex);
         String profilePictureUri = data.getString(pictureColumnIndex);
         nameEditText.setText(name);
 
-        // TODO: remove the uriStr == null condition
         if(profilePictureUri != null && uriStr == null) {
             displayImage(Uri.parse(profilePictureUri), imageView);
         }
@@ -81,13 +77,11 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-
     }
 
     private TextWatcher playerNameWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
         }
 
         @Override
@@ -97,7 +91,6 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
 
         @Override
         public void afterTextChanged(Editable editable) {
-
         }
     };
 
@@ -120,7 +113,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.new_player_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_new_player, menu);
         return true;
     }
 
@@ -142,7 +135,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
 
     private void addNewPlayer() {
         if(playerName == null || playerName.trim().length() <= 0) {
-            Toast.makeText(this, "Enter a name",
+            Toast.makeText(this, getString(R.string.enter_a_name),
                     Toast.LENGTH_SHORT).show();
             return;
         }
@@ -159,7 +152,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
         }
         insertPlayer(playerName, getContentResolver());
         finish();
-        Toast.makeText(this, "player saved",
+        Toast.makeText(this, getString(R.string.player_saved),
                 Toast.LENGTH_SHORT).show();
     }
 
@@ -186,19 +179,17 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
         dispatchTakePictureIntent();
     }
 
-    private File createImageFile() throws IOException {
+    private static File createImageFile(PlayerEditorActivity playerEditorActivity) throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = playerEditorActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName, /* prefix */
                 ".jpg", /* suffix */
                 storageDir      /* directory */
         );
 
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
@@ -209,7 +200,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
             // Create the File where the photo should go
             File photoFile = null;
             try {
-                photoFile = createImageFile();
+                photoFile = createImageFile(this);
             } catch (IOException ex) {
                 // Error occurred while creating the File
             }

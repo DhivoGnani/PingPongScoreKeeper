@@ -24,18 +24,17 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_image_playerone"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/default_profile"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="1dp"
                     app:riv_border_color="#333333"
                     app:riv_border_width="1dip"
-                    app:riv_corner_radius="30dip"
-                    android:id="@+id/profile_image_playerone"
-                    android:src="@drawable/default_profile"
-                    app:civ_border_width="1dp"
-                    app:civ_border_color="#FF000000"
-                    android:layout_gravity="center_horizontal"/>
+                    app:riv_corner_radius="30dip" />
 
                 <TextView
                     android:id="@+id/player_one_name"
@@ -44,7 +43,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textSize="@dimen/TeamNames"
-                    tools:text="Dhivo *" />
+                    tools:text="@string/test_player_one_serve" />
             </LinearLayout>
 
             <LinearLayout
@@ -66,7 +65,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:textSize="@dimen/Score"
-                        tools:text="5" />
+                        tools:text="@string/five" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -74,7 +73,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text=" - "
+                        android:text="@string/set_separator"
                         android:textSize="@dimen/Score" />
 
                     <TextView
@@ -85,7 +84,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:textSize="@dimen/Score"
-                        tools:text="1" />
+                        tools:text="@string/three" />
 
                 </LinearLayout>
 
@@ -96,7 +95,7 @@
                     android:layout_gravity="center|bottom"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="2012/01/20" />
+                    android:text="@string/test_match_date" />
             </LinearLayout>
 
             <LinearLayout
@@ -105,18 +104,17 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_image_playertwo"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/default_profile"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="1dp"
                     app:riv_border_color="#333333"
                     app:riv_border_width="1dip"
-                    app:riv_corner_radius="30dip"
-                    android:id="@+id/profile_image_playertwo"
-                    android:src="@drawable/default_profile"
-                    app:civ_border_width="1dp"
-                    app:civ_border_color="#FF000000"
-                    android:layout_gravity="center_horizontal"/>
+                    app:riv_corner_radius="30dip" />
 
                 <TextView
                     android:id="@+id/player_two_name"
@@ -125,7 +123,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textSize="@dimen/TeamNames"
-                    tools:text="Dan" />
+                    tools:text="@string/test_player_two_name" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

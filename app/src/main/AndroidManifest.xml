@@ -21,9 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="me.dhivo.android.pingpongmatchtracker.activities.GameActivity">
-        </activity>
+        <activity android:name="me.dhivo.android.pingpongmatchtracker.activities.ScoreKeeperActivity"></activity>
         <activity
             android:name="me.dhivo.android.pingpongmatchtracker.activities.SettingsActivity"
             android:label="Settings" />

@@ -21,11 +21,11 @@ class SetAdapter(context: Context, resource: Int, private val sets: List<PingPon
         val set = getItem(position)
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.editable_set_item, parent, false)
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_editable_set_details, parent, false)
         }
 
-        val playerOneScore = convertView!!.findViewById<EditText>(R.id.player_one_num)
-        val playerTwoScore = convertView.findViewById<EditText>(R.id.player_two_num)
+        val playerOneScore: EditText = convertView!!.findViewById(R.id.player_one_num)
+        val playerTwoScore: EditText = convertView.findViewById(R.id.player_two_num)
         val title = convertView.findViewById<TextView>(R.id.set_n)
 
         title.text = "SET " + set!!.setNumber
@@ -53,14 +53,12 @@ class SetAdapter(context: Context, resource: Int, private val sets: List<PingPon
                 } catch (ex: Exception) {
 
                 }
-
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int,
                                        count: Int) {
-
             }
         })
 
@@ -71,20 +69,16 @@ class SetAdapter(context: Context, resource: Int, private val sets: List<PingPon
 
                     currentSet.playerTwoScore = Integer.valueOf(s.toString())
                 } catch (ex: Exception) {
-
                 }
-
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int,
                                        count: Int) {
-
             }
         })
 
         return convertView
     }
-
 }
