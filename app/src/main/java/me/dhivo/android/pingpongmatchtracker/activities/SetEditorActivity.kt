@@ -2,7 +2,6 @@ package me.dhivo.android.pingpongmatchtracker.activities
 
 import android.content.ContentValues
 import android.content.Intent
-import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -29,7 +28,7 @@ class SetEditorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_set_editor)
+        setContentView(R.layout.activity_match)
 
         val playerOneName = intent.extras!!.getString("playerOneName")
         val playerTwoName = intent.extras!!.getString("playerTwoName")
@@ -117,7 +116,7 @@ class SetEditorActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.new_player_menu, menu)
+        menuInflater.inflate(R.menu.menu_new_player, menu)
         return true
     }
 

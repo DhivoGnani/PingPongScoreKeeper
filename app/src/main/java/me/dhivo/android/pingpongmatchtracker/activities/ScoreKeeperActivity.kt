@@ -2,8 +2,6 @@ package me.dhivo.android.pingpongmatchtracker.activities
 
 import android.content.ContentValues
 import android.content.Intent
-import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -13,25 +11,19 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-
-import java.util.ArrayList
-import java.util.Locale
-import java.util.Random
-
 import me.dhivo.android.pingpongmatchtracker.R
 import me.dhivo.android.pingpongmatchtracker.components.PingPongGame
 import me.dhivo.android.pingpongmatchtracker.components.PingPongPlayer
-import me.dhivo.android.pingpongmatchtracker.components.PingPongSet
 import me.dhivo.android.pingpongmatchtracker.constants.Audio
 import me.dhivo.android.pingpongmatchtracker.data.PingPongContract
+import java.util.*
 
-class GameActivity : AppCompatActivity() {
+class ScoreKeeperActivity : AppCompatActivity() {
     private var pingPongGame: PingPongGame? = null
     private var textToSpeech: TextToSpeech? = null
     private val rand = Random()
@@ -92,7 +84,7 @@ class GameActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_settings -> {
+            R.id.settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
                 return true
@@ -107,13 +99,13 @@ class GameActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
-        inflater.inflate(R.menu.mainmenu, menu)
+        inflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_score_keeper)
 
         // TODO: Find a better way to get necessary data
         val playerOneName = intent.extras!!.getString("playerOneName")
@@ -173,7 +165,6 @@ class GameActivity : AppCompatActivity() {
         (findViewById<View>(R.id.player_two_serve) as TextView).text = ""
     }
 
-    //TODO: Remove hardcoded strings
     private fun displayCurrentServingPlayer() {
         if (pingPongGame!!.currentServingPlayer == pingPongGame!!.playerOne) {
             (findViewById<View>(R.id.player_one_serve) as TextView).text = "Serve"
@@ -202,7 +193,7 @@ class GameActivity : AppCompatActivity() {
         displayPointsAndSets()
     }
 
-    fun displayPointsAndSets() {
+    private fun displayPointsAndSets() {
         displayPlayerOneScore()
         displayPlayerTwoScore()
         displayNumberOfSetsPlayerOneWon()
@@ -210,10 +201,7 @@ class GameActivity : AppCompatActivity() {
         displayCurrentServingPlayer()
     }
 
-    fun playAudio(playerName: String, en: Boolean) {
-        // TODO: Change audio file
-        // TODO: Use voice library
-
+    private fun playAudio(playerName: String, en: Boolean) {
         val text = if (en) "$randomEncouragingWord $playerName" else playerName
         speak(text)
     }
@@ -231,7 +219,7 @@ class GameActivity : AppCompatActivity() {
         displayPointsAndSets()
     }
 
-    fun playerScored(player: PingPongPlayer) {
+    private fun playerScored(player: PingPongPlayer) {
         pingPongGame!!.playerHasScored(player)
         if (!pingPongGame!!.hasPlayerWonCurrentSet(player)) {
             if (pingPongGame!!.isDeuce) {
@@ -286,11 +274,6 @@ class GameActivity : AppCompatActivity() {
                 intent.putExtra("won", "p2")
             }
             startActivity(intent)
-
-            //            playAudio(getString(
-            //                    R.string.player_won_match,
-            //                    player.getName()
-            //            ), false);
             clearServingPlayer()
             changeResetButton()
         } else {
@@ -309,46 +292,46 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    fun displayMessage(message: String) {
+    private fun displayMessage(message: String) {
         val messageDisplay = findViewById<TextView>(R.id.message)
         messageDisplay.text = message
     }
 
-    fun clearMessage() {
+    private fun clearMessage() {
         displayMessage("")
     }
 
-    fun resetCurrentScoreDisplay() {
+    private fun resetCurrentScoreDisplay() {
         (findViewById<View>(R.id.player_one_current_set_score) as TextView).text = getString(R.string.initial_set_score)
         (findViewById<View>(R.id.player_two_current_set_score) as TextView).text = getString(R.string.initial_set_score)
     }
 
-    fun resetNumberOfSetsWonDisplay() {
+    private fun resetNumberOfSetsWonDisplay() {
         (findViewById<View>(R.id.player_one_sets_won) as TextView).text = getString(R.string.initial_sets_won)
         (findViewById<View>(R.id.player_two_sets_won) as TextView).text = getString(R.string.initial_sets_won)
     }
 
-    fun displayNumberOfSetsPlayerOneWon() {
+    private fun displayNumberOfSetsPlayerOneWon() {
         (findViewById<View>(R.id.player_one_sets_won) as TextView).text = Integer.toString(pingPongGame!!.numSetsPlayerOneWon)
     }
 
-    fun displayNumberOfSetsPlayerTwoWon() {
+    private fun displayNumberOfSetsPlayerTwoWon() {
         (findViewById<View>(R.id.player_two_sets_won) as TextView).text = Integer.toString(pingPongGame!!.numSetsPlayerTwoWon)
     }
 
-    fun displayPlayerOneScore() {
+    private fun displayPlayerOneScore() {
         (findViewById<View>(R.id.player_one_current_set_score) as TextView).text = Integer.toString(pingPongGame!!.playerOneCurrentSetScore)
     }
 
-    fun displayPlayerTwoScore() {
+    private fun displayPlayerTwoScore() {
         (findViewById<View>(R.id.player_two_current_set_score) as TextView).text = Integer.toString(pingPongGame!!.playerTwoCurrentSetScore)
     }
 
-    fun resetOnClick(view: View) {
+    private fun resetOnClick(view: View) {
         resetCurrentScoreDisplay()
         resetNumberOfSetsWonDisplay()
         clearMessage()
-        pingPongGame!!.resetGame()
+        pingPongGame?.resetGame()
         displayCurrentServingPlayer()
         val reset = view as TextView
         if (reset.text == "Restart") {
@@ -358,7 +341,7 @@ class GameActivity : AppCompatActivity() {
 
     }
 
-    fun changeResetButton() {
-        reset!!.text = "Restart"
+    private fun changeResetButton() {
+        reset?.text = "Restart"
     }
 }

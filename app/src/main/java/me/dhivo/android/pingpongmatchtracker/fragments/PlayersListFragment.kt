@@ -3,7 +3,6 @@ package me.dhivo.android.pingpongmatchtracker.fragments
 import android.content.ContentUris
 import android.content.Intent
 import android.database.Cursor
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.LoaderManager
@@ -31,7 +30,7 @@ class PlayersListFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.players_list, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_players, container, false)
 
         playersListView = rootView.findViewById(R.id.player_list)
 

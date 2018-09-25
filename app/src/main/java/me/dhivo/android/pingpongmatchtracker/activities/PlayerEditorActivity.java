@@ -120,7 +120,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.new_player_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_new_player, menu);
         return true;
     }
 

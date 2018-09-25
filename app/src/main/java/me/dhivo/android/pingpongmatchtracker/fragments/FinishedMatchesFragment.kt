@@ -30,7 +30,7 @@ class FinishedMatchesFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.activity_finished_matches, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_finished_matches, container, false)
 
         finishedMatchesListView = rootView.findViewById(R.id.list)
 

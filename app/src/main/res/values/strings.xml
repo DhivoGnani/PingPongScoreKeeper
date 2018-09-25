@@ -36,4 +36,7 @@
     <string name="zero">0</string>
     <string name="test_player_one_serve">Fred *</string>
     <string name="test_match_date">2012/01/20</string>
+    <string name="settings">Settings</string>
+    <string name="enable_disable_option">Turn this option on or off</string>
+    <string name="audio">Audio</string>
 </resources>

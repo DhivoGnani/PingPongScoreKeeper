@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.CursorAdapter
 import android.widget.TextView
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.list_item.view.*
+import kotlinx.android.synthetic.main.item_match_details.view.*
 import me.dhivo.android.pingpongmatchtracker.R
 import me.dhivo.android.pingpongmatchtracker.activities.MatchActivity
 import me.dhivo.android.pingpongmatchtracker.data.PingPongContract
@@ -21,7 +21,7 @@ import me.dhivo.android.pingpongmatchtracker.helpers.ImageHelper
 class FinishedMatchesCursorAdapter(context: Context, c: Cursor?) : CursorAdapter(context, c, 0) {
 
     override fun newView(context: Context, cursor: Cursor, parent: ViewGroup): View {
-        return LayoutInflater.from(context).inflate(R.layout.list_item, parent, false)
+        return LayoutInflater.from(context).inflate(R.layout.item_match_details, parent, false)
     }
 
     override fun bindView(view: View, context: Context, cursor: Cursor) {

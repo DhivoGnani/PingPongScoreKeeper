@@ -21,7 +21,7 @@ class SetAdapter(context: Context, resource: Int, private val sets: List<PingPon
         val set = getItem(position)
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.editable_set_item, parent, false)
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_editable_set_details, parent, false)
         }
 
         val playerOneScore = convertView!!.findViewById<EditText>(R.id.player_one_num)

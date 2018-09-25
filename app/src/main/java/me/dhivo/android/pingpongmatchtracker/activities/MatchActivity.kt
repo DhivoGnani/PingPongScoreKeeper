@@ -1,6 +1,5 @@
 package me.dhivo.android.pingpongmatchtracker.activities
 
-import android.content.ContentUris
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Typeface
@@ -14,11 +13,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ListView
 import android.widget.TextView
-
 import me.dhivo.android.pingpongmatchtracker.R
 import me.dhivo.android.pingpongmatchtracker.adapters.MatchSetsAdapter
 import me.dhivo.android.pingpongmatchtracker.data.PingPongContract
-
 import me.dhivo.android.pingpongmatchtracker.data.PingPongContract.Set.SORTED_SETS
 
 class MatchActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
@@ -76,7 +73,7 @@ class MatchActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.game_details_menu, menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
@@ -91,15 +88,8 @@ class MatchActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                 finish()
                 return true
             }
-            R.id.delete_a -> deleteMatch()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun deleteMatch() {
-        val mId = ContentUris.withAppendedId(PingPongContract.PingPongMatch.CONTENT_URI, matchId)
-        contentResolver.delete(mId, null, null)
-        finish()
     }
 
     companion object

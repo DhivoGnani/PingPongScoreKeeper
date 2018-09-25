@@ -14,7 +14,7 @@ import me.dhivo.android.pingpongmatchtracker.data.PingPongContract.Set.*
 class MatchSetsAdapter(context: Context, c: Cursor?)  : CursorAdapter(context, c, 0)  {
 
     override fun newView(context: Context, cursor: Cursor, parent: ViewGroup): View {
-        return LayoutInflater.from(context).inflate(R.layout.details_item, parent, false)
+        return LayoutInflater.from(context).inflate(R.layout.item_set_details, parent, false)
     }
 
     override fun bindView(view: View, context: Context, cursor: Cursor) {
