@@ -28,38 +28,39 @@ class MatchActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_match)
 
+        val intent: Intent = intent
         mCurrentUri = intent.data
-        matchId = intent.extras.getLong("matchId")
 
+        matchId = intent.extras.getLong("matchId")
         val playerOneName: String = intent.extras.getString("playerOneName")
         val playerTwoName: String = intent.extras.getString("playerTwoName")
-
         val playerOneNameDisplay: TextView = findViewById(R.id.player_one_id)
         val playerTwoNameDisplay: TextView = findViewById(R.id.player_two_id)
 
         playerOneNameDisplay.text = playerOneName
         playerTwoNameDisplay.text = playerTwoName
+        playerOneNameDisplay.setTypeface(
+                Typeface.create(playerOneNameDisplay.typeface, Typeface.NORMAL), Typeface.NORMAL
+        )
+        playerTwoNameDisplay.setTypeface(
+                Typeface.create(playerTwoNameDisplay.typeface, Typeface.NORMAL), Typeface.NORMAL
+        )
 
-        playerOneNameDisplay.setTypeface(Typeface.create(playerOneNameDisplay.typeface, Typeface.NORMAL), Typeface.NORMAL)
-        playerTwoNameDisplay.setTypeface(Typeface.create(playerTwoNameDisplay.typeface, Typeface.NORMAL), Typeface.NORMAL)
-
-        val won = intent.extras.getString("won") == "p1"
-
-        if (won) playerOneNameDisplay.setTypeface(playerOneNameDisplay.typeface, Typeface.BOLD)
+        if (hasPlayerOneWon(intent)) playerOneNameDisplay.setTypeface(playerOneNameDisplay.typeface, Typeface.BOLD)
         else playerTwoNameDisplay.setTypeface(playerTwoNameDisplay.typeface, Typeface.BOLD)
 
         val list: ListView = findViewById(R.id.setlist)
         adapter = MatchSetsAdapter(this, null)
-
         list.adapter = adapter
 
         this.supportLoaderManager.initLoader(SET_LOADER, null, this)
     }
 
+    private fun hasPlayerOneWon(intent: Intent): Boolean = intent.extras.getString("won") == "p1"
+
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
         val selection = PingPongContract.Set.MATCH_ID + "=?"
         val selectionArgs = arrayOf(matchId.toString())
-
         return CursorLoader(this, mCurrentUri, null, selection, selectionArgs,
                 SORTED_SETS)
     }
@@ -71,7 +72,6 @@ class MatchActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     override fun onLoaderReset(loader: Loader<Cursor>) {
         adapter.swapCursor(null)
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)

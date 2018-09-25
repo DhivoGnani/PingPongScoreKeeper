@@ -21,12 +21,8 @@ import me.dhivo.android.pingpongmatchtracker.data.PingPongContract
 
 class PlayersListFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
-    internal lateinit var playersAdapter: PlayersAdapter
-    private var playersListView: ListView? = null
-
-    fun refreshList() {
-        playersAdapter.notifyDataSetChanged()
-    }
+    private lateinit var playersAdapter: PlayersAdapter
+    private lateinit var playersListView: ListView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,7 +32,7 @@ class PlayersListFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
         playersAdapter = PlayersAdapter(activity!!, null)
 
-        playersListView!!.adapter = playersAdapter
+        playersListView.adapter = playersAdapter
 
         this.loaderManager.initLoader(PING_PONG_LOADER, null, this)
 
@@ -45,13 +41,12 @@ class PlayersListFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
             startActivity(intent)
         }
 
-        playersListView!!.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, id ->
+        playersListView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, id ->
             val intent = Intent(activity, PlayerEditorActivity::class.java)
 
             val currentPetUri = ContentUris.withAppendedId(PingPongContract.Player.CONTENT_URI, id)
 
             intent.data = currentPetUri
-
             startActivity(intent)
         }
         return rootView
@@ -60,7 +55,8 @@ class PlayersListFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
     override fun onCreateLoader(i: Int, bundle: Bundle?): Loader<Cursor> {
 
-        return CursorLoader(activity!!, PingPongContract.Player.CONTENT_URI, null, null, null, null)
+        return CursorLoader(activity!!, PingPongContract.Player.CONTENT_URI, null,
+                null, null, null)
     }
 
     override fun onLoadFinished(loader: Loader<Cursor>, cursor: Cursor) {
@@ -72,7 +68,6 @@ class PlayersListFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
     }
 
     companion object {
-
-        private val PING_PONG_LOADER = 0
+        private const val PING_PONG_LOADER = 0
     }
 }

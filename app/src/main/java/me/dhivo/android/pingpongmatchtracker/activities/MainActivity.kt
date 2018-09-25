@@ -17,20 +17,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val viewPager: ViewPager = findViewById(R.id.viewpager)
-
         val adapter = CategoryAdapter(supportFragmentManager)
-
         viewPager.adapter = adapter
         viewPager.offscreenPageLimit = 2
 
         val tabLayout: TabLayout = this.findViewById(R.id.tabs)
-
         tabLayout.setupWithViewPager(viewPager)
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         val prepared: Boolean = super.onPrepareOptionsMenu(menu)
-        menu?.findItem(R.id.action_close)?.isVisible = false
+        menu.findItem(R.id.action_close).isVisible = false
         return prepared
     }
 

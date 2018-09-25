@@ -40,9 +40,7 @@ import me.dhivo.android.pingpongmatchtracker.helpers.ImageHelper;
 
 public class PlayerEditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private String mCurrentPhotoPath;
     private String uriStr;
-
     private Uri mCurrentPlayerUri;
     private EditText nameEditText;
     private CircleImageView imageView;
@@ -56,18 +54,17 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
         if (playerName != null) return null;
         return new CursorLoader(this,
                 mCurrentPlayerUri,
-                new String[] {PingPongContract.Player._ID, PingPongContract.Player.COLUMN_NAME_TITLE, PingPongContract.Player.COLUMN_PROFILE_PICTURE_TITLE}, null, null, null);
+                new String[] {PingPongContract.Player._ID, PingPongContract.Player.COLUMN_NAME_TITLE,
+                        PingPongContract.Player.COLUMN_PROFILE_PICTURE_TITLE}, null, null, null);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         if(data == null || loader == null) return;
-
         data.moveToFirst();
 
         int nameColumnIndex = data.getColumnIndex(PingPongContract.Player.COLUMN_NAME_TITLE);
         int pictureColumnIndex = data.getColumnIndex(PingPongContract.Player.COLUMN_PROFILE_PICTURE_TITLE);
-
 
         String name = data.getString(nameColumnIndex);
         String profilePictureUri = data.getString(pictureColumnIndex);
@@ -193,8 +190,6 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
                 storageDir      /* directory */
         );
 
-        // Save a file: path for use with ACTION_VIEW intents
-        playerEditorActivity.mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 

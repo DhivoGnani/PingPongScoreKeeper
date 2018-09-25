@@ -25,8 +25,8 @@ import me.dhivo.android.pingpongmatchtracker.data.PingPongContract.PingPongMatch
 
 class FinishedMatchesFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
-    internal lateinit var finishedMatchesCursorAdapter: FinishedMatchesCursorAdapter
-    private var finishedMatchesListView: ListView? = null
+    private lateinit var finishedMatchesCursorAdapter: FinishedMatchesCursorAdapter
+    private lateinit var finishedMatchesListView: ListView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -35,12 +35,12 @@ class FinishedMatchesFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor
         finishedMatchesListView = rootView.findViewById(R.id.list)
 
         finishedMatchesCursorAdapter = FinishedMatchesCursorAdapter(activity!!, null)
-        finishedMatchesListView!!.adapter = finishedMatchesCursorAdapter
+        finishedMatchesListView.adapter = finishedMatchesCursorAdapter
 
         this.loaderManager.initLoader(PING_PONG_LOADER, null, this)
 
         val emptyView = rootView.findViewById<View>(R.id.empty_view)
-        finishedMatchesListView!!.emptyView = emptyView
+        finishedMatchesListView.emptyView = emptyView
 
         return rootView
     }
@@ -62,7 +62,6 @@ class FinishedMatchesFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor
     }
 
     companion object {
-
-        private val PING_PONG_LOADER = 0
+        private const val PING_PONG_LOADER = 0
     }
 }
