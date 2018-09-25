@@ -21,12 +21,12 @@ import me.dhivo.android.pingpongmatchtracker.data.PingPongContract.PingPongMatch
 class PingPongProvider : ContentProvider() {
     private var mDbHelper: PingPongDBHelper? = null
 
-    private val pingPongMatchTableName = "matchTable"
-    private val playerOneTableName = "playerOneTable"
-    private val playerTwoTableName = "playerTwoTable"
-    private val servingPlayerTableName = "servingPlayerTable"
+    internal val pingPongMatchTableName = "matchTable"
+    internal val playerOneTableName = "playerOneTable"
+    internal val playerTwoTableName = "playerTwoTable"
+    internal val servingPlayerTableName = "servingPlayerTable"
 
-    private val matchesWithPlayerInfo: Cursor
+    val matchesWithPlayerInfo: Cursor
         get() {
             val database = mDbHelper!!.readableDatabase
 
@@ -52,7 +52,7 @@ class PingPongProvider : ContentProvider() {
         }
 
     override fun onCreate(): Boolean {
-        mDbHelper = PingPongDBHelper(context!!)
+        mDbHelper = PingPongDBHelper(context)
         return true
     }
 
