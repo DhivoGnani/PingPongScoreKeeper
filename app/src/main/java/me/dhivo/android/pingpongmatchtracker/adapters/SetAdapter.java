@@ -27,7 +27,6 @@ public class SetAdapter extends ArrayAdapter<PingPongSet> {
         sets = objects;
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         PingPongSet set = getItem(position);
