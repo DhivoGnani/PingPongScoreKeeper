@@ -8,7 +8,7 @@ class PingPongPlayer(var name: String) {
     var numberOfSetsWon: Int = 0
         private set
 
-    fun resetNumberOfSetsWon() {
+    private fun resetNumberOfSetsWon() {
         numberOfSetsWon = 0
     }
 

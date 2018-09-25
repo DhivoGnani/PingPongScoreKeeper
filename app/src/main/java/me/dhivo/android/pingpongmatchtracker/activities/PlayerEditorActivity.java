@@ -227,7 +227,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
 
     private void displayImage(Uri uri, ImageView imageView)
     {
-        int rotation = ImageHelper.getOrientation(getContentResolver(), uri);
+        int rotation = ImageHelper.INSTANCE.getOrientation(getContentResolver(), uri);
         Picasso.get().load(uri).resize(1000,1000)
                 .centerCrop().rotate(rotation).into(imageView);
     }
