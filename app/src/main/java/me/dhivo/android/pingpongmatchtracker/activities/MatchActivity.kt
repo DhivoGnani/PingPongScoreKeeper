@@ -61,8 +61,9 @@ class MatchActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
         val selection = PingPongContract.Set.MATCH_ID + "=?"
         val selectionArgs = arrayOf(matchId.toString())
-        return CursorLoader(this, mCurrentUri, null, selection, selectionArgs,
-                SORTED_SETS)
+        return CursorLoader(
+                this, mCurrentUri, null, selection, selectionArgs, SORTED_SETS
+        )
     }
 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor) {

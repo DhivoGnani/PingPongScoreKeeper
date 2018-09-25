@@ -52,10 +52,15 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
         if (playerName != null) return null;
-        return new CursorLoader(this,
+        return new CursorLoader(
+                this,
                 mCurrentPlayerUri,
-                new String[] {PingPongContract.Player._ID, PingPongContract.Player.COLUMN_NAME_TITLE,
-                        PingPongContract.Player.COLUMN_PROFILE_PICTURE_TITLE}, null, null, null);
+                new String[] {
+                        PingPongContract.Player._ID, PingPongContract.Player.COLUMN_NAME_TITLE,
+                        PingPongContract.Player.COLUMN_PROFILE_PICTURE_TITLE
+                },
+                null, null, null
+        );
     }
 
     @Override
@@ -71,7 +76,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
         nameEditText.setText(name);
 
         if(profilePictureUri != null && uriStr == null) {
-            displayImage(Uri.parse(profilePictureUri), imageView);
+            ImageHelper.displayImage(getContentResolver(), Uri.parse(profilePictureUri), imageView);
         }
     }
 
@@ -171,26 +176,12 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
-            displayImage(Uri.parse(uriStr), imageView);
+            ImageHelper.displayImage(getContentResolver(), Uri.parse(uriStr), imageView);
         }
     }
 
     public void takePicture(View view) {
         dispatchTakePictureIntent();
-    }
-
-    private static File createImageFile(PlayerEditorActivity playerEditorActivity) throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = playerEditorActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName, /* prefix */
-                ".jpg", /* suffix */
-                storageDir      /* directory */
-        );
-
-        return image;
     }
 
     private void dispatchTakePictureIntent() {
@@ -200,7 +191,7 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
             // Create the File where the photo should go
             File photoFile = null;
             try {
-                photoFile = createImageFile(this);
+                photoFile = ImageHelper.createImageFile(this);
             } catch (IOException ex) {
                 // Error occurred while creating the File
             }
@@ -214,12 +205,5 @@ public class PlayerEditorActivity extends AppCompatActivity implements LoaderMan
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
         }
-    }
-
-    private void displayImage(Uri uri, ImageView imageView)
-    {
-        int rotation = ImageHelper.INSTANCE.getOrientation(getContentResolver(), uri);
-        Picasso.get().load(uri).resize(1000,1000)
-                .centerCrop().rotate(rotation).into(imageView);
     }
 }
