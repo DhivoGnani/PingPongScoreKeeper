@@ -190,14 +190,14 @@ public class GameActivity extends AppCompatActivity
 
     //TODO: Remove hardcoded strings
     private void displayCurrentServingPlayer() {
-        if(pingPongGame.currentServingPlayer == pingPongGame.playerOne)
+        if(pingPongGame.getCurrentServingPlayer() == pingPongGame.getPlayerOne())
         {
             ((TextView)findViewById(R.id.player_one_serve)).
                     setText("Serve");
             ((TextView)findViewById(R.id.player_two_serve)).
                     setText("");
         }
-        else if(pingPongGame.currentServingPlayer == pingPongGame.playerTwo)
+        else if(pingPongGame.getCurrentServingPlayer() == pingPongGame.getPlayerTwo())
         {
             ((TextView)findViewById(R.id.player_two_serve)).
                     setText("Serve");
@@ -207,21 +207,21 @@ public class GameActivity extends AppCompatActivity
     }
 
     private void displayPlayersName() {
-        ((TextView)findViewById(R.id.player_one)).setText(pingPongGame.playerOne.getName());
-        ((TextView)findViewById(R.id.player_two)).setText(pingPongGame.playerTwo.getName());
+        ((TextView)findViewById(R.id.player_one)).setText(pingPongGame.getPlayerOne().getName());
+        ((TextView)findViewById(R.id.player_two)).setText(pingPongGame.getPlayerTwo().getName());
     }
 
     public void playerOneScoreOnClick(View view)
     {
         if(pingPongGame.isGameOver()) return;
-        playerScored(pingPongGame.playerOne);
-        if(!pingPongGame.hasPlayerWonCurrentSet(pingPongGame.playerOne))
+        playerScored(pingPongGame.getPlayerOne());
+        if(!pingPongGame.hasPlayerWonCurrentSet(pingPongGame.getPlayerOne()))
         {
             if(pingPongGame.isDeuce()) {
                 playAudio("Deuce!", false);
             }
-            else if(pingPongGame.playerOne.getCurrentSetScore() != 0) {
-                playAudio(pingPongGame.playerOneName, true);
+            else if(pingPongGame.getPlayerOne().getCurrentSetScore() != 0) {
+                playAudio(pingPongGame.getPlayerOneName(), true);
             }
         }
         displayPointsAndSets();
@@ -256,14 +256,14 @@ public class GameActivity extends AppCompatActivity
     public void playerTwoScoreOnClick(View view)
     {
         if(pingPongGame.isGameOver()) return;
-        playerScored(pingPongGame.playerTwo);
-        if(!pingPongGame.hasPlayerWonCurrentSet(pingPongGame.playerTwo))
+        playerScored(pingPongGame.getPlayerTwo());
+        if(!pingPongGame.hasPlayerWonCurrentSet(pingPongGame.getPlayerTwo()))
         {
             if(pingPongGame.isDeuce()) {
                 playAudio("Deuce!", false);
             }
-            else if(pingPongGame.playerTwo.getCurrentSetScore() != 0) {
-                playAudio(pingPongGame.playerTwoName, true);
+            else if(pingPongGame.getPlayerTwo().getCurrentSetScore() != 0) {
+                playAudio(pingPongGame.getPlayerTwoName(), true);
             }
         }
         displayPointsAndSets();
@@ -294,8 +294,8 @@ public class GameActivity extends AppCompatActivity
             );
 
             ContentValues values = new ContentValues();
-            values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_ID_TITLE, pingPongGame.playerOneId);
-            values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE,  pingPongGame.playerTwoId);
+            values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_ID_TITLE, pingPongGame.getPlayerOneId());
+            values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_ID_TITLE, pingPongGame.getPlayerTwoId());
             values.put(PingPongContract.PingPongMatch.COLUMN_SERVING_PLAYER_ID_TITLE, servingPlayerId);
             values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_ONE_SETS_WON_TITLE,  pingPongGame.getNumSetsPlayerOneWon());
             values.put(PingPongContract.PingPongMatch.COLUMN_PLAYER_TWO_SETS_WON_TITLE, pingPongGame.getNumSetsPlayerTwoWon());
@@ -304,7 +304,7 @@ public class GameActivity extends AppCompatActivity
 
             long id = Long.valueOf(uri.getLastPathSegment());
 
-            for(PingPongSet set: pingPongGame.pingPongSets)
+            for(PingPongSet set: pingPongGame.getPingPongSets())
             {
                 values = new ContentValues();
                 values.put(PingPongContract.Set.MATCH_ID, id+ "");
@@ -319,9 +319,9 @@ public class GameActivity extends AppCompatActivity
             intent.setData(PingPongContract.Set.CONTENT_URI);
             String matchId = id + "";
             intent.putExtra("matchId", Long.valueOf(matchId));
-            intent.putExtra("playerOneName", pingPongGame.playerOne.getName());
-            intent.putExtra("playerTwoName", pingPongGame.playerTwo.getName());
-            if(pingPongGame.playerOne.getNumberOfSetsWon() > pingPongGame.playerTwo.getNumberOfSetsWon()) {
+            intent.putExtra("playerOneName", pingPongGame.getPlayerOne().getName());
+            intent.putExtra("playerTwoName", pingPongGame.getPlayerTwo().getName());
+            if(pingPongGame.getPlayerOne().getNumberOfSetsWon() > pingPongGame.getPlayerTwo().getNumberOfSetsWon()) {
                 intent.putExtra("won", "p1");
             } else {
                 intent.putExtra("won", "p2");
@@ -414,7 +414,7 @@ public class GameActivity extends AppCompatActivity
         if(reset.getText().equals("Restart")) {
             reset.setText("RESET");
         }
-        pingPongGame.pingPongSets = new ArrayList<>();
+        pingPongGame.setPingPongSets(new ArrayList<PingPongSet>());
 
     }
 
