@@ -14,45 +14,32 @@ import android.widget.TextView
 import me.dhivo.android.pingpongmatchtracker.R
 import me.dhivo.android.pingpongmatchtracker.components.PingPongSet
 
-class SetAdapter(context: Context, resource: Int, private val sets: List<PingPongSet>) : ArrayAdapter<PingPongSet>(context, resource, sets) {
+class SetAdapter(context: Context, resource: Int, private val sets: List<PingPongSet>)
+    : ArrayAdapter<PingPongSet>(context, resource, sets) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
         val set = getItem(position)
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_editable_set_details, parent, false)
+            convertView = LayoutInflater.from(context)
+                    .inflate(R.layout.item_editable_set_details, parent, false)
         }
 
         val playerOneScore: EditText = convertView!!.findViewById(R.id.player_one_num)
         val playerTwoScore: EditText = convertView.findViewById(R.id.player_two_num)
         val title = convertView.findViewById<TextView>(R.id.set_n)
 
-        title.text = "SET " + set!!.setNumber
+        title.text = context.getString(R.string.set).toUpperCase() + " " + set.setNumber
 
-        if (set.playerOneScore >= 0) {
-            playerOneScore.setText(set.playerOneScore.toString())
-        } else {
-            playerOneScore.setText("")
-        }
-
-        if (set.playerTwoScore >= 0) {
-            playerTwoScore.setText(set.playerTwoScore.toString())
-        } else {
-            playerTwoScore.setText("")
-        }
+        setPlayerScores(set, playerOneScore, playerTwoScore)
 
         val currentSet = sets[position]
 
         playerOneScore.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable) {
-                try {
-
                     currentSet.playerOneScore = Integer.valueOf(s.toString())
-                } catch (ex: Exception) {
-
-                }
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -65,11 +52,7 @@ class SetAdapter(context: Context, resource: Int, private val sets: List<PingPon
         playerTwoScore.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable) {
-                try {
-
-                    currentSet.playerTwoScore = Integer.valueOf(s.toString())
-                } catch (ex: Exception) {
-                }
+                currentSet.playerTwoScore = Integer.valueOf(s.toString())
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -80,5 +63,19 @@ class SetAdapter(context: Context, resource: Int, private val sets: List<PingPon
         })
 
         return convertView
+    }
+
+    private fun setPlayerScores(set: PingPongSet, playerOneScore: EditText, playerTwoScore: EditText) {
+        if (set.playerOneScore >= 0) {
+            playerOneScore.setText(set.playerOneScore.toString())
+        } else {
+            playerOneScore.setText("")
+        }
+
+        if (set.playerTwoScore >= 0) {
+            playerTwoScore.setText(set.playerTwoScore.toString())
+        } else {
+            playerTwoScore.setText("")
+        }
     }
 }

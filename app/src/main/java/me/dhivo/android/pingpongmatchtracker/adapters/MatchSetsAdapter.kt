@@ -34,6 +34,15 @@ class MatchSetsAdapter(context: Context, c: Cursor?)  : CursorAdapter(context, c
         playerOneScoreView.text = playerOneScore.toString()
         playerTwoScoreView.text = playerTwoScore.toString()
 
+        addTypefaceToPlayerName(playerOneScoreView, playerTwoScoreView, playerOneScore, playerTwoScore)
+    }
+
+    private fun addTypefaceToPlayerName(
+            playerOneScoreView: TextView,
+            playerTwoScoreView: TextView,
+            playerOneScore: Int,
+            playerTwoScore: Int
+    ) {
         playerOneScoreView.setTypeface(
                 Typeface.create(playerOneScoreView.typeface, Typeface.NORMAL), Typeface.NORMAL
         )
