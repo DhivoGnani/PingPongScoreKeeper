@@ -36,23 +36,7 @@ class FinishedMatchesCursorAdapter(context: Context, c: Cursor?) : CursorAdapter
         val playerOneProfilePictureCol = cursor.getColumnIndex("PlayerOnePicture")
         val playerTwoProfilePictureCol = cursor.getColumnIndex("PlayerTwoPicture")
 
-        if(cursor.getString(playerOneProfilePictureCol) != null) {
-            var uri: Uri = Uri.parse(cursor.getString(playerOneProfilePictureCol))
-            var degrees = ImageHelper.getOrientation(context.contentResolver, uri)
-            Picasso.get().load(uri).resize(1000, 1000)
-                    .centerCrop().rotate(degrees.toFloat()).into(view.profile_image_playerone)
-        } else {
-            view.profile_image_playerone.setImageResource(R.drawable.default_profile)
-        }
-
-        if(cursor.getString(playerTwoProfilePictureCol) != null) {
-            var uri: Uri = Uri.parse(cursor.getString(playerTwoProfilePictureCol))
-            var degrees = ImageHelper.getOrientation(context.contentResolver, uri)
-            Picasso.get().load(uri).resize(1000, 1000)
-                    .centerCrop().rotate(degrees.toFloat()).into(view.profile_image_playertwo)
-        } else {
-            view.profile_image_playertwo.setImageResource(R.drawable.default_profile)
-        }
+        addPlayerProfilePictures(cursor, playerOneProfilePictureCol, context, view, playerTwoProfilePictureCol)
 
         val servingPlayerNameCol = cursor.getColumnIndex("ServingPlayerName");
         val playerOneScoreCol = cursor.getColumnIndex(COLUMN_PLAYER_ONE_SETS_WON_TITLE)
@@ -66,8 +50,7 @@ class FinishedMatchesCursorAdapter(context: Context, c: Cursor?) : CursorAdapter
 
         val matchId =  cursor.getLong(matchIdCol);
 
-        playerOneNameView.text = if(playerOneName == servingPlayerName) "$playerOneName *" else playerOneName
-        playerTwoNameView .text = if(playerTwoName == servingPlayerName) "$playerTwoName *" else playerTwoName
+        addPlayerNames(playerOneNameView, playerOneName, servingPlayerName, playerTwoNameView, playerTwoName)
 
         val playerOneSetsWon = cursor.getInt(playerOneScoreCol)
         val playerTwoSetsWon = cursor.getInt(playerTwoScoreCol)
@@ -89,10 +72,55 @@ class FinishedMatchesCursorAdapter(context: Context, c: Cursor?) : CursorAdapter
             } else {
                 intent.putExtra("won", "p2")
             }
-
             context.startActivity(intent)
         }
 
+        setPlayerNameTypeface(playerTwoScoreView, playerOneScoreView, playerOneSetsWon, playerTwoSetsWon)
+    }
+
+    private fun addPlayerNames(
+            playerOneNameView: TextView,
+            playerOneName: String,
+            servingPlayerName: String?,
+            playerTwoNameView: TextView,
+            playerTwoName: String
+    ) {
+        playerOneNameView.text = if (playerOneName == servingPlayerName) "$playerOneName *" else playerOneName
+        playerTwoNameView.text = if (playerTwoName == servingPlayerName) "$playerTwoName *" else playerTwoName
+    }
+
+    private fun addPlayerProfilePictures(
+            cursor: Cursor,
+            playerOneProfilePictureCol: Int,
+            context: Context,
+            view: View,
+            playerTwoProfilePictureCol: Int
+    ) {
+        if (cursor.getString(playerOneProfilePictureCol) != null) {
+            var uri: Uri = Uri.parse(cursor.getString(playerOneProfilePictureCol))
+            var degrees = ImageHelper.getOrientation(context.contentResolver, uri)
+            Picasso.get().load(uri).resize(1000, 1000)
+                    .centerCrop().rotate(degrees.toFloat()).into(view.profile_image_playerone)
+        } else {
+            view.profile_image_playerone.setImageResource(R.drawable.default_profile)
+        }
+
+        if (cursor.getString(playerTwoProfilePictureCol) != null) {
+            var uri: Uri = Uri.parse(cursor.getString(playerTwoProfilePictureCol))
+            var degrees = ImageHelper.getOrientation(context.contentResolver, uri)
+            Picasso.get().load(uri).resize(1000, 1000)
+                    .centerCrop().rotate(degrees.toFloat()).into(view.profile_image_playertwo)
+        } else {
+            view.profile_image_playertwo.setImageResource(R.drawable.default_profile)
+        }
+    }
+
+    private fun setPlayerNameTypeface(
+            playerTwoScoreView: TextView,
+            playerOneScoreView: TextView,
+            playerOneSetsWon: Int,
+            playerTwoSetsWon: Int
+    ) {
         playerTwoScoreView.setTypeface(
                 Typeface.create(playerTwoScoreView.typeface, Typeface.NORMAL), Typeface.NORMAL
         )

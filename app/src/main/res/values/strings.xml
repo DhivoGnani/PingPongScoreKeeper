@@ -19,6 +19,7 @@
     <string name="invalid_set_points">Set points are invalid</string>
     <string name="serve">Serve</string>
     <string name="sets">Sets</string>
+    <string name="set">Set</string>
     <string name="decrease">-</string>
     <string name="increase">+</string>
     <string name="three">3</string>
